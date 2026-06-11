@@ -69,14 +69,14 @@ export default async function Inicio() {
   }
 
   return (
-    <main className="min-h-screen bg-slate-950 text-slate-100 flex flex-col lg:flex-row">
+    <main className="min-h-screen bg-slate-50 text-slate-800 flex flex-col lg:flex-row">
       <DashboardSidebar 
         modulosPermitidos={modulosPermitidos}
         usuarioInfo={
           usuario && (
             <div className="flex items-center gap-3 px-4 mb-4">
-                <div className="h-10 w-10 rounded-full bg-indigo-500/20 flex items-center justify-center border border-indigo-500/30">
-                    <span className="text-indigo-300 font-bold">{usuario.nombre.charAt(0).toUpperCase()}</span>
+                <div className="h-10 w-10 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200">
+                    <span className="text-slate-600 font-bold">{usuario.nombre.charAt(0).toUpperCase()}</span>
                 </div>
                 <div>
                     <p className="text-sm font-medium text-white">{usuario.nombre}</p>
@@ -89,19 +89,19 @@ export default async function Inicio() {
       />
 
       <section className="flex-1 p-6 lg:p-10 w-full lg:w-auto">
-          <header className="mb-10 rounded-3xl border border-slate-800 bg-slate-900 p-8 shadow-2xl shadow-slate-950/40">
-            <p className="text-sm font-semibold uppercase tracking-[0.35em] text-cyan-400">
-              Sistema ERP modular
+          <header className="mb-10 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+            <p className="text-sm font-semibold uppercase tracking-widest text-teal-600">
+              Sistema ERP Modular
             </p>
 
             <div className="mt-4 max-w-4xl">
-              <h2 className="text-4xl font-bold tracking-tight text-white">
-                Bienvenido a NexaERP
+              <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+                Bienvenido a PharmaERP 360
               </h2>
-              <p className="mt-4 text-lg leading-8 text-slate-300">
-                Plataforma base para gestionar ventas, compras, inventario,
-                clientes, proveedores, caja, comprobantes y reportes. El sistema
-                está preparado para adaptarse a distintos rubros comerciales.
+              <p className="mt-4 text-lg leading-8 text-slate-600">
+                Plataforma corporativa para gestionar ventas, compras, inventario,
+                clientes, proveedores, caja, comprobantes y reportes. Optimizado para el 
+                control riguroso del sector farmacéutico.
               </p>
             </div>
           </header>
@@ -110,15 +110,15 @@ export default async function Inicio() {
             {indicadores.map((indicador) => (
               <article
                 key={indicador.titulo}
-                className="rounded-2xl border border-slate-800 bg-slate-900 p-6"
+                className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md"
               >
-                <p className="text-sm font-medium text-slate-400">
+                <p className="text-sm font-medium text-slate-500">
                   {indicador.titulo}
                 </p>
-                <strong className="mt-3 block text-2xl font-bold text-white">
+                <strong className="mt-3 block text-2xl font-bold text-slate-900">
                   {indicador.valor}
                 </strong>
-                <p className="mt-2 text-xs text-slate-500">
+                <p className="mt-2 text-xs text-slate-400">
                   {indicador.descripcion}
                 </p>
               </article>
@@ -126,26 +126,26 @@ export default async function Inicio() {
           </section>
 
           <section className="mt-10 grid gap-6 lg:grid-cols-2">
-            <article className="rounded-2xl border border-slate-800 bg-slate-900 p-6">
-              <h3 className="text-xl font-semibold text-white">
+            <article className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+              <h3 className="text-xl font-semibold text-slate-900">
                 Arquitectura del sistema
               </h3>
-              <p className="mt-3 text-sm leading-6 text-slate-400">
-                NexaERP se desarrolla bajo una arquitectura en capas con
+              <p className="mt-3 text-sm leading-6 text-slate-600">
+                PharmaERP 360 se desarrolla bajo una arquitectura en capas con
                 organización modular. La presentación, la lógica de negocio y el
-                acceso a datos se mantienen separados para facilitar el
-                mantenimiento y la reutilización.
+                acceso a datos se mantienen separados para facilitar la
+                auditoría y escalabilidad.
               </p>
             </article>
 
-            <article className="rounded-2xl border border-slate-800 bg-slate-900 p-6">
-              <h3 className="text-xl font-semibold text-white">
-                Primera especialización
+            <article className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+              <h3 className="text-xl font-semibold text-slate-900">
+                Especialización Clínica
               </h3>
-              <p className="mt-3 text-sm leading-6 text-slate-400">
-                La primera adaptación será para farmacia, incorporando lotes,
-                vencimientos, laboratorios, alertas y lógica FEFO para controlar
-                productos próximos a vencer.
+              <p className="mt-3 text-sm leading-6 text-slate-600">
+                Incorpora trazabilidad completa mediante lotes,
+                vencimientos, laboratorios, alertas tempranas y rotación FEFO para controlar
+                rigurosamente los productos críticos.
               </p>
             </article>
           </section>

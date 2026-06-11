@@ -18,7 +18,7 @@ export function LoginForm() {
     return (
         <form action={formAction} className="flex flex-col gap-5 w-full">
             <div>
-                <label className="block text-sm font-medium text-slate-300 mb-1.5" htmlFor="correo">
+                <label className="block text-sm font-medium text-slate-700 mb-1.5" htmlFor="correo">
                     Correo Electrónico
                 </label>
                 <div className="relative">
@@ -33,14 +33,14 @@ export function LoginForm() {
                         type="email"
                         autoComplete="email"
                         required
-                        className="block w-full rounded-xl border-0 bg-slate-800/50 py-3 pl-10 pr-4 text-white shadow-sm ring-1 ring-inset ring-slate-700/50 placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                        className="block w-full rounded-xl border-0 bg-slate-50 py-3 pl-10 pr-4 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-emerald-600 sm:text-sm sm:leading-6"
                         placeholder="admin@nexaerp.com"
                     />
                 </div>
             </div>
 
             <div>
-                <label className="block text-sm font-medium text-slate-300 mb-1.5" htmlFor="contrasena">
+                <label className="block text-sm font-medium text-slate-700 mb-1.5" htmlFor="contrasena">
                     Contraseña
                 </label>
                 <div className="relative">
@@ -55,22 +55,22 @@ export function LoginForm() {
                         type="password"
                         autoComplete="current-password"
                         required
-                        className="block w-full rounded-xl border-0 bg-slate-800/50 py-3 pl-10 pr-4 text-white shadow-sm ring-1 ring-inset ring-slate-700/50 placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                        className="block w-full rounded-xl border-0 bg-slate-50 py-3 pl-10 pr-4 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-emerald-600 sm:text-sm sm:leading-6"
                         placeholder="••••••••"
                     />
                 </div>
             </div>
 
             {state?.error && (
-                <div className="rounded-lg bg-rose-500/10 p-4 border border-rose-500/20">
+                <div className="rounded-lg bg-rose-50 p-4 border border-rose-200">
                     <div className="flex">
                         <div className="flex-shrink-0">
-                            <svg className="h-5 w-5 text-rose-400" viewBox="0 0 20 20" fill="currentColor">
+                            <svg className="h-5 w-5 text-rose-500" viewBox="0 0 20 20" fill="currentColor">
                                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clipRule="evenodd" />
                             </svg>
                         </div>
                         <div className="ml-3">
-                            <h3 className="text-sm font-medium text-rose-400">{state.error}</h3>
+                            <h3 className="text-sm font-medium text-rose-800">{state.error}</h3>
                         </div>
                     </div>
                 </div>
@@ -79,7 +79,7 @@ export function LoginForm() {
             <button
                 type="submit"
                 disabled={isPending}
-                className="mt-2 flex w-full justify-center rounded-xl bg-indigo-500 px-3 py-3 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                className="mt-2 flex w-full justify-center rounded-xl bg-emerald-600 px-3 py-3 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
             >
                 {isPending ? (
                     <span className="flex items-center gap-2">
