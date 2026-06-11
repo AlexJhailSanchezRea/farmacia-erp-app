@@ -69,6 +69,9 @@ model Producto {
   categoriaId Int
   categoria   Categoria @relation(fields: [categoriaId], references: [id])
 
+  detallesCompra        DetalleCompra[]
+  movimientosInventario MovimientoInventario[]
+
   @@map("productos")
 }
 
@@ -98,5 +101,67 @@ model Proveedor {
   creadoEn      DateTime       @default(now())
   actualizadoEn DateTime       @updatedAt
 
+  compras Compra[]
+
   @@map("proveedores")
+}
+
+enum TipoMovimientoInventario {
+  ENTRADA
+  SALIDA
+  AJUSTE
+}
+
+model Compra {
+  id            Int            @id @default(autoincrement())
+  numeroCompra  String         @unique
+  fechaCompra   DateTime       @default(now())
+  total         Decimal        @db.Decimal(10, 2)
+  observacion   String?
+  estado        EstadoRegistro @default(ACTIVO)
+  creadoEn      DateTime       @default(now())
+  actualizadoEn DateTime       @updatedAt
+
+  proveedorId Int
+  proveedor   Proveedor @relation(fields: [proveedorId], references: [id])
+
+  detalles    DetalleCompra[]
+  movimientos MovimientoInventario[]
+
+  @@map("compras")
+}
+
+model DetalleCompra {
+  id             Int      @id @default(autoincrement())
+  cantidad       Int
+  precioUnitario Decimal  @db.Decimal(10, 2)
+  subtotal       Decimal  @db.Decimal(10, 2)
+  creadoEn       DateTime @default(now())
+
+  compraId Int
+  compra   Compra @relation(fields: [compraId], references: [id])
+
+  productoId Int
+  producto   Producto @relation(fields: [productoId], references: [id])
+
+  @@map("detalles_compra")
+}
+
+model MovimientoInventario {
+  id             Int                      @id @default(autoincrement())
+  tipoMovimiento TipoMovimientoInventario
+  cantidad       Int
+  stockAnterior  Int
+  stockNuevo     Int
+  motivo         String?
+  referencia     String?
+  creadoEn       DateTime                 @default(now())
+
+  productoId Int
+  producto   Producto @relation(fields: [productoId], references: [id])
+
+  compraId Int?
+  compra   Compra? @relation(fields: [compraId], references: [id])
+
+  @@map("movimientos_inventario")
 }

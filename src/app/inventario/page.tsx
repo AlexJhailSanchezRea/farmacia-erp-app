@@ -1,11 +1,14 @@
-import { PaginaModulo } from "@/components/layout/PaginaModulo";
+import { accionObtenerMovimientos } from "@/modules/inventario/actions";
+import { ListaMovimientos } from "./components";
 
-export default function InventarioPage() {
+export const dynamic = 'force-dynamic';
+
+export default async function InventarioPage() {
+    const movimientos = await accionObtenerMovimientos();
+
     return (
-        <PaginaModulo
-            modulo="Control"
-            titulo="Inventario"
-            descripcion="Control de existencias, movimientos de stock, productos activos y productos con stock bajo."
-        />
+        <main className="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
+            <ListaMovimientos movimientos={movimientos} />
+        </main>
     );
 }
