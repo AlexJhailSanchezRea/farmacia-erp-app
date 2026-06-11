@@ -4,22 +4,26 @@ type PaginaModuloProps = {
     descripcion: string;
     modulo: string;
     children?: React.ReactNode;
+    volverA?: string;
+    volverTexto?: string;
 };
 
 export function PaginaModulo({
     titulo,
     descripcion,
     modulo,
-    children
+    children,
+    volverA = "/",
+    volverTexto = "Volver al dashboard"
 }: PaginaModuloProps) {
     return (
         <main className="min-h-screen bg-slate-50 dark:bg-slate-950 p-6 text-slate-900 dark:text-slate-100 lg:p-10">
             <section className="mx-auto max-w-6xl">
                 <Link
-                    href="/"
+                    href={volverA}
                     className="mb-6 inline-flex rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-2 text-sm text-slate-600 dark:text-slate-400 transition hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-teal-600 dark:hover:text-teal-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 dark:focus:ring-offset-slate-950"
                 >
-                    Volver al dashboard
+                    {volverTexto}
                 </Link>
 
                 <header className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-8 shadow-sm">
