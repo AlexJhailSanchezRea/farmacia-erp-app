@@ -1,4 +1,5 @@
 import { obtenerUsuarioAutenticado } from "@/lib/auth";
+import Link from "next/link";
 import { LogoutButton } from "@/components/layout/LogoutButton";
 import { AutoLogout } from "@/components/layout/AutoLogout";
 import { servicioObtenerReporteGeneral } from "@/modules/reportes/services";
@@ -77,14 +78,19 @@ export default async function Inicio() {
         modulosPermitidos={modulosPermitidos}
         usuarioInfo={
           usuario && (
-            <div className="flex items-center gap-3 px-4 mb-4">
-                <div className="h-10 w-10 rounded-full bg-slate-800 dark:bg-slate-700 flex items-center justify-center border border-slate-700 dark:border-slate-600">
-                    <span className="text-white font-bold">{usuario.nombre.charAt(0).toUpperCase()}</span>
+            <div className="flex flex-col mb-4">
+                <div className="flex items-center gap-3 px-4">
+                    <div className="h-10 w-10 rounded-full bg-slate-800 dark:bg-slate-700 flex items-center justify-center border border-slate-700 dark:border-slate-600">
+                        <span className="text-white font-bold">{usuario.nombre.charAt(0).toUpperCase()}</span>
+                    </div>
+                    <div>
+                        <p className="text-sm font-medium text-white">{usuario.nombre}</p>
+                        <p className="text-xs text-slate-400">{usuario.rol.nombre}</p>
+                    </div>
                 </div>
-                <div>
-                    <p className="text-sm font-medium text-white">{usuario.nombre}</p>
-                    <p className="text-xs text-slate-400">{usuario.rol.nombre}</p>
-                </div>
+                <Link href="/perfil" className="mt-3 mx-4 text-xs font-medium text-teal-400 hover:text-teal-300 transition">
+                    Mi Perfil / Seguridad
+                </Link>
             </div>
           )
         }

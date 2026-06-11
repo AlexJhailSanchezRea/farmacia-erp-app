@@ -48,3 +48,31 @@ export async function cambiarEstadoUsuarioDB(id: number, estado: "ACTIVO" | "INA
         await prisma.usuario.update({ where: { id }, data: { estado } });
     }
 }
+
+export async function obtenerUsuarioPorIdDB(id: number) {
+    return await prisma.usuario.findUnique({
+        where: { id }
+    });
+}
+
+export async function actualizarContrasenaDB(id: number, contrasenaHash: string) {
+    return await prisma.usuario.update({
+        where: { id },
+        data: { contrasenaHash }
+    });
+}
+
+export async function invalidarSesionesDB(usuarioId: number, exceptTokenHash?: string) {
+    if (exceptTokenHash) {
+        return await prisma.sesionUsuario.deleteMany({
+            where: {
+                usuarioId,
+                tokenHash: { not: exceptTokenHash }
+            }
+        });
+    } else {
+        return await prisma.sesionUsuario.deleteMany({
+            where: { usuarioId }
+        });
+    }
+}

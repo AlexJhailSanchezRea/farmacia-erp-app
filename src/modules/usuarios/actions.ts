@@ -1,10 +1,11 @@
 "use server";
-import { obtenerUsuarioAutenticado } from "@/lib/auth";
+import { obtenerUsuarioAutenticado, hashearToken } from "@/lib/auth";
+import { cookies } from "next/headers";
 import { verificarPermisoAccion } from "@/lib/permissions";
 
 import { revalidatePath } from "next/cache";
 import { usuarioSchema } from "./validations";
-import { registrarUsuarioService, editarUsuarioService, cambiarEstadoUsuarioService } from "./services";
+import { registrarUsuarioService, editarUsuarioService, cambiarEstadoUsuarioService, servicioCambiarContrasena, servicioResetearContrasena } from "./services";
 import { accionRegistrarAuditoria } from "@/modules/auditoria/actions";
 
 export async function guardarUsuarioAction(prevState: unknown, formData: FormData) {
@@ -80,5 +81,89 @@ export async function alternarEstadoUsuarioAction(id: number, estadoActual: "ACT
             return { error: error.message };
         }
         return { error: "Error al cambiar estado." };
+    }
+}
+
+export async function cambiarContrasenaAccion(prevState: unknown, formData: FormData) {
+    const usuario = await obtenerUsuarioAutenticado();
+    if (!usuario) {
+        return { error: "No autenticado." };
+    }
+
+    const actual = formData.get("actual")?.toString() || "";
+    const nueva = formData.get("nueva")?.toString() || "";
+    const confirmar = formData.get("confirmar")?.toString() || "";
+
+    if (!actual || !nueva || !confirmar) {
+        return { error: "Todos los campos son obligatorios." };
+    }
+
+    if (nueva.length < 8) {
+        return { error: "La nueva contraseña debe tener al menos 8 caracteres." };
+    }
+
+    if (nueva !== confirmar) {
+        return { error: "Las contraseñas no coinciden." };
+    }
+
+    try {
+        const cookieStore = await cookies();
+        const sessionCruda = cookieStore.get("nexa_session")?.value;
+        if (!sessionCruda) throw new Error("No hay sesión válida.");
+
+        const sessionHash = hashearToken(sessionCruda);
+
+        await servicioCambiarContrasena(
+            usuario.id,
+            usuario.correo,
+            actual,
+            nueva,
+            sessionHash
+        );
+        return { success: true, mensaje: "Contraseña cambiada exitosamente." };
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+            return { error: error.message };
+        }
+        return { error: "Error al cambiar la contraseña." };
+    }
+}
+
+export async function resetearContrasenaAccion(prevState: unknown, formData: FormData) {
+    const admin = await obtenerUsuarioAutenticado();
+    if (!admin || admin.rol.nombre !== "Administrador") {
+        return { error: "No tienes permisos para resetear contraseñas." };
+    }
+
+    const usuarioId = Number(formData.get("usuarioId"));
+    const nueva = formData.get("nueva")?.toString() || "";
+    const confirmar = formData.get("confirmar")?.toString() || "";
+
+    if (!usuarioId || !nueva || !confirmar) {
+        return { error: "Todos los campos son obligatorios." };
+    }
+
+    if (nueva.length < 8) {
+        return { error: "La nueva contraseña debe tener al menos 8 caracteres." };
+    }
+
+    if (nueva !== confirmar) {
+        return { error: "Las contraseñas no coinciden." };
+    }
+
+    try {
+        await servicioResetearContrasena(
+            admin.id,
+            admin.correo,
+            usuarioId,
+            nueva
+        );
+        revalidatePath("/usuarios");
+        return { success: true, mensaje: "Contraseña reseteada exitosamente." };
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+            return { error: error.message };
+        }
+        return { error: "Error al resetear la contraseña." };
     }
 }
