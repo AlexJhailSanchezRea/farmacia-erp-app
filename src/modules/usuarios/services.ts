@@ -8,7 +8,7 @@ export async function registrarUsuarioService(data: { nombre: string; correo: st
 
     const contrasenaHash = await generarHash(data.contrasena);
     
-    await crearUsuarioDB({
+    return await crearUsuarioDB({
         nombre: data.nombre,
         correo: data.correo,
         contrasenaHash,

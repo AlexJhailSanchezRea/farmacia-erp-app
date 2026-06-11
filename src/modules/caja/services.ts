@@ -15,5 +15,5 @@ export async function servicioRegistrarMovimientoManual(data: MovimientoCajaForm
         throw new Error(validacion.error.issues[0].message);
     }
 
-    await registrarMovimientoManual(validacion.data);
+    return await registrarMovimientoManual(validacion.data);
 }
