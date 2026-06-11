@@ -18,7 +18,8 @@ const modulos = [
   { nombre: "Comprobantes", ruta: "/comprobantes" },
   { nombre: "Alertas Sanitarias", ruta: "/alertas" },
   { nombre: "Usuarios y Roles", ruta: "/usuarios" },
-  { nombre: "Configuracion", ruta: "/configuracion" }
+  { nombre: "Configuracion", ruta: "/configuracion" },
+  { nombre: "Auditoria", ruta: "/auditoria" }
 ];
 
 export default async function Inicio() {

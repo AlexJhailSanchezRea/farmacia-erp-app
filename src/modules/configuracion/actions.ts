@@ -3,6 +3,7 @@
 import { servicioObtenerConfiguracion, servicioActualizarConfiguracion } from "./services";
 import { ConfiguracionSistema, ConfiguracionUpdateData } from "./types";
 import { obtenerUsuarioAutenticado } from "@/lib/auth";
+import { accionRegistrarAuditoria } from "@/modules/auditoria/actions";
 
 export async function accionObtenerConfiguracion(): Promise<ConfiguracionSistema> {
     return servicioObtenerConfiguracion();
@@ -17,6 +18,15 @@ export async function accionActualizarConfiguracion(data: ConfiguracionUpdateDat
         }
 
         const conf = await servicioActualizarConfiguracion(data);
+        
+        await accionRegistrarAuditoria({
+            modulo: "Configuracion",
+            accion: "Actualizar",
+            descripcion: `Configuración actualizada (${data.nombreComercial})`,
+            entidadId: conf.id,
+            entidad: "Configuracion"
+        });
+
         return { success: true, data: conf };
     } catch (error: unknown) {
         if (error instanceof Error) {

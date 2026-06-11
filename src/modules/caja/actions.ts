@@ -5,6 +5,7 @@ import { verificarPermisoAccion } from "@/lib/permissions";
 import { revalidatePath } from "next/cache";
 import { servicioRegistrarMovimientoManual } from "./services";
 import { movimientoCajaSchema } from "./validations";
+import { accionRegistrarAuditoria } from "@/modules/auditoria/actions";
 
 export async function registrarMovimientoAccion(prevState: unknown, formData: FormData) {
     const usuario = await obtenerUsuarioAutenticado();
@@ -28,10 +29,18 @@ export async function registrarMovimientoAccion(prevState: unknown, formData: Fo
             return { error: validacion.error.issues[0].message };
         }
 
-        await servicioRegistrarMovimientoManual(validacion.data);
+        const mov = await servicioRegistrarMovimientoManual(validacion.data);
         revalidatePath("/caja");
         revalidatePath("/reportes"); // Revalidar dashboard y reportes
         revalidatePath("/");
+
+        await accionRegistrarAuditoria({
+            modulo: "Caja",
+            accion: "Movimiento Manual",
+            descripcion: `${validacion.data.tipoMovimiento}: ${validacion.data.concepto} (Bs ${validacion.data.monto})`,
+            entidadId: mov.id,
+            entidad: "MovimientoCaja"
+        });
 
         return { success: true };
     } catch (error: unknown) {

@@ -319,3 +319,19 @@ model Configuracion {
   @@map("configuracion")
 }
 
+model Auditoria {
+  id             Int      @id @default(autoincrement())
+  usuarioId      Int?
+  usuarioCorreo  String?
+  modulo         String
+  accion         String
+  descripcion    String
+  entidadId      Int?
+  entidad        String?
+  ip             String?
+  userAgent      String?
+  creadoEn       DateTime @default(now())
+
+  @@map("auditoria")
+}
+

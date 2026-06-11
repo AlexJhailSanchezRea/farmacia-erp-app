@@ -8,6 +8,7 @@ import {
     servicioCrearCompra
 } from "./services";
 import { CompraCliente, CrearCompraInput, RespuestaAccionCompra } from "./types";
+import { accionRegistrarAuditoria } from "@/modules/auditoria/actions";
 
 export async function accionObtenerCompras(): Promise<CompraCliente[]> {
     return servicioObtenerCompras();
@@ -24,6 +25,13 @@ export async function accionCrearCompra(datos: CrearCompraInput): Promise<Respue
             revalidatePath("/compras");
             revalidatePath("/inventario");
             revalidatePath("/productos");
+            await accionRegistrarAuditoria({
+                modulo: "Compras",
+                accion: "Registrar",
+                descripcion: `Compra registrada (Nro: ${resultado.compra?.numeroCompra})`,
+                entidadId: resultado.compra?.id,
+                entidad: "Compra"
+            });
         }
         return { exito: resultado.exito, mensaje: resultado.mensaje, datos: resultado.compra };
     } catch (error) {

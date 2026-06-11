@@ -8,6 +8,7 @@ import {
     servicioCrearVenta
 } from "./services";
 import { VentaCliente, CrearVentaInput, RespuestaAccionVenta } from "./types";
+import { accionRegistrarAuditoria } from "@/modules/auditoria/actions";
 
 export async function accionObtenerVentas(): Promise<VentaCliente[]> {
     return servicioObtenerVentas();
@@ -25,6 +26,13 @@ export async function accionCrearVenta(datos: CrearVentaInput): Promise<Respuest
             revalidatePath("/inventario");
             revalidatePath("/productos");
             revalidatePath("/comprobantes");
+            await accionRegistrarAuditoria({
+                modulo: "Ventas",
+                accion: "Registrar",
+                descripcion: `Venta registrada (Cliente ID: ${datos.clienteId})`,
+                entidadId: resultado.venta?.id,
+                entidad: "Venta"
+            });
         }
         return { exito: resultado.exito, mensaje: resultado.mensaje, datos: resultado.venta };
     } catch (error) {

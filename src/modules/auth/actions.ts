@@ -3,6 +3,7 @@
 import { loginSchema } from "./validations";
 import { iniciarSesionService, cerrarSesionService } from "./services";
 import { redirect } from "next/navigation";
+import { accionRegistrarAuditoria } from "@/modules/auditoria/actions";
 
 export async function loginAction(prevState: unknown, formData: FormData) {
     try {
@@ -17,7 +18,15 @@ export async function loginAction(prevState: unknown, formData: FormData) {
         }
 
         // Ejecutar servicio
-        await iniciarSesionService(validacion.data.correo, validacion.data.contrasena);
+        const usuario = await iniciarSesionService(validacion.data.correo, validacion.data.contrasena);
+
+        await accionRegistrarAuditoria({
+            modulo: "Autenticación",
+            accion: "Inicio de sesión",
+            descripcion: `Inicio de sesión exitoso`,
+            entidadId: usuario.id,
+            entidad: "Usuario"
+        });
 
         // Si todo sale bien
         return { success: true };
@@ -30,6 +39,11 @@ export async function loginAction(prevState: unknown, formData: FormData) {
 }
 
 export async function logoutAction() {
+    await accionRegistrarAuditoria({
+        modulo: "Autenticación",
+        accion: "Cierre de sesión",
+        descripcion: `Cierre de sesión manual`
+    });
     await cerrarSesionService();
     redirect("/login");
 }

@@ -13,6 +13,7 @@ import {
 } from "./services";
 import { ProductoCliente, CrearProductoInput, ActualizarProductoInput, RespuestaAccionProducto } from "./types";
 import { Categoria } from "@/modules/categorias/types";
+import { accionRegistrarAuditoria } from "@/modules/auditoria/actions";
 
 export async function accionObtenerProductos(): Promise<ProductoCliente[]> {
     return servicioObtenerProductos();
@@ -31,6 +32,13 @@ export async function accionCrearProducto(datos: CrearProductoInput): Promise<Re
         const resultado = await servicioCrearProducto(datos);
         if (resultado.exito) {
             revalidatePath("/productos");
+            await accionRegistrarAuditoria({
+                modulo: "Productos",
+                accion: "Crear",
+                descripcion: `Producto creado: ${datos.nombre}`,
+                entidadId: resultado.producto?.id,
+                entidad: "Producto"
+            });
         }
         return { exito: resultado.exito, mensaje: resultado.mensaje, datos: resultado.producto };
     } catch (error) {
@@ -48,6 +56,13 @@ export async function accionActualizarProducto(datos: ActualizarProductoInput): 
         const resultado = await servicioActualizarProducto(datos);
         if (resultado.exito) {
             revalidatePath("/productos");
+            await accionRegistrarAuditoria({
+                modulo: "Productos",
+                accion: "Actualizar",
+                descripcion: `Producto actualizado: ${datos.nombre}`,
+                entidadId: datos.id,
+                entidad: "Producto"
+            });
         }
         return { exito: resultado.exito, mensaje: resultado.mensaje, datos: resultado.producto };
     } catch (error) {

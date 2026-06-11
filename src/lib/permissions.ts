@@ -12,7 +12,8 @@ export type ModuloNombre =
   | "Comprobantes" 
   | "Alertas Sanitarias" 
   | "Usuarios y Roles"
-  | "Configuracion";
+  | "Configuracion"
+  | "Auditoria";
 
 // Acciones específicas de escritura
 export type AccionNombre = 
@@ -33,7 +34,7 @@ export type AccionNombre =
 const PERMISOS_MODULOS: Record<string, ModuloNombre[]> = {
   "Administrador": [
     "Productos", "Categorías", "Clientes", "Proveedores", "Compras", "Ventas", 
-    "Inventario", "Caja", "Reportes", "Comprobantes", "Alertas Sanitarias", "Usuarios y Roles", "Configuracion"
+    "Inventario", "Caja", "Reportes", "Comprobantes", "Alertas Sanitarias", "Usuarios y Roles", "Configuracion", "Auditoria"
   ],
   "Vendedor": [
     "Ventas", "Productos", "Clientes", "Comprobantes"

@@ -5,6 +5,7 @@ import { verificarPermisoAccion } from "@/lib/permissions";
 import { revalidatePath } from "next/cache";
 import { usuarioSchema } from "./validations";
 import { registrarUsuarioService, editarUsuarioService, cambiarEstadoUsuarioService } from "./services";
+import { accionRegistrarAuditoria } from "@/modules/auditoria/actions";
 
 export async function guardarUsuarioAction(prevState: unknown, formData: FormData) {
     const usuario = await obtenerUsuarioAutenticado();
@@ -32,12 +33,26 @@ export async function guardarUsuarioAction(prevState: unknown, formData: FormDat
                 contrasena: validacion.data.contrasena,
                 rolId: validacion.data.rolId
             });
+            await accionRegistrarAuditoria({
+                modulo: "Usuarios",
+                accion: "Editar",
+                descripcion: `Usuario editado: ${validacion.data.correo}`,
+                entidadId: id,
+                entidad: "Usuario"
+            });
         } else {
-            await registrarUsuarioService({
+            const nuevo = await registrarUsuarioService({
                 nombre: validacion.data.nombre,
                 correo: validacion.data.correo,
                 contrasena: validacion.data.contrasena,
                 rolId: validacion.data.rolId
+            });
+            await accionRegistrarAuditoria({
+                modulo: "Usuarios",
+                accion: "Crear",
+                descripcion: `Usuario creado: ${validacion.data.correo}`,
+                entidadId: nuevo.id,
+                entidad: "Usuario"
             });
         }
 
