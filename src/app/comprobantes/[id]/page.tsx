@@ -4,6 +4,7 @@ import Link from "next/link";
 import { BotonImprimir } from "./components";
 import { verificarAccesoModulo } from "@/lib/permissions";
 import { obtenerUsuarioAutenticado } from "@/lib/auth";
+import { accionObtenerConfiguracion } from "@/modules/configuracion/actions";
 
 export default async function DetalleComprobantePage({ params }: { params: { id: string } }) {
     const usuario = await obtenerUsuarioAutenticado();
@@ -20,7 +21,10 @@ export default async function DetalleComprobantePage({ params }: { params: { id:
         notFound();
     }
 
-    const comprobante = await accionObtenerComprobantePorId(id);
+    const [comprobante, config] = await Promise.all([
+        accionObtenerComprobantePorId(id),
+        accionObtenerConfiguracion()
+    ]);
 
     if (!comprobante) {
         notFound();
@@ -40,12 +44,12 @@ export default async function DetalleComprobantePage({ params }: { params: { id:
                     
                     {/* Header Recibo */}
                     <div className="text-center mb-8 border-b border-slate-200 pb-6 print:border-slate-800">
-                        <h1 className="text-2xl font-bold text-slate-900 uppercase tracking-widest print:text-black">PharmaERP 360</h1>
-                        <h2 className="text-lg font-semibold text-slate-700 mt-1 print:text-black">Farmacia Demo</h2>
+                        <h1 className="text-2xl font-bold text-slate-900 uppercase tracking-widest print:text-black">{config.nombreComercial}</h1>
+                        <h2 className="text-lg font-semibold text-slate-700 mt-1 print:text-black">{config.razonSocial}</h2>
                         <div className="text-sm text-slate-500 mt-2 space-y-1 print:text-black">
-                            <p>NIT: 123456789</p>
-                            <p>Dirección: Av. Principal 123, Ciudad Central</p>
-                            <p>Teléfono: +591 12345678</p>
+                            <p>NIT: {config.nit}</p>
+                            <p>Dirección: {config.direccion}</p>
+                            <p>Teléfono: {config.telefono}</p>
                         </div>
                     </div>
 
@@ -98,8 +102,7 @@ export default async function DetalleComprobantePage({ params }: { params: { id:
 
                     {/* Footer */}
                     <div className="mt-12 text-center text-sm text-slate-500 pt-6 border-t border-slate-200 print:border-slate-800 print:text-black">
-                        <p className="font-semibold text-slate-700 print:text-black mb-1">¡Gracias por su compra!</p>
-                        <p className="text-xs">Para devoluciones o reclamos, presente este comprobante.</p>
+                        <p className="font-semibold text-slate-700 print:text-black mb-1">{config.mensajeComprobante}</p>
                         <p className="text-xs mt-2 text-slate-400 print:text-slate-600">Este no es un documento fiscal</p>
                     </div>
 

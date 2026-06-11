@@ -304,3 +304,18 @@ model MovimientoCaja {
   @@map("movimientos_caja")
 }
 
+model Configuracion {
+  id                 Int      @id @default(autoincrement())
+  nombreComercial    String
+  razonSocial        String
+  nit                String
+  direccion          String
+  telefono           String
+  correo             String?
+  ciudad             String
+  mensajeComprobante String
+  actualizadoEn      DateTime @updatedAt
+
+  @@map("configuracion")
+}
+

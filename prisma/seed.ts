@@ -20,6 +20,23 @@ const prisma = new PrismaClient({
 async function main() {
     console.log("Iniciando inyección masiva de datos (Seed)...");
 
+    // 0. Configuración
+    await prisma.configuracion.upsert({
+        where: { id: 1 },
+        update: {},
+        create: {
+            id: 1,
+            nombreComercial: "PharmaERP 360",
+            razonSocial: "Farmacia Demo S.R.L.",
+            nit: "123456789",
+            direccion: "Av. Principal 123, Zona Central",
+            telefono: "+591 12345678",
+            correo: "info@pharmaerp360.com",
+            ciudad: "Ciudad Demo",
+            mensajeComprobante: "¡Gracias por su compra! Para devoluciones presente este comprobante."
+        }
+    });
+
     // 1. Roles (4)
     const rolesBase = [
         { nombre: "Administrador", descripcion: "Acceso total al sistema" },
