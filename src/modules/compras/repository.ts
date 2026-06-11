@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { Prisma, TipoMovimientoInventario } from "@/generated/prisma/client";
+import { Prisma, TipoMovimientoInventario, TipoMovimientoCaja } from "@/generated/prisma/client";
 import { CrearCompraInput, CompraCliente } from "./types";
 
 type CompraConRelaciones = Prisma.CompraGetPayload<{
@@ -140,6 +140,17 @@ export async function crearCompraConTransaccion(datos: CrearCompraInput): Promis
                 }
             });
         }
+
+        // 3. Crear Movimiento de Caja (EGRESO)
+        await tx.movimientoCaja.create({
+            data: {
+                tipoMovimiento: TipoMovimientoCaja.EGRESO,
+                concepto: `Compra ${numCompra}`,
+                monto: new Prisma.Decimal(totalCalculado),
+                referencia: nuevaCompra.proveedor.nombre,
+                compraId: nuevaCompra.id
+            }
+        });
 
         return nuevaCompra;
     });

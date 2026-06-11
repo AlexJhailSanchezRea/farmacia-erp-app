@@ -142,8 +142,9 @@ model Compra {
   proveedorId Int
   proveedor   Proveedor @relation(fields: [proveedorId], references: [id])
 
-  detalles    DetalleCompra[]
-  movimientos MovimientoInventario[]
+  detalles       DetalleCompra[]
+  movimientos    MovimientoInventario[]
+  movimientoCaja MovimientoCaja?
 
   @@map("compras")
 }
@@ -203,9 +204,10 @@ model Venta {
   clienteId Int?
   cliente   Cliente? @relation(fields: [clienteId], references: [id])
 
-  detalles    DetalleVenta[]
-  movimientos MovimientoInventario[]
-  comprobante Comprobante?
+  detalles       DetalleVenta[]
+  movimientos    MovimientoInventario[]
+  comprobante    Comprobante?
+  movimientoCaja MovimientoCaja?
 
   @@map("ventas")
 }
@@ -242,3 +244,31 @@ model Comprobante {
 
   @@map("comprobantes")
 }
+
+enum TipoMovimientoCaja {
+  INGRESO
+  EGRESO
+  AJUSTE
+}
+
+model MovimientoCaja {
+  id              Int                @id @default(autoincrement())
+  tipoMovimiento  TipoMovimientoCaja
+  concepto        String
+  monto           Decimal            @db.Decimal(10, 2)
+  fechaMovimiento DateTime           @default(now())
+  referencia      String?
+  estado          String             @default("ACTIVO")
+  
+  ventaId         Int?               @unique
+  venta           Venta?             @relation(fields: [ventaId], references: [id])
+  
+  compraId        Int?               @unique
+  compra          Compra?            @relation(fields: [compraId], references: [id])
+
+  creadoEn        DateTime           @default(now())
+  actualizadoEn   DateTime           @updatedAt
+
+  @@map("movimientos_caja")
+}
+

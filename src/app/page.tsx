@@ -1,29 +1,7 @@
 import Link from "next/link";
 import { obtenerUsuarioAutenticado } from "@/lib/auth";
 import { LogoutButton } from "@/components/layout/LogoutButton";
-
-const indicadores = [
-  {
-    titulo: "Ventas del día",
-    valor: "Bs 0.00",
-    descripcion: "Ingresos registrados hoy",
-  },
-  {
-    titulo: "Productos activos",
-    valor: "0",
-    descripcion: "Productos disponibles en catálogo",
-  },
-  {
-    titulo: "Stock bajo",
-    valor: "0",
-    descripcion: "Productos por debajo del mínimo",
-  },
-  {
-    titulo: "Compras recientes",
-    valor: "0",
-    descripcion: "Compras registradas este mes",
-  },
-];
+import { servicioObtenerReporteGeneral } from "@/modules/reportes/services";
 
 const modulos = [
   { nombre: "Productos", ruta: "/productos" },
@@ -41,6 +19,32 @@ const modulos = [
 
 export default async function Inicio() {
   const usuario = await obtenerUsuarioAutenticado();
+  const reporte = await servicioObtenerReporteGeneral();
+
+  const formatSoles = (valor: number) => `Bs ${valor.toFixed(2)}`;
+
+  const indicadores = [
+    {
+      titulo: "Ventas del Mes",
+      valor: formatSoles(reporte.resumen.ventasTotalesMes),
+      descripcion: "Ingresos registrados este mes",
+    },
+    {
+      titulo: "Saldo en Caja",
+      valor: formatSoles(reporte.resumen.saldoCaja),
+      descripcion: "Efectivo disponible derivado",
+    },
+    {
+      titulo: "Stock bajo",
+      valor: reporte.resumen.productosStockBajo.toString(),
+      descripcion: "Productos por debajo del mínimo",
+    },
+    {
+      titulo: "Compras del Mes",
+      valor: formatSoles(reporte.resumen.comprasTotalesMes),
+      descripcion: "Inversión registrada este mes",
+    },
+  ];
 
   return (
     <main className="min-h-screen bg-slate-950 text-slate-100">

@@ -285,6 +285,16 @@ async function main() {
                         where: { id: nuevaCompra.id },
                         data: { total: totalCompra }
                     });
+
+                    await tx.movimientoCaja.create({
+                        data: {
+                            tipoMovimiento: "EGRESO",
+                            concepto: `Compra Fac. ${compBase.numeroCompra}`,
+                            monto: totalCompra,
+                            referencia: compBase.proveedor.nombre,
+                            compraId: nuevaCompra.id
+                        }
+                    });
                 });
             }
         }
@@ -378,12 +388,43 @@ async function main() {
                             ventaId: nuevaVenta.id
                         }
                     });
+
+                    await tx.movimientoCaja.create({
+                        data: {
+                            tipoMovimiento: "INGRESO",
+                            concepto: `Venta Fac. ${ventaBase.numeroVenta}`,
+                            monto: totalVenta,
+                            referencia: ventaBase.cliente ? ventaBase.cliente.nombre : "Cliente General",
+                            ventaId: nuevaVenta.id
+                        }
+                    });
                 });
             }
         }
     }
 
-    console.log("Seed completado exitosamente: 3 Roles, 12 Categorías, 40 Productos, 20 Clientes, 12 Proveedores, 8 Compras y 8 Ventas procesadas con transacciones.");
+    // 8. Movimientos de Caja de Ajuste (Manual)
+    const cajaFondoInitial = await prisma.movimientoCaja.findFirst({ where: { concepto: "Fondo de Caja Inicial" } });
+    if (!cajaFondoInitial) {
+        await prisma.movimientoCaja.create({
+            data: {
+                tipoMovimiento: "AJUSTE",
+                concepto: "Fondo de Caja Inicial",
+                monto: 500.00,
+                referencia: "Apertura"
+            }
+        });
+        await prisma.movimientoCaja.create({
+            data: {
+                tipoMovimiento: "AJUSTE",
+                concepto: "Retiro para pago servicios",
+                monto: -150.00, // Ajuste negativo
+                referencia: "Pago Luz y Agua"
+            }
+        });
+    }
+
+    console.log("Seed completado exitosamente: 3 Roles, 12 Categorías, 40 Productos, 20 Clientes, 12 Proveedores, 8 Compras y 8 Ventas procesadas con transacciones y caja.");
 }
 
 main()

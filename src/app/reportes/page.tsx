@@ -1,11 +1,21 @@
 import { PaginaModulo } from "@/components/layout/PaginaModulo";
+import { ReportesDashboard } from "./components";
+import { servicioObtenerReporteGeneral } from "@/modules/reportes/services";
 
-export default function ReportesPage() {
+export const metadata = {
+    title: "Reportes | NexaERP",
+};
+
+export default async function ReportesPage() {
+    const datosReporte = await servicioObtenerReporteGeneral();
+
     return (
-        <PaginaModulo
-            modulo="Análisis"
-            titulo="Reportes"
-            descripcion="Reportes de ventas, compras, inventario, stock bajo y rendimiento general del negocio."
-        />
+        <PaginaModulo 
+            titulo="Reportes y Estadísticas" 
+            descripcion="Panel consolidado con los indicadores clave del rendimiento del negocio."
+            modulo="Reportes"
+        >
+            <ReportesDashboard datos={datosReporte} />
+        </PaginaModulo>
     );
 }

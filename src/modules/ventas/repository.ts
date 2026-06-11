@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { Prisma, TipoMovimientoInventario, TipoComprobante } from "@/generated/prisma/client";
+import { Prisma, TipoMovimientoInventario, TipoComprobante, TipoMovimientoCaja } from "@/generated/prisma/client";
 import { CrearVentaInput, VentaCliente } from "./types";
 
 type VentaConRelaciones = Prisma.VentaGetPayload<{
@@ -171,6 +171,17 @@ export async function crearVentaConTransaccion(datos: CrearVentaInput): Promise<
                 tipoComprobante: TipoComprobante.NOTA_VENTA,
                 total: new Prisma.Decimal(totalCalculado),
                 clienteNombre: clienteNombre,
+                ventaId: nuevaVenta.id
+            }
+        });
+
+        // 5. Crear Movimiento de Caja (INGRESO)
+        await tx.movimientoCaja.create({
+            data: {
+                tipoMovimiento: TipoMovimientoCaja.INGRESO,
+                concepto: `Venta ${numVenta}`,
+                monto: new Prisma.Decimal(totalCalculado),
+                referencia: clienteNombre,
                 ventaId: nuevaVenta.id
             }
         });
