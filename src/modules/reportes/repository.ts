@@ -38,6 +38,16 @@ export async function obtenerReporteGeneral(): Promise<ReporteMetricas> {
         where: { tipoMovimiento: "SALIDA", creadoEn: { gte: inicioMes } }
     });
 
+    const dentroDe30Dias = new Date();
+    dentroDe30Dias.setDate(fechaActual.getDate() + 30);
+
+    const alertasVencimiento = await prisma.loteProducto.count({
+        where: {
+            stockActual: { gt: 0 },
+            fechaVencimiento: { lte: dentroDe30Dias }
+        }
+    });
+
     // 2. Últimas listas
     const ultimasVentas = await prisma.venta.findMany({
         where: { estado: "ACTIVO" },
@@ -93,7 +103,8 @@ export async function obtenerReporteGeneral(): Promise<ReporteMetricas> {
             movimientosEntradaMes: entradasInventarioMes,
             movimientosSalidaMes: salidasInventarioMes,
             ingresosTotales: saldoCaja.totalIngresos,
-            egresosTotales: saldoCaja.totalEgresos
+            egresosTotales: saldoCaja.totalEgresos,
+            alertasVencimiento
         },
         ultimasVentas: ultimasVentas.map(v => ({ id: v.id, numero: v.numeroVenta, total: Number(v.total), fecha: v.fechaVenta.toISOString() })),
         ultimasCompras: ultimasCompras.map(c => ({ id: c.id, numero: c.numeroCompra, total: Number(c.total), fecha: c.fechaCompra.toISOString() })),

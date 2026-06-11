@@ -8,6 +8,7 @@ export interface DashboardResumen {
     movimientosSalidaMes: number;
     ingresosTotales: number;
     egresosTotales: number;
+    alertasVencimiento: number;
 }
 
 export interface ReporteMetricas {

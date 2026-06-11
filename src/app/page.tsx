@@ -14,6 +14,7 @@ const modulos = [
   { nombre: "Caja", ruta: "/caja" },
   { nombre: "Reportes", ruta: "/reportes" },
   { nombre: "Comprobantes", ruta: "/comprobantes" },
+  { nombre: "Alertas Sanitarias", ruta: "/alertas" },
   { nombre: "Usuarios y Roles", ruta: "/usuarios" }
 ];
 
@@ -35,14 +36,24 @@ export default async function Inicio() {
       descripcion: "Efectivo disponible derivado",
     },
     {
-      titulo: "Stock bajo",
-      valor: reporte.resumen.productosStockBajo.toString(),
-      descripcion: "Productos por debajo del mínimo",
-    },
-    {
       titulo: "Compras del Mes",
       valor: formatSoles(reporte.resumen.comprasTotalesMes),
-      descripcion: "Inversión registrada este mes",
+      descripcion: "Inversión registrada",
+    },
+    {
+      titulo: "Productos Activos",
+      valor: reporte.resumen.productosActivos.toString(),
+      descripcion: "Disponibles en el catálogo",
+    },
+    {
+      titulo: "Stock Bajo",
+      valor: reporte.resumen.productosStockBajo.toString(),
+      descripcion: "Debajo del mínimo permitido",
+    },
+    {
+      titulo: "Alertas Vencimiento",
+      valor: reporte.resumen.alertasVencimiento.toString(),
+      descripcion: "Lotes vencidos o próximos a 30 días",
     },
   ];
 
@@ -108,7 +119,7 @@ export default async function Inicio() {
             </div>
           </header>
 
-          <section className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+          <section className="grid gap-6 md:grid-cols-3 xl:grid-cols-6">
             {indicadores.map((indicador) => (
               <article
                 key={indicador.titulo}
@@ -117,10 +128,10 @@ export default async function Inicio() {
                 <p className="text-sm font-medium text-slate-400">
                   {indicador.titulo}
                 </p>
-                <strong className="mt-3 block text-3xl font-bold text-white">
+                <strong className="mt-3 block text-2xl font-bold text-white">
                   {indicador.valor}
                 </strong>
-                <p className="mt-2 text-sm text-slate-500">
+                <p className="mt-2 text-xs text-slate-500">
                   {indicador.descripcion}
                 </p>
               </article>
