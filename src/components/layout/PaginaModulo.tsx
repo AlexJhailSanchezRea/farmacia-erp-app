@@ -17,16 +17,16 @@ export function PaginaModulo({
     volverTexto = "Volver al dashboard"
 }: PaginaModuloProps) {
     return (
-        <main className="min-h-screen bg-slate-50 dark:bg-slate-950 p-6 text-slate-900 dark:text-slate-100 lg:p-10">
+        <main className="min-h-screen bg-slate-50 dark:bg-slate-950 p-6 text-slate-900 dark:text-slate-100 lg:p-10 print:bg-white print:text-black print:p-0 print:m-0 w-full">
             <section className="mx-auto max-w-6xl">
                 <Link
                     href={volverA}
-                    className="mb-6 inline-flex rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-2 text-sm text-slate-600 dark:text-slate-400 transition hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-teal-600 dark:hover:text-teal-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 dark:focus:ring-offset-slate-950"
+                    className="mb-6 inline-flex rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-2 text-sm text-slate-600 dark:text-slate-400 transition hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-teal-600 dark:hover:text-teal-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 dark:focus:ring-offset-slate-950 print:hidden"
                 >
                     {volverTexto}
                 </Link>
 
-                <header className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-8 shadow-sm">
+                <header className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-8 shadow-sm print:shadow-none print:border-none print:p-0 print:mb-6">
                     <p className="text-sm font-semibold uppercase tracking-widest text-teal-600 dark:text-teal-400">
                         {modulo}
                     </p>

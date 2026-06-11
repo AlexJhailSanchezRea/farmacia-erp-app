@@ -1,14 +1,103 @@
 "use client";
 
+import { useState } from "react";
 import { ReporteMetricas } from "@/modules/reportes/types";
+import { 
+    accionExportarVentas, 
+    accionExportarCompras, 
+    accionExportarMovimientosCaja, 
+    accionExportarProductosStockBajo, 
+    accionExportarLotesPorVencer 
+} from "@/modules/reportes/actions";
 
-export function ReportesDashboard({ datos }: { datos: ReporteMetricas }) {
+export function ReportesDashboard({ datos, rolUsuario }: { datos: ReporteMetricas, rolUsuario: string }) {
+    const [cargandoExport, setCargandoExport] = useState(false);
+    
     const formatSoles = (valor: number) => `Bs ${valor.toFixed(2)}`;
+
+    const puedeExportar = rolUsuario === "Administrador" || rolUsuario === "Contador";
+
+    const exportarCSV = (nombreArchivo: string, datos: Record<string, unknown>[]) => {
+        if (datos.length === 0) {
+            alert("No hay datos para exportar.");
+            return;
+        }
+
+        const headers = Object.keys(datos[0]);
+        const filas = datos.map(fila => 
+            headers.map(header => {
+                const valor = fila[header] !== null && fila[header] !== undefined ? String(fila[header]) : "";
+                return `"${valor.replace(/"/g, '""')}"`;
+            }).join(",")
+        );
+
+        const csvContent = [headers.join(","), ...filas].join("\n");
+        const blob = new Blob(["\uFEFF" + csvContent], { type: "text/csv;charset=utf-8;" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.setAttribute("href", url);
+        link.setAttribute("download", `${nombreArchivo}_${new Date().getTime()}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
+    const handleExportar = async (tipo: string) => {
+        setCargandoExport(true);
+        try {
+            let res;
+            if (tipo === "ventas") res = await accionExportarVentas();
+            else if (tipo === "compras") res = await accionExportarCompras();
+            else if (tipo === "caja") res = await accionExportarMovimientosCaja();
+            else if (tipo === "stock") res = await accionExportarProductosStockBajo();
+            else if (tipo === "lotes") res = await accionExportarLotesPorVencer();
+
+            if (res?.exito && res.datos) {
+                exportarCSV(`Reporte_${tipo}`, res.datos as Record<string, unknown>[]);
+            } else {
+                alert(res?.mensaje || "Error al exportar");
+            }
+        } catch (error) {
+            console.error(error);
+            alert("Error al procesar la exportación");
+        } finally {
+            setCargandoExport(false);
+        }
+    };
 
     return (
         <div className="flex flex-col gap-8">
+            <div className="flex justify-end gap-3 print:hidden mb-4">
+                <button 
+                    onClick={() => window.print()} 
+                    className="inline-flex items-center gap-2 rounded-xl bg-slate-200 dark:bg-slate-800 px-4 py-2.5 text-sm font-semibold text-slate-900 dark:text-white shadow-sm hover:bg-slate-300 dark:hover:bg-slate-700 transition-all"
+                >
+                    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                    </svg>
+                    Imprimir Reporte
+                </button>
+                
+                {puedeExportar && (
+                    <div className="relative group">
+                        <button disabled={cargandoExport} className="inline-flex items-center gap-2 rounded-xl bg-teal-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-teal-500 disabled:opacity-50 transition-all">
+                            {cargandoExport ? "Exportando..." : "Exportar CSV ▼"}
+                        </button>
+                        <div className="absolute right-0 mt-2 w-56 origin-top-right rounded-md bg-white dark:bg-slate-800 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden group-hover:block z-50">
+                            <div className="py-1">
+                                <button onClick={() => handleExportar("ventas")} className="text-slate-700 dark:text-slate-300 block px-4 py-2 text-sm w-full text-left hover:bg-slate-100 dark:hover:bg-slate-700">Ventas Activas</button>
+                                <button onClick={() => handleExportar("compras")} className="text-slate-700 dark:text-slate-300 block px-4 py-2 text-sm w-full text-left hover:bg-slate-100 dark:hover:bg-slate-700">Compras</button>
+                                <button onClick={() => handleExportar("caja")} className="text-slate-700 dark:text-slate-300 block px-4 py-2 text-sm w-full text-left hover:bg-slate-100 dark:hover:bg-slate-700">Movimientos de Caja</button>
+                                <button onClick={() => handleExportar("stock")} className="text-slate-700 dark:text-slate-300 block px-4 py-2 text-sm w-full text-left hover:bg-slate-100 dark:hover:bg-slate-700">Productos con Stock Bajo</button>
+                                <button onClick={() => handleExportar("lotes")} className="text-slate-700 dark:text-slate-300 block px-4 py-2 text-sm w-full text-left hover:bg-slate-100 dark:hover:bg-slate-700">Lotes próximos a vencer</button>
+                            </div>
+                        </div>
+                    </div>
+                )}
+            </div>
+
             {/* KPI Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 print:grid-cols-4 print:gap-4">
                 <KPICard 
                     title="Ventas del Mes" 
                     value={formatSoles(datos.resumen.ventasTotalesMes)} 
@@ -36,7 +125,7 @@ export function ReportesDashboard({ datos }: { datos: ReporteMetricas }) {
             </div>
 
             {/* Gráficos Simples */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 print:grid-cols-3 print:gap-4 print:break-inside-avoid">
                 {/* Ventas vs Compras */}
                 <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-white dark:bg-slate-900/50 p-6 flex flex-col gap-4">
                     <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Ventas vs Compras</h3>
@@ -112,7 +201,7 @@ export function ReportesDashboard({ datos }: { datos: ReporteMetricas }) {
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 print:grid-cols-2 print:gap-4">
                 {/* Últimas Ventas */}
                 <TablaReporte 
                     titulo="Últimas Ventas" 

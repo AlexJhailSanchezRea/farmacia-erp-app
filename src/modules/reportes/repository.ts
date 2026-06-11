@@ -126,3 +126,85 @@ export async function obtenerReporteGeneral(): Promise<ReporteMetricas> {
         topProductos
     };
 }
+
+export async function exportarVentasDB() {
+    const ventas = await prisma.venta.findMany({
+        where: { estado: "ACTIVO" },
+        include: { cliente: true },
+        orderBy: { fechaVenta: "desc" }
+    });
+    return ventas.map(v => ({
+        Numero: v.numeroVenta,
+        Fecha: v.fechaVenta.toISOString(),
+        Cliente: v.cliente?.nombre || "Cliente General",
+        Total: Number(v.total),
+        Observacion: v.observacion || ""
+    }));
+}
+
+export async function exportarComprasDB() {
+    const compras = await prisma.compra.findMany({
+        where: { estado: "ACTIVO" },
+        include: { proveedor: true },
+        orderBy: { fechaCompra: "desc" }
+    });
+    return compras.map(c => ({
+        Numero: c.numeroCompra,
+        Fecha: c.fechaCompra.toISOString(),
+        Proveedor: c.proveedor?.nombre || "Proveedor General",
+        Total: Number(c.total),
+        Observacion: c.observacion || ""
+    }));
+}
+
+export async function exportarMovimientosCajaDB() {
+    const movimientos = await prisma.movimientoCaja.findMany({
+        where: { estado: "ACTIVO" },
+        orderBy: { fechaMovimiento: "desc" }
+    });
+    return movimientos.map(m => ({
+        Fecha: m.fechaMovimiento.toISOString(),
+        Tipo: m.tipoMovimiento,
+        Concepto: m.concepto,
+        Monto: Number(m.monto),
+        Referencia: m.referencia || ""
+    }));
+}
+
+export async function exportarProductosStockBajoDB() {
+    const productos = await prisma.producto.findMany({
+        where: { estado: "ACTIVO" },
+        include: { categoria: true },
+        orderBy: { nombre: "asc" }
+    });
+    const stockBajo = productos.filter(p => p.stockActual <= p.stockMinimo);
+    return stockBajo.map(p => ({
+        CodigoBarra: p.codigoBarra || "",
+        Nombre: p.nombre,
+        Categoria: p.categoria.nombre,
+        StockActual: p.stockActual,
+        StockMinimo: p.stockMinimo,
+        Laboratorio: p.laboratorio || ""
+    }));
+}
+
+export async function exportarLotesPorVencerDB() {
+    const dentroDe30Dias = new Date();
+    dentroDe30Dias.setDate(dentroDe30Dias.getDate() + 30);
+    
+    const lotes = await prisma.loteProducto.findMany({
+        where: {
+            stockActual: { gt: 0 },
+            fechaVencimiento: { lte: dentroDe30Dias }
+        },
+        include: { producto: true },
+        orderBy: { fechaVencimiento: "asc" }
+    });
+    return lotes.map(l => ({
+        Producto: l.producto.nombre,
+        Laboratorio: l.producto.laboratorio || "",
+        NumeroLote: l.numeroLote,
+        FechaVencimiento: l.fechaVencimiento.toISOString(),
+        StockRestante: l.stockActual
+    }));
+}

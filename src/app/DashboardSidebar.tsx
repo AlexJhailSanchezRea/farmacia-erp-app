@@ -11,7 +11,7 @@ export function DashboardSidebar({ modulosPermitidos, usuarioInfo, logoutButton 
     return (
         <>
             {/* Mobile header / toggle */}
-            <div className="lg:hidden flex items-center justify-between p-4 bg-slate-800 dark:bg-slate-900 border-b border-slate-700 dark:border-slate-800">
+            <div className="lg:hidden flex items-center justify-between p-4 bg-slate-800 dark:bg-slate-900 border-b border-slate-700 dark:border-slate-800 print:hidden">
                 <span className="text-teal-400 font-bold tracking-widest text-sm uppercase">PharmaERP 360</span>
                 <button 
                     onClick={() => setIsOpen(!isOpen)}
@@ -24,7 +24,7 @@ export function DashboardSidebar({ modulosPermitidos, usuarioInfo, logoutButton 
             </div>
 
             {/* Sidebar */}
-            <aside className={`${isOpen ? 'block' : 'hidden'} lg:block w-full lg:w-72 lg:border-r border-slate-700 dark:border-slate-800 bg-slate-800 dark:bg-slate-900 p-6 flex flex-col h-full lg:min-h-screen`}>
+            <aside className={`${isOpen ? 'block' : 'hidden'} lg:block w-full lg:w-72 lg:border-r border-slate-700 dark:border-slate-800 bg-slate-800 dark:bg-slate-900 p-6 flex flex-col h-full lg:min-h-screen print:hidden`}>
                 <div className="mb-10 hidden lg:block">
                     <p className="text-sm font-semibold uppercase tracking-widest text-teal-400">
                         PharmaERP 360

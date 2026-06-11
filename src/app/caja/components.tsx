@@ -49,23 +49,35 @@ export function CajaManager({
                 <div className="flex gap-3">
                     <Link 
                         href="/caja/historial"
-                        className="inline-flex items-center gap-2 rounded-xl bg-slate-200 dark:bg-slate-800 px-4 py-2.5 text-sm font-semibold text-slate-900 dark:text-white shadow-sm hover:bg-slate-300 dark:hover:bg-slate-700 transition-all"
+                        className="inline-flex items-center gap-2 rounded-xl bg-slate-200 dark:bg-slate-800 px-4 py-2.5 text-sm font-semibold text-slate-900 dark:text-white shadow-sm hover:bg-slate-300 dark:hover:bg-slate-700 transition-all print:hidden"
                     >
                         Ver Historial de Cajas
                     </Link>
+
+                    {cajaAbierta && (
+                        <button 
+                            onClick={() => window.print()} 
+                            className="inline-flex items-center gap-2 rounded-xl bg-slate-200 dark:bg-slate-800 px-4 py-2.5 text-sm font-semibold text-slate-900 dark:text-white shadow-sm hover:bg-slate-300 dark:hover:bg-slate-700 transition-all print:hidden"
+                        >
+                            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                            </svg>
+                            Imprimir Estado
+                        </button>
+                    )}
 
                     {puedeAbrirCerrar && (
                         cajaAbierta ? (
                             <button
                                 onClick={() => setIsCierreOpen(true)}
-                                className="inline-flex items-center gap-2 rounded-xl bg-rose-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-rose-500 transition-all"
+                                className="inline-flex items-center gap-2 rounded-xl bg-rose-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-rose-500 transition-all print:hidden"
                             >
                                 Cerrar Caja
                             </button>
                         ) : (
                             <button
                                 onClick={() => setIsAperturaOpen(true)}
-                                className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-emerald-500 transition-all"
+                                className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-emerald-500 transition-all print:hidden"
                             >
                                 Abrir Caja
                             </button>
@@ -97,7 +109,7 @@ export function CajaManager({
             )}
 
             {/* Historial de Movimientos de la caja actual */}
-            <div className="flex justify-between items-center border-t border-slate-200 dark:border-slate-800 pt-8">
+            <div className="flex justify-between items-center border-t border-slate-200 dark:border-slate-800 pt-8 print:hidden">
                 <h2 className="text-xl font-semibold text-slate-900 dark:text-white">Movimientos del Turno Actual</h2>
                 <button
                     onClick={() => setIsModalOpen(true)}
@@ -109,7 +121,7 @@ export function CajaManager({
             </div>
 
             {/* Tabla de Movimientos */}
-            <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-white dark:bg-slate-900/50 backdrop-blur-sm overflow-hidden">
+            <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-white dark:bg-slate-900/50 backdrop-blur-sm overflow-hidden print:hidden">
                 <div className="overflow-x-auto">
                     <table className="min-w-full divide-y divide-slate-800">
                         <thead className="bg-slate-50 dark:bg-white dark:bg-slate-900/80">

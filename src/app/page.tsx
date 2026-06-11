@@ -72,7 +72,7 @@ export default async function Inicio() {
   }
 
   return (
-    <main className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 flex flex-col lg:flex-row">
+    <main className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 flex flex-col lg:flex-row print:bg-white print:text-black">
       <DashboardSidebar 
         modulosPermitidos={modulosPermitidos}
         usuarioInfo={
@@ -91,7 +91,7 @@ export default async function Inicio() {
         logoutButton={<LogoutButton />}
       />
 
-      <section className="flex-1 p-6 lg:p-10 w-full lg:w-auto">
+      <section className="flex-1 p-6 lg:p-10 w-full lg:w-auto print:w-full print:p-0">
           <header className="mb-10 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-8 shadow-sm">
             <p className="text-sm font-semibold uppercase tracking-widest text-teal-600 dark:text-teal-400">
               Sistema ERP Modular

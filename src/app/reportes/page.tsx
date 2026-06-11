@@ -23,7 +23,7 @@ export default async function ReportesPage() {
             descripcion="Panel consolidado con los indicadores clave del rendimiento del negocio."
             modulo="Reportes"
         >
-            <ReportesDashboard datos={datosReporte} />
+            <ReportesDashboard datos={datosReporte} rolUsuario={usuario.rol.nombre} />
         </PaginaModulo>
     );
 }
