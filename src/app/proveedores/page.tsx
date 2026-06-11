@@ -1,11 +1,14 @@
-import { PaginaModulo } from "@/components/layout/PaginaModulo";
+import { accionObtenerProveedores } from "@/modules/proveedores/actions";
+import { ListaProveedores } from "./components";
 
-export default function ProveedoresPage() {
+export const dynamic = 'force-dynamic';
+
+export default async function ProveedoresPage() {
+    const proveedores = await accionObtenerProveedores();
+
     return (
-        <PaginaModulo
-            modulo="Personas"
-            titulo="Proveedores"
-            descripcion="Gestión de proveedores relacionados con compras, abastecimiento e inventario."
-        />
+        <main className="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
+            <ListaProveedores proveedores={proveedores} />
+        </main>
     );
 }
