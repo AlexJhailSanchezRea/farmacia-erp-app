@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { VentaCliente, DetalleVentaInput } from "@/modules/ventas/types";
 import { accionCrearVenta, accionAnularVenta } from "@/modules/ventas/actions";
+import { accionGenerarFacturaDemo } from "@/modules/facturas/actions";
 import { ClienteCliente } from "@/modules/clientes/types";
 import { ProductoCliente } from "@/modules/productos/types";
 
@@ -379,6 +380,7 @@ export function ListaVentas({
                             <th className="px-6 py-4 font-semibold">Observación</th>
                             <th className="px-6 py-4 font-semibold text-right">Total</th>
                             <th className="px-6 py-4 font-semibold text-center">Estado</th>
+                            <th className="px-6 py-4 font-semibold text-center">Factura Demo</th>
                             {puedeAnular && <th className="px-6 py-4 font-semibold text-center">Acciones</th>}
                         </tr>
                     </thead>
@@ -415,6 +417,26 @@ export function ListaVentas({
                                         }`}>
                                             {v.estado === "ACTIVO" ? "ACTIVA" : "ANULADA"}
                                         </span>
+                                    </td>
+                                    <td className="px-6 py-4 text-center">
+                                        {v.facturaDemoId ? (
+                                            <a 
+                                                href={`/facturas/${v.facturaDemoId}`} 
+                                                className="inline-block rounded-lg bg-teal-600/20 px-3 py-1 text-xs font-medium text-teal-400 hover:bg-teal-600/40 border border-teal-500/30 transition"
+                                            >
+                                                Ver Factura
+                                            </a>
+                                        ) : v.estado === "ACTIVO" && (
+                                            <button
+                                                onClick={async () => {
+                                                    const res = await accionGenerarFacturaDemo(v.id);
+                                                    if (!res.exito) alert(res.error);
+                                                }}
+                                                className="inline-block rounded-lg bg-indigo-600/20 px-3 py-1 text-xs font-medium text-indigo-400 hover:bg-indigo-600/40 border border-indigo-500/30 transition"
+                                            >
+                                                Generar
+                                            </button>
+                                        )}
                                     </td>
                                     {puedeAnular && (
                                         <td className="px-6 py-4 text-center">

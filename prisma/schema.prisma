@@ -68,21 +68,21 @@ model Categoria {
 }
 
 model Producto {
-  id            Int            @id @default(autoincrement())
-  nombre        String
-  descripcion   String?
-  codigoBarra   String?        @unique
-  precioCompra  Decimal        @db.Decimal(10, 2)
-  precioVenta   Decimal        @db.Decimal(10, 2)
-  stockActual   Int            @default(0)
-  stockMinimo   Int            @default(0)
-  
+  id           Int     @id @default(autoincrement())
+  nombre       String
+  descripcion  String?
+  codigoBarra  String? @unique
+  precioCompra Decimal @db.Decimal(10, 2)
+  precioVenta  Decimal @db.Decimal(10, 2)
+  stockActual  Int     @default(0)
+  stockMinimo  Int     @default(0)
+
   // Especialización Farmacia
   principioActivo String?
   laboratorio     String?
   presentacion    String?
   concentracion   String?
-  requiereReceta  Boolean        @default(false)
+  requiereReceta  Boolean @default(false)
 
   estado        EstadoRegistro @default(ACTIVO)
   creadoEn      DateTime       @default(now())
@@ -209,7 +209,7 @@ model MovimientoInventario {
 
   compraId Int?
   compra   Compra? @relation(fields: [compraId], references: [id])
-  
+
   ventaId Int?
   venta   Venta? @relation(fields: [ventaId], references: [id])
 
@@ -224,16 +224,16 @@ enum TipoComprobante {
 }
 
 model Venta {
-  id            Int            @id @default(autoincrement())
-  numeroVenta   String         @unique
-  fechaVenta    DateTime       @default(now())
-  total         Decimal        @db.Decimal(10, 2)
-  observacion   String?
-  estado        EstadoRegistro @default(ACTIVO)
+  id              Int            @id @default(autoincrement())
+  numeroVenta     String         @unique
+  fechaVenta      DateTime       @default(now())
+  total           Decimal        @db.Decimal(10, 2)
+  observacion     String?
+  estado          EstadoRegistro @default(ACTIVO)
   motivoAnulacion String?
   fechaAnulacion  DateTime?
-  creadoEn      DateTime       @default(now())
-  actualizadoEn DateTime       @updatedAt
+  creadoEn        DateTime       @default(now())
+  actualizadoEn   DateTime       @updatedAt
 
   clienteId Int?
   cliente   Cliente? @relation(fields: [clienteId], references: [id])
@@ -241,6 +241,7 @@ model Venta {
   detalles       DetalleVenta[]
   movimientos    MovimientoInventario[]
   comprobante    Comprobante?
+  facturaDemo    FacturaDemo?
   movimientoCaja MovimientoCaja?
 
   @@map("ventas")
@@ -293,15 +294,15 @@ model MovimientoCaja {
   fechaMovimiento DateTime           @default(now())
   referencia      String?
   estado          String             @default("ACTIVO")
-  
-  ventaId         Int?               @unique
-  venta           Venta?             @relation(fields: [ventaId], references: [id])
-  
-  compraId        Int?               @unique
-  compra          Compra?            @relation(fields: [compraId], references: [id])
 
-  creadoEn        DateTime           @default(now())
-  actualizadoEn   DateTime           @updatedAt
+  ventaId Int?   @unique
+  venta   Venta? @relation(fields: [ventaId], references: [id])
+
+  compraId Int?    @unique
+  compra   Compra? @relation(fields: [compraId], references: [id])
+
+  creadoEn      DateTime @default(now())
+  actualizadoEn DateTime @updatedAt
 
   @@map("movimientos_caja")
 }
@@ -322,18 +323,35 @@ model Configuracion {
 }
 
 model Auditoria {
-  id             Int      @id @default(autoincrement())
-  usuarioId      Int?
-  usuarioCorreo  String?
-  modulo         String
-  accion         String
-  descripcion    String
-  entidadId      Int?
-  entidad        String?
-  ip             String?
-  userAgent      String?
-  creadoEn       DateTime @default(now())
+  id            Int      @id @default(autoincrement())
+  usuarioId     Int?
+  usuarioCorreo String?
+  modulo        String
+  accion        String
+  descripcion   String
+  entidadId     Int?
+  entidad       String?
+  ip            String?
+  userAgent     String?
+  creadoEn      DateTime @default(now())
 
   @@map("auditoria")
 }
 
+model FacturaDemo {
+  id            Int            @id @default(autoincrement())
+  numeroFactura String         @unique
+  cuf           String
+  cufd          String
+  leyenda       String
+  fechaEmision  DateTime       @default(now())
+  total         Decimal        @db.Decimal(10, 2)
+  estado        EstadoRegistro @default(ACTIVO)
+  creadoEn      DateTime       @default(now())
+  actualizadoEn DateTime       @updatedAt
+
+  ventaId Int   @unique
+  venta   Venta @relation(fields: [ventaId], references: [id])
+
+  @@map("facturas_demo")
+}

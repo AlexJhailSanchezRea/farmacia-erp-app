@@ -27,6 +27,7 @@ export interface VentaCliente {
     
     cliente?: ClienteCliente | null;
     detalles?: DetalleVentaCliente[];
+    facturaDemoId?: number;
 }
 
 export interface DetalleVentaInput {

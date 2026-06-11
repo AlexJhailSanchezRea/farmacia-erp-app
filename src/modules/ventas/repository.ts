@@ -7,7 +7,8 @@ type VentaConRelaciones = Prisma.VentaGetPayload<{
         cliente: true,
         detalles: {
             include: { producto: true }
-        }
+        },
+        facturaDemo: true
     }
 }>;
 
@@ -34,6 +35,7 @@ function mapearVenta(ventaPrisma: VentaConRelaciones): VentaCliente {
             creadoEn: ventaPrisma.cliente.creadoEn.toISOString(),
             actualizadoEn: ventaPrisma.cliente.actualizadoEn.toISOString(),
         } : null,
+        facturaDemoId: ventaPrisma.facturaDemo?.id,
         detalles: ventaPrisma.detalles.map(d => ({
             id: d.id,
             ventaId: d.ventaId,
@@ -71,7 +73,8 @@ export async function obtenerVentas(): Promise<VentaCliente[]> {
             cliente: true,
             detalles: {
                 include: { producto: true }
-            }
+            },
+            facturaDemo: true
         }
     });
     return ventas.map(mapearVenta);
@@ -130,7 +133,8 @@ export async function crearVentaConTransaccion(datos: CrearVentaInput): Promise<
                 cliente: true,
                 detalles: {
                     include: { producto: true }
-                }
+                },
+                facturaDemo: true
             }
         });
 
@@ -237,7 +241,7 @@ export async function anularVentaConTransaccion(idVenta: number, motivo: string)
         // 1. Obtener la venta con comprobante
         const venta = await tx.venta.findUniqueOrThrow({
             where: { id: idVenta },
-            include: { comprobante: true }
+            include: { comprobante: true, facturaDemo: true }
         });
 
         if (venta.estado === "INACTIVO") {
@@ -256,7 +260,8 @@ export async function anularVentaConTransaccion(idVenta: number, motivo: string)
                 cliente: true,
                 detalles: {
                     include: { producto: true }
-                }
+                },
+                facturaDemo: true
             }
         });
 
@@ -264,6 +269,14 @@ export async function anularVentaConTransaccion(idVenta: number, motivo: string)
         if (venta.comprobante) {
             await tx.comprobante.update({
                 where: { id: venta.comprobante.id },
+                data: { estado: "INACTIVO" }
+            });
+        }
+        
+        // 3.5 Cambiar estado de factura demo a INACTIVO si existe
+        if (venta.facturaDemo) {
+            await tx.facturaDemo.update({
+                where: { id: venta.facturaDemo.id },
                 data: { estado: "INACTIVO" }
             });
         }
