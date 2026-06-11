@@ -11,3 +11,15 @@ export interface ComprobanteCliente {
     ventaId: number;
     creadoEn: string;
 }
+
+export interface DetalleVentaImpresion {
+    id: number;
+    productoNombre: string;
+    cantidad: number;
+    precioUnitario: number;
+    subtotal: number;
+}
+
+export interface ComprobanteDetalleCliente extends ComprobanteCliente {
+    detalles: DetalleVentaImpresion[];
+}

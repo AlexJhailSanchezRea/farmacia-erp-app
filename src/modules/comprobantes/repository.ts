@@ -22,3 +22,33 @@ export async function obtenerComprobantes(): Promise<ComprobanteCliente[]> {
     });
     return comprobantes.map(mapearComprobante);
 }
+
+export async function obtenerComprobantePorId(id: number): Promise<import('./types').ComprobanteDetalleCliente | null> {
+    const comp = await prisma.comprobante.findUnique({
+        where: { id },
+        include: {
+            venta: {
+                include: {
+                    detalles: {
+                        include: {
+                            producto: true
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    if (!comp) return null;
+
+    return {
+        ...mapearComprobante(comp),
+        detalles: comp.venta.detalles.map(d => ({
+            id: d.id,
+            productoNombre: d.producto.nombre,
+            cantidad: d.cantidad,
+            precioUnitario: Number(d.precioUnitario),
+            subtotal: Number(d.subtotal)
+        }))
+    };
+}

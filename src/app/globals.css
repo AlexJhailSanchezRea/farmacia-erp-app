@@ -17,3 +17,40 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@media print {
+  body {
+    background: white;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Esconder el menú lateral y cualquier navegación en modo impresión */
+  aside, nav, header {
+    display: none !important;
+  }
+  
+  /* Ajustar la vista principal para que ocupe todo el espacio */
+  main {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+  }
+
+  /* Asegurarse de que el recibo tome el tamaño completo */
+  #area-impresion {
+    width: 100% !important;
+    max-width: none !important;
+    padding: 2cm !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+  
+  /* Forzar color de texto a negro */
+  * {
+    color: black !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
