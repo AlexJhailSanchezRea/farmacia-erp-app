@@ -1,11 +1,14 @@
-import { PaginaModulo } from "@/components/layout/PaginaModulo";
+import { accionObtenerClientes } from "@/modules/clientes/actions";
+import { ListaClientes } from "./components";
 
-export default function ClientesPage() {
+export const dynamic = 'force-dynamic';
+
+export default async function ClientesPage() {
+    const clientes = await accionObtenerClientes();
+
     return (
-        <PaginaModulo
-            modulo="Personas"
-            titulo="Clientes"
-            descripcion="Registro y administración de clientes para ventas, comprobantes y reportes comerciales."
-        />
+        <main className="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
+            <ListaClientes clientes={clientes} />
+        </main>
     );
 }
