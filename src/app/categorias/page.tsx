@@ -1,11 +1,14 @@
-import { PaginaModulo } from "@/components/layout/PaginaModulo";
+import { accionObtenerCategorias } from "@/modules/categorias/actions";
+import { ListaCategorias } from "./components";
 
-export default function CategoriasPage() {
+export const dynamic = 'force-dynamic';
+
+export default async function CategoriasPage() {
+    const categorias = await accionObtenerCategorias();
+
     return (
-        <PaginaModulo
-            modulo="Catálogo"
-            titulo="Categorías"
-            descripcion="Administración de categorías para organizar los productos del sistema."
-        />
+        <main className="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
+            <ListaCategorias categoriasIniciales={categorias} />
+        </main>
     );
 }
