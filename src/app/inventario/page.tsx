@@ -15,7 +15,7 @@ export default async function InventarioPage() {
     const movimientos = await accionObtenerMovimientos();
 
     return (
-        <main className="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
+        <main className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col">
             <ListaMovimientos movimientos={movimientos} />
         </main>
     );

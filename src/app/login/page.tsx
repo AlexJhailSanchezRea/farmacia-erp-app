@@ -15,7 +15,7 @@ export default async function LoginPage() {
     }
 
     return (
-        <main className="flex min-h-screen flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-slate-50 relative overflow-hidden">
+        <main className="flex min-h-screen flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-slate-50 dark:bg-slate-950 relative overflow-hidden">
             {/* Background Decorations */}
             <div className="absolute top-0 -left-4 w-72 h-72 bg-emerald-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob"></div>
             <div className="absolute top-0 -right-4 w-72 h-72 bg-teal-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-2000"></div>
@@ -29,16 +29,16 @@ export default async function LoginPage() {
                         </svg>
                     </div>
                 </div>
-                <h2 className="text-center text-3xl font-bold leading-9 tracking-tight text-slate-900 mb-2">
+                <h2 className="text-center text-3xl font-bold leading-9 tracking-tight text-slate-900 dark:text-slate-100 mb-2">
                     PharmaERP 360
                 </h2>
-                <p className="text-center text-sm text-slate-500">
+                <p className="text-center text-sm text-slate-500 dark:text-slate-400">
                     Acceso institucional al sistema de gestión
                 </p>
             </div>
 
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[400px] relative z-10">
-                <div className="bg-white py-10 px-6 sm:rounded-2xl sm:px-10 border border-slate-200 shadow-xl shadow-slate-200/50">
+                <div className="bg-white dark:bg-slate-900 py-10 px-6 sm:rounded-2xl sm:px-10 border border-slate-200 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
                     <LoginForm />
                 </div>
             </div>

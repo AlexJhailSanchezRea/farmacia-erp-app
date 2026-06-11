@@ -23,7 +23,7 @@ export default async function VentasPage() {
     const puedeAnular = verificarPermisoAccion(usuario.rol.nombre, "anular_venta");
 
     return (
-        <main className="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
+        <main className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col">
             <ListaVentas 
                 ventas={ventas} 
                 clientes={clientes} 

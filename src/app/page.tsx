@@ -71,14 +71,14 @@ export default async function Inicio() {
   }
 
   return (
-    <main className="min-h-screen bg-slate-50 text-slate-800 flex flex-col lg:flex-row">
+    <main className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 flex flex-col lg:flex-row">
       <DashboardSidebar 
         modulosPermitidos={modulosPermitidos}
         usuarioInfo={
           usuario && (
             <div className="flex items-center gap-3 px-4 mb-4">
-                <div className="h-10 w-10 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200">
-                    <span className="text-slate-600 font-bold">{usuario.nombre.charAt(0).toUpperCase()}</span>
+                <div className="h-10 w-10 rounded-full bg-slate-800 dark:bg-slate-700 flex items-center justify-center border border-slate-700 dark:border-slate-600">
+                    <span className="text-white font-bold">{usuario.nombre.charAt(0).toUpperCase()}</span>
                 </div>
                 <div>
                     <p className="text-sm font-medium text-white">{usuario.nombre}</p>
@@ -91,16 +91,16 @@ export default async function Inicio() {
       />
 
       <section className="flex-1 p-6 lg:p-10 w-full lg:w-auto">
-          <header className="mb-10 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
-            <p className="text-sm font-semibold uppercase tracking-widest text-teal-600">
+          <header className="mb-10 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-8 shadow-sm">
+            <p className="text-sm font-semibold uppercase tracking-widest text-teal-600 dark:text-teal-400">
               Sistema ERP Modular
             </p>
 
             <div className="mt-4 max-w-4xl">
-              <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+              <h2 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100 sm:text-4xl">
                 Bienvenido a PharmaERP 360
               </h2>
-              <p className="mt-4 text-lg leading-8 text-slate-600">
+              <p className="mt-4 text-lg leading-8 text-slate-600 dark:text-slate-400">
                 Plataforma corporativa para gestionar ventas, compras, inventario,
                 clientes, proveedores, caja, comprobantes y reportes. Optimizado para el 
                 control riguroso del sector farmacéutico.
@@ -112,15 +112,15 @@ export default async function Inicio() {
             {indicadores.map((indicador) => (
               <article
                 key={indicador.titulo}
-                className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md"
+                className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm transition-shadow hover:shadow-md"
               >
-                <p className="text-sm font-medium text-slate-500">
+                <p className="text-sm font-medium text-slate-500 dark:text-slate-400">
                   {indicador.titulo}
                 </p>
-                <strong className="mt-3 block text-2xl font-bold text-slate-900">
+                <strong className="mt-3 block text-2xl font-bold text-slate-900 dark:text-slate-100">
                   {indicador.valor}
                 </strong>
-                <p className="mt-2 text-xs text-slate-400">
+                <p className="mt-2 text-xs text-slate-400 dark:text-slate-500">
                   {indicador.descripcion}
                 </p>
               </article>
@@ -128,11 +128,11 @@ export default async function Inicio() {
           </section>
 
           <section className="mt-10 grid gap-6 lg:grid-cols-2">
-            <article className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-              <h3 className="text-xl font-semibold text-slate-900">
+            <article className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm">
+              <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-100">
                 Arquitectura del sistema
               </h3>
-              <p className="mt-3 text-sm leading-6 text-slate-600">
+              <p className="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-400">
                 PharmaERP 360 se desarrolla bajo una arquitectura en capas con
                 organización modular. La presentación, la lógica de negocio y el
                 acceso a datos se mantienen separados para facilitar la
@@ -140,11 +140,11 @@ export default async function Inicio() {
               </p>
             </article>
 
-            <article className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-              <h3 className="text-xl font-semibold text-slate-900">
+            <article className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm">
+              <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-100">
                 Especialización Clínica
               </h3>
-              <p className="mt-3 text-sm leading-6 text-slate-600">
+              <p className="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-400">
                 Incorpora trazabilidad completa mediante lotes,
                 vencimientos, laboratorios, alertas tempranas y rotación FEFO para controlar
                 rigurosamente los productos críticos.

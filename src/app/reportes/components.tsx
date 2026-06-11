@@ -38,8 +38,8 @@ export function ReportesDashboard({ datos }: { datos: ReporteMetricas }) {
             {/* Gráficos Simples */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {/* Ventas vs Compras */}
-                <div className="rounded-2xl border border-slate-800 bg-slate-900/50 p-6 flex flex-col gap-4">
-                    <h3 className="text-lg font-semibold text-white">Ventas vs Compras</h3>
+                <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-white dark:bg-slate-900/50 p-6 flex flex-col gap-4">
+                    <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Ventas vs Compras</h3>
                     <div className="flex flex-col gap-4 mt-2">
                         {[
                             { label: "Ventas", value: datos.resumen.ventasTotalesMes, color: "bg-emerald-500" },
@@ -50,10 +50,10 @@ export function ReportesDashboard({ datos }: { datos: ReporteMetricas }) {
                             return (
                                 <div key={item.label} className="flex flex-col gap-1">
                                     <div className="flex justify-between text-sm">
-                                        <span className="text-slate-300">{item.label}</span>
-                                        <span className="font-bold text-white">{formatSoles(item.value)}</span>
+                                        <span className="text-slate-700 dark:text-slate-300">{item.label}</span>
+                                        <span className="font-bold text-slate-900 dark:text-white">{formatSoles(item.value)}</span>
                                     </div>
-                                    <div className="h-2 w-full bg-slate-800 rounded-full overflow-hidden">
+                                    <div className="h-2 w-full bg-slate-50 dark:bg-slate-800 rounded-full overflow-hidden">
                                         <div className={`h-full ${item.color} rounded-full`} style={{ width: `${pct}%` }} />
                                     </div>
                                 </div>
@@ -63,8 +63,8 @@ export function ReportesDashboard({ datos }: { datos: ReporteMetricas }) {
                 </div>
 
                 {/* Flujo de Caja */}
-                <div className="rounded-2xl border border-slate-800 bg-slate-900/50 p-6 flex flex-col gap-4">
-                    <h3 className="text-lg font-semibold text-white">Flujo de Caja</h3>
+                <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-white dark:bg-slate-900/50 p-6 flex flex-col gap-4">
+                    <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Flujo de Caja</h3>
                     <div className="flex flex-col gap-4 mt-2">
                         {[
                             { label: "Ingresos", value: datos.resumen.ingresosTotales, color: "bg-emerald-500" },
@@ -75,10 +75,10 @@ export function ReportesDashboard({ datos }: { datos: ReporteMetricas }) {
                             return (
                                 <div key={item.label} className="flex flex-col gap-1">
                                     <div className="flex justify-between text-sm">
-                                        <span className="text-slate-300">{item.label}</span>
-                                        <span className="font-bold text-white">{formatSoles(item.value)}</span>
+                                        <span className="text-slate-700 dark:text-slate-300">{item.label}</span>
+                                        <span className="font-bold text-slate-900 dark:text-white">{formatSoles(item.value)}</span>
                                     </div>
-                                    <div className="h-2 w-full bg-slate-800 rounded-full overflow-hidden">
+                                    <div className="h-2 w-full bg-slate-50 dark:bg-slate-800 rounded-full overflow-hidden">
                                         <div className={`h-full ${item.color} rounded-full`} style={{ width: `${pct}%` }} />
                                     </div>
                                 </div>
@@ -88,8 +88,8 @@ export function ReportesDashboard({ datos }: { datos: ReporteMetricas }) {
                 </div>
 
                 {/* Top Productos */}
-                <div className="rounded-2xl border border-slate-800 bg-slate-900/50 p-6 flex flex-col gap-4">
-                    <h3 className="text-lg font-semibold text-white">Top 5 Productos Vendidos</h3>
+                <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-white dark:bg-slate-900/50 p-6 flex flex-col gap-4">
+                    <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Top 5 Productos Vendidos</h3>
                     <div className="flex flex-col gap-3 mt-1">
                         {datos.topProductos.length > 0 ? datos.topProductos.map(p => {
                             const max = Math.max(...datos.topProductos.map(x => x.cantidad), 1);
@@ -97,16 +97,16 @@ export function ReportesDashboard({ datos }: { datos: ReporteMetricas }) {
                             return (
                                 <div key={p.nombre} className="flex flex-col gap-1">
                                     <div className="flex justify-between text-xs">
-                                        <span className="text-slate-300 truncate max-w-[180px]">{p.nombre}</span>
+                                        <span className="text-slate-700 dark:text-slate-300 truncate max-w-[180px]">{p.nombre}</span>
                                         <span className="font-bold text-indigo-400">{p.cantidad} und.</span>
                                     </div>
-                                    <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+                                    <div className="h-1.5 w-full bg-slate-50 dark:bg-slate-800 rounded-full overflow-hidden">
                                         <div className="h-full bg-indigo-500 rounded-full" style={{ width: `${pct}%` }} />
                                     </div>
                                 </div>
                             );
                         }) : (
-                            <span className="text-sm text-slate-500 text-center mt-4">No hay datos de ventas aún.</span>
+                            <span className="text-sm text-slate-500 dark:text-slate-600 dark:text-slate-400 text-center mt-4">No hay datos de ventas aún.</span>
                         )}
                     </div>
                 </div>
@@ -175,13 +175,13 @@ function KPICard({ title, value, color, icon }: { title: string, value: string, 
         rose: "border-rose-500/20 bg-rose-500/10 text-rose-400",
         indigo: "border-indigo-500/20 bg-indigo-500/10 text-indigo-400",
         amber: "border-amber-500/20 bg-amber-500/10 text-amber-400",
-    }[color] || "border-slate-500/20 bg-slate-500/10 text-slate-400";
+    }[color] || "border-slate-500/20 bg-slate-500/10 text-slate-600 dark:text-slate-400";
 
     return (
         <div className={`rounded-2xl border p-6 flex items-center justify-between ${colorClasses}`}>
             <div className="flex flex-col gap-2">
                 <span className="text-sm font-medium opacity-80">{title}</span>
-                <span className="text-3xl font-bold text-white">{value}</span>
+                <span className="text-3xl font-bold text-slate-900 dark:text-white">{value}</span>
             </div>
             <div className="h-12 w-12 rounded-full flex items-center justify-center bg-white/10">
                 <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -194,16 +194,16 @@ function KPICard({ title, value, color, icon }: { title: string, value: string, 
 
 function TablaReporte({ titulo, headers, datos }: { titulo: string, headers: string[], datos: { id: number, col1: string, col2: string, col3: string, color?: string }[] }) {
     return (
-        <div className="rounded-2xl border border-slate-800 bg-slate-900/50 backdrop-blur-sm overflow-hidden flex flex-col">
-            <div className="px-6 py-4 border-b border-slate-800 bg-slate-900/80 flex items-center justify-between">
-                <h3 className="text-lg font-semibold text-white">{titulo}</h3>
+        <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-white dark:bg-slate-900/50 backdrop-blur-sm overflow-hidden flex flex-col">
+            <div className="px-6 py-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-white dark:bg-slate-900/80 flex items-center justify-between">
+                <h3 className="text-lg font-semibold text-slate-900 dark:text-white">{titulo}</h3>
             </div>
             <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-slate-800">
-                    <thead className="bg-slate-900/40">
+                    <thead className="bg-white dark:bg-slate-900/40">
                         <tr>
                             {headers.map((h, i) => (
-                                <th key={i} className={`px-6 py-3 text-xs font-medium text-slate-400 uppercase tracking-wider ${i === 2 ? 'text-right' : 'text-left'}`}>
+                                <th key={i} className={`px-6 py-3 text-xs font-medium text-slate-600 dark:text-slate-400 uppercase tracking-wider ${i === 2 ? 'text-right' : 'text-left'}`}>
                                     {h}
                                 </th>
                             ))}
@@ -211,15 +211,15 @@ function TablaReporte({ titulo, headers, datos }: { titulo: string, headers: str
                     </thead>
                     <tbody className="divide-y divide-slate-800">
                         {datos.map((d) => (
-                            <tr key={d.id} className="hover:bg-slate-800/30 transition-colors">
-                                <td className="px-6 py-3 whitespace-nowrap text-sm text-white">{d.col1}</td>
-                                <td className="px-6 py-3 whitespace-nowrap text-sm text-slate-400">{d.col2}</td>
-                                <td className={`px-6 py-3 whitespace-nowrap text-sm font-medium text-right ${d.color || 'text-white'}`}>{d.col3}</td>
+                            <tr key={d.id} className="hover:bg-slate-50 dark:bg-slate-800/30 transition-colors">
+                                <td className="px-6 py-3 whitespace-nowrap text-sm text-slate-900 dark:text-white">{d.col1}</td>
+                                <td className="px-6 py-3 whitespace-nowrap text-sm text-slate-600 dark:text-slate-400">{d.col2}</td>
+                                <td className={`px-6 py-3 whitespace-nowrap text-sm font-medium text-right ${d.color || 'text-slate-900 dark:text-white'}`}>{d.col3}</td>
                             </tr>
                         ))}
                         {datos.length === 0 && (
                             <tr>
-                                <td colSpan={3} className="px-6 py-8 text-center text-sm text-slate-500">
+                                <td colSpan={3} className="px-6 py-8 text-center text-sm text-slate-500 dark:text-slate-600 dark:text-slate-400">
                                     No hay registros disponibles.
                                 </td>
                             </tr>

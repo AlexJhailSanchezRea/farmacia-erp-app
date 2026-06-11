@@ -26,10 +26,10 @@ export function UsuariosManager({ usuarios, roles }: { usuarios: UsuarioCliente[
     return (
         <div className="flex flex-col gap-6">
             <div className="flex justify-between items-center">
-                <h2 className="text-xl font-semibold text-white">Listado de Usuarios</h2>
+                <h2 className="text-xl font-semibold text-slate-900 dark:text-white">Listado de Usuarios</h2>
                 <button
                     onClick={handleCrear}
-                    className="inline-flex items-center gap-2 rounded-xl bg-indigo-500 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 transition-all"
+                    className="inline-flex items-center gap-2 rounded-xl bg-indigo-500 px-4 py-2 text-sm font-semibold text-slate-900 dark:text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 transition-all"
                 >
                     <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -39,24 +39,24 @@ export function UsuariosManager({ usuarios, roles }: { usuarios: UsuarioCliente[
             </div>
 
             {/* Tabla de Usuarios */}
-            <div className="rounded-2xl border border-slate-800 bg-slate-900/50 backdrop-blur-sm overflow-hidden">
+            <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-white dark:bg-slate-900/50 backdrop-blur-sm overflow-hidden">
                 <div className="overflow-x-auto">
                     <table className="min-w-full divide-y divide-slate-800">
-                        <thead className="bg-slate-900/80">
+                        <thead className="bg-slate-50 dark:bg-white dark:bg-slate-900/80">
                             <tr>
-                                <th className="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Nombre</th>
-                                <th className="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Rol</th>
-                                <th className="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Estado</th>
-                                <th className="px-6 py-4 text-right text-xs font-medium text-slate-400 uppercase tracking-wider">Acciones</th>
+                                <th className="px-6 py-4 text-left text-xs font-medium text-slate-600 dark:text-slate-400 uppercase tracking-wider">Nombre</th>
+                                <th className="px-6 py-4 text-left text-xs font-medium text-slate-600 dark:text-slate-400 uppercase tracking-wider">Rol</th>
+                                <th className="px-6 py-4 text-left text-xs font-medium text-slate-600 dark:text-slate-400 uppercase tracking-wider">Estado</th>
+                                <th className="px-6 py-4 text-right text-xs font-medium text-slate-600 dark:text-slate-400 uppercase tracking-wider">Acciones</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-800">
                             {usuarios.map((u) => (
-                                <tr key={u.id} className="hover:bg-slate-800/30 transition-colors">
+                                <tr key={u.id} className="hover:bg-slate-50 dark:bg-slate-800/30 transition-colors">
                                     <td className="px-6 py-4 whitespace-nowrap">
                                         <div className="flex flex-col">
-                                            <span className="font-medium text-white">{u.nombre}</span>
-                                            <span className="text-sm text-slate-400">{u.correo}</span>
+                                            <span className="font-medium text-slate-900 dark:text-white">{u.nombre}</span>
+                                            <span className="text-sm text-slate-600 dark:text-slate-400">{u.correo}</span>
                                         </div>
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap">
@@ -92,13 +92,13 @@ export function UsuariosManager({ usuarios, roles }: { usuarios: UsuarioCliente[
             {/* Modal de formulario */}
             {isModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-                    <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 w-full max-w-md shadow-2xl relative">
-                        <button onClick={handleClose} className="absolute top-4 right-4 text-slate-400 hover:text-white">
+                    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 w-full max-w-md shadow-2xl relative">
+                        <button onClick={handleClose} className="absolute top-4 right-4 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white">
                             <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                             </svg>
                         </button>
-                        <h3 className="text-xl font-semibold text-white mb-6">
+                        <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-6">
                             {usuarioEditar ? "Editar Usuario" : "Nuevo Usuario"}
                         </h3>
                         <UsuarioForm usuario={usuarioEditar} roles={roles} onClose={handleClose} />
@@ -148,33 +148,33 @@ function UsuarioForm({ usuario, roles, onClose }: { usuario: UsuarioCliente | nu
             {usuario && <input type="hidden" name="id" value={usuario.id} />}
             
             <div>
-                <label className="block text-sm font-medium text-slate-300 mb-1">Nombre Completo</label>
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Nombre Completo</label>
                 <input 
                     name="nombre" 
                     defaultValue={usuario?.nombre} 
                     required 
-                    className="block w-full rounded-lg border-0 bg-slate-800 py-2.5 px-3 text-white shadow-sm ring-1 ring-inset ring-slate-700 placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-lg border-0 bg-slate-50 dark:bg-slate-800 py-2.5 px-3 text-slate-900 dark:text-white shadow-sm ring-1 ring-inset ring-slate-700 placeholder:text-slate-500 dark:text-slate-600 dark:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
                 />
             </div>
             
             <div>
-                <label className="block text-sm font-medium text-slate-300 mb-1">Correo Electrónico</label>
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Correo Electrónico</label>
                 <input 
                     name="correo" 
                     type="email"
                     defaultValue={usuario?.correo} 
                     required 
-                    className="block w-full rounded-lg border-0 bg-slate-800 py-2.5 px-3 text-white shadow-sm ring-1 ring-inset ring-slate-700 placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-lg border-0 bg-slate-50 dark:bg-slate-800 py-2.5 px-3 text-slate-900 dark:text-white shadow-sm ring-1 ring-inset ring-slate-700 placeholder:text-slate-500 dark:text-slate-600 dark:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
                 />
             </div>
 
             <div>
-                <label className="block text-sm font-medium text-slate-300 mb-1">Rol</label>
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Rol</label>
                 <select 
                     name="rolId" 
                     defaultValue={usuario?.rol.id || ""} 
                     required
-                    className="block w-full rounded-lg border-0 bg-slate-800 py-2.5 px-3 text-white shadow-sm ring-1 ring-inset ring-slate-700 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 [&>option]:bg-slate-800"
+                    className="block w-full rounded-lg border-0 bg-slate-50 dark:bg-slate-800 py-2.5 px-3 text-slate-900 dark:text-white shadow-sm ring-1 ring-inset ring-slate-700 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 [&>option]:bg-slate-50 dark:bg-slate-800"
                 >
                     <option value="" disabled>Seleccione un rol...</option>
                     {roles.map(r => (
@@ -184,7 +184,7 @@ function UsuarioForm({ usuario, roles, onClose }: { usuario: UsuarioCliente | nu
             </div>
 
             <div>
-                <label className="block text-sm font-medium text-slate-300 mb-1">
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
                     {usuario ? "Nueva Contraseña (dejar en blanco para no cambiar)" : "Contraseña"}
                 </label>
                 <input 
@@ -192,7 +192,7 @@ function UsuarioForm({ usuario, roles, onClose }: { usuario: UsuarioCliente | nu
                     type="password"
                     required={!usuario}
                     minLength={6}
-                    className="block w-full rounded-lg border-0 bg-slate-800 py-2.5 px-3 text-white shadow-sm ring-1 ring-inset ring-slate-700 placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-lg border-0 bg-slate-50 dark:bg-slate-800 py-2.5 px-3 text-slate-900 dark:text-white shadow-sm ring-1 ring-inset ring-slate-700 placeholder:text-slate-500 dark:text-slate-600 dark:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
                 />
             </div>
 
@@ -206,14 +206,14 @@ function UsuarioForm({ usuario, roles, onClose }: { usuario: UsuarioCliente | nu
                 <button
                     type="button"
                     onClick={onClose}
-                    className="rounded-lg px-4 py-2.5 text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800 transition-all"
+                    className="rounded-lg px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white hover:bg-slate-50 dark:bg-slate-800 transition-all"
                 >
                     Cancelar
                 </button>
                 <button
                     type="submit"
                     disabled={isPending}
-                    className="rounded-lg bg-indigo-500 px-6 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 disabled:opacity-50 transition-all"
+                    className="rounded-lg bg-indigo-500 px-6 py-2.5 text-sm font-medium text-slate-900 dark:text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 disabled:opacity-50 transition-all"
                 >
                     {isPending ? "Guardando..." : "Guardar"}
                 </button>

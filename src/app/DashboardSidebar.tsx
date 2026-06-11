@@ -11,11 +11,11 @@ export function DashboardSidebar({ modulosPermitidos, usuarioInfo, logoutButton 
     return (
         <>
             {/* Mobile header / toggle */}
-            <div className="lg:hidden flex items-center justify-between p-4 bg-slate-900 border-b border-slate-800">
+            <div className="lg:hidden flex items-center justify-between p-4 bg-slate-800 dark:bg-slate-900 border-b border-slate-700 dark:border-slate-800">
                 <span className="text-teal-400 font-bold tracking-widest text-sm uppercase">PharmaERP 360</span>
                 <button 
                     onClick={() => setIsOpen(!isOpen)}
-                    className="p-2 text-slate-400 hover:text-white"
+                    className="p-2 text-slate-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-teal-500 rounded-lg"
                 >
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
@@ -24,7 +24,7 @@ export function DashboardSidebar({ modulosPermitidos, usuarioInfo, logoutButton 
             </div>
 
             {/* Sidebar */}
-            <aside className={`${isOpen ? 'block' : 'hidden'} lg:block w-full lg:w-72 lg:border-r border-slate-800 bg-slate-900 p-6 flex flex-col h-full lg:min-h-screen`}>
+            <aside className={`${isOpen ? 'block' : 'hidden'} lg:block w-full lg:w-72 lg:border-r border-slate-700 dark:border-slate-800 bg-slate-800 dark:bg-slate-900 p-6 flex flex-col h-full lg:min-h-screen`}>
                 <div className="mb-10 hidden lg:block">
                     <p className="text-sm font-semibold uppercase tracking-widest text-teal-400">
                         PharmaERP 360
@@ -42,7 +42,7 @@ export function DashboardSidebar({ modulosPermitidos, usuarioInfo, logoutButton 
                         <Link
                             key={modulo.nombre}
                             href={modulo.ruta}
-                            className="block rounded-xl px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-teal-400"
+                            className="block rounded-xl px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-700 dark:hover:bg-slate-800 hover:text-teal-400 focus:outline-none focus:ring-2 focus:ring-teal-500"
                             onClick={() => setIsOpen(false)}
                         >
                             {modulo.nombre}
@@ -50,7 +50,7 @@ export function DashboardSidebar({ modulosPermitidos, usuarioInfo, logoutButton 
                     ))}
                 </nav>
 
-                <div className="mt-8 border-t border-slate-800 pt-6">
+                <div className="mt-8 border-t border-slate-700 dark:border-slate-800 pt-6">
                     {usuarioInfo}
                     <div className={!usuarioInfo ? "mt-4" : ""}>
                         {logoutButton}

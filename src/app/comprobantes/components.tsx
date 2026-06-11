@@ -13,7 +13,7 @@ export function ListaComprobantes({ comprobantes }: { comprobantes: ComprobanteC
 
             <div className="rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-sm overflow-x-auto">
                 <table className="w-full text-left text-sm text-slate-700 min-w-[900px]">
-                    <thead className="border-b border-slate-200 bg-slate-50 text-xs uppercase text-slate-500">
+                    <thead className="border-b border-slate-200 bg-slate-50 text-xs uppercase text-slate-500 dark:text-slate-600 dark:text-slate-400">
                         <tr>
                             <th className="px-6 py-4 font-semibold">Nro. Comprobante</th>
                             <th className="px-6 py-4 font-semibold">Fecha Emisión</th>
@@ -27,7 +27,7 @@ export function ListaComprobantes({ comprobantes }: { comprobantes: ComprobanteC
                     <tbody className="divide-y divide-slate-100">
                         {comprobantes.length === 0 ? (
                             <tr>
-                                <td colSpan={6} className="px-6 py-8 text-center text-slate-500">
+                                <td colSpan={6} className="px-6 py-8 text-center text-slate-500 dark:text-slate-600 dark:text-slate-400">
                                     No hay comprobantes emitidos.
                                 </td>
                             </tr>

@@ -25,7 +25,7 @@ export function TablaAuditoria({ registros }: { registros: AuditoriaRegistro[] }
                         onChange={(e) => setFiltro(e.target.value)}
                         className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all"
                     />
-                    <svg className="w-5 h-5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg className="w-5 h-5 text-slate-600 dark:text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
                 </div>
@@ -47,7 +47,7 @@ export function TablaAuditoria({ registros }: { registros: AuditoriaRegistro[] }
                     <tbody className="divide-y divide-slate-100">
                         {registrosFiltrados.length === 0 ? (
                             <tr>
-                                <td colSpan={7} className="px-6 py-8 text-center text-slate-500">
+                                <td colSpan={7} className="px-6 py-8 text-center text-slate-500 dark:text-slate-600 dark:text-slate-400">
                                     No se encontraron registros de auditoría que coincidan con la búsqueda.
                                 </td>
                             </tr>
@@ -58,7 +58,7 @@ export function TablaAuditoria({ registros }: { registros: AuditoriaRegistro[] }
                                         <span className="text-slate-900 font-medium">
                                             {new Date(registro.creadoEn).toLocaleDateString('es-ES')}
                                         </span>
-                                        <span className="text-slate-500 block text-xs">
+                                        <span className="text-slate-500 dark:text-slate-600 dark:text-slate-400 block text-xs">
                                             {new Date(registro.creadoEn).toLocaleTimeString('es-ES')}
                                         </span>
                                     </td>
@@ -78,7 +78,7 @@ export function TablaAuditoria({ registros }: { registros: AuditoriaRegistro[] }
                                             {registro.descripcion}
                                         </span>
                                     </td>
-                                    <td className="px-4 lg:px-6 py-4 hidden lg:table-cell text-xs text-slate-500">
+                                    <td className="px-4 lg:px-6 py-4 hidden lg:table-cell text-xs text-slate-500 dark:text-slate-600 dark:text-slate-400">
                                         {registro.entidad && registro.entidadId ? (
                                             <span className="font-mono bg-slate-100 px-2 py-1 rounded">
                                                 {registro.entidad} #{registro.entidadId}
@@ -87,7 +87,7 @@ export function TablaAuditoria({ registros }: { registros: AuditoriaRegistro[] }
                                             "-"
                                         )}
                                     </td>
-                                    <td className="px-4 lg:px-6 py-4 hidden xl:table-cell text-xs font-mono text-slate-400">
+                                    <td className="px-4 lg:px-6 py-4 hidden xl:table-cell text-xs font-mono text-slate-600 dark:text-slate-400">
                                         {registro.ip || "-"}
                                     </td>
                                 </tr>

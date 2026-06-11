@@ -103,8 +103,8 @@ export function FormularioCompra({
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 overflow-y-auto">
-            <div className="w-full max-w-4xl rounded-2xl border border-slate-700 bg-slate-900 p-6 shadow-2xl my-8">
-                <h3 className="text-2xl font-bold text-white mb-6">Nueva Compra</h3>
+            <div className="w-full max-w-4xl rounded-2xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 p-6 shadow-2xl my-8">
+                <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Nueva Compra</h3>
                 
                 {error && (
                     <div className="mb-4 rounded-lg bg-red-500/10 p-3 text-sm text-red-400 border border-red-500/20">
@@ -114,11 +114,11 @@ export function FormularioCompra({
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <div>
-                        <label className="block text-sm font-medium text-slate-300 mb-1">Proveedor *</label>
+                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Proveedor *</label>
                         <select
                             value={proveedorId}
                             onChange={(e) => setProveedorId(Number(e.target.value))}
-                            className="w-full rounded-xl border border-slate-700 bg-slate-800 p-3 text-white focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500"
+                            className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-3 text-slate-900 dark:text-white focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
                         >
                             <option value={0}>-- Seleccionar Proveedor --</option>
                             {proveedoresActivos.map(p => (
@@ -127,27 +127,27 @@ export function FormularioCompra({
                         </select>
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-slate-300 mb-1">Observación</label>
+                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Observación</label>
                         <input
                             type="text"
                             value={observacion}
                             onChange={(e) => setObservacion(e.target.value)}
-                            className="w-full rounded-xl border border-slate-700 bg-slate-800 p-3 text-white placeholder-slate-500 focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500"
+                            className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-3 text-slate-900 dark:text-white placeholder-slate-500 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
                             placeholder="Ej. Factura Nro 12345"
                         />
                     </div>
                 </div>
 
                 {/* Zona de adición de productos */}
-                <div className="bg-slate-800/50 p-4 rounded-xl border border-slate-700 mb-6">
-                    <h4 className="font-semibold text-white mb-3">Agregar Producto</h4>
+                <div className="hover:bg-slate-50 dark:hover:bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-300 dark:border-slate-700 mb-6">
+                    <h4 className="font-semibold text-slate-900 dark:text-white mb-3">Agregar Producto</h4>
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
                         <div className="md:col-span-2">
-                            <label className="block text-xs text-slate-400 mb-1">Producto</label>
+                            <label className="block text-xs text-slate-600 dark:text-slate-400 mb-1">Producto</label>
                             <select
                                 value={productoSelec}
                                 onChange={(e) => setProductoSelec(Number(e.target.value))}
-                                className="w-full rounded-lg border border-slate-700 bg-slate-800 p-2 text-sm text-white focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500"
+                                className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-2 text-sm text-slate-900 dark:text-white focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
                             >
                                 <option value={0}>-- Seleccionar Producto --</option>
                                 {productosActivos.map(p => (
@@ -156,45 +156,45 @@ export function FormularioCompra({
                             </select>
                         </div>
                         <div>
-                            <label className="block text-xs text-slate-400 mb-1">Cantidad</label>
+                            <label className="block text-xs text-slate-600 dark:text-slate-400 mb-1">Cantidad</label>
                             <input
                                 type="number"
                                 min={1}
                                 value={cantidadSelec}
                                 onChange={(e) => setCantidadSelec(Number(e.target.value))}
-                                className="w-full rounded-lg border border-slate-700 bg-slate-800 p-2 text-sm text-white focus:border-cyan-500 focus:outline-none"
+                                className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-2 text-sm text-slate-900 dark:text-white focus:border-teal-500 focus:outline-none"
                             />
                         </div>
                         <div>
-                            <label className="block text-xs text-slate-400 mb-1">Precio Unitario (Bs)</label>
+                            <label className="block text-xs text-slate-600 dark:text-slate-400 mb-1">Precio Unitario (Bs)</label>
                             <input
                                 type="number"
                                 min={0}
                                 step="0.01"
                                 value={precioSelec}
                                 onChange={(e) => setPrecioSelec(Number(e.target.value))}
-                                className="w-full rounded-lg border border-slate-700 bg-slate-800 p-2 text-sm text-white focus:border-cyan-500 focus:outline-none"
+                                className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-2 text-sm text-slate-900 dark:text-white focus:border-teal-500 focus:outline-none"
                             />
                         </div>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 items-end">
                         <div>
-                            <label className="block text-xs text-slate-400 mb-1">Nro. Lote (Obligatorio)</label>
+                            <label className="block text-xs text-slate-600 dark:text-slate-400 mb-1">Nro. Lote (Obligatorio)</label>
                             <input
                                 type="text"
                                 value={loteSelec}
                                 onChange={(e) => setLoteSelec(e.target.value)}
-                                className="w-full rounded-lg border border-slate-700 bg-slate-800 p-2 text-sm text-white focus:border-cyan-500 focus:outline-none"
+                                className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-2 text-sm text-slate-900 dark:text-white focus:border-teal-500 focus:outline-none"
                                 placeholder="Lote del producto"
                             />
                         </div>
                         <div>
-                            <label className="block text-xs text-slate-400 mb-1">Vencimiento (Obligatorio)</label>
+                            <label className="block text-xs text-slate-600 dark:text-slate-400 mb-1">Vencimiento (Obligatorio)</label>
                             <input
                                 type="date"
                                 value={fechaVencimientoSelec}
                                 onChange={(e) => setFechaVencimientoSelec(e.target.value)}
-                                className="w-full rounded-lg border border-slate-700 bg-slate-800 p-2 text-sm text-white focus:border-cyan-500 focus:outline-none"
+                                className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-2 text-sm text-slate-900 dark:text-white focus:border-teal-500 focus:outline-none"
                             />
                         </div>
                     </div>
@@ -210,9 +210,9 @@ export function FormularioCompra({
                 </div>
 
                 {/* Tabla de detalle */}
-                <div className="overflow-x-auto rounded-xl border border-slate-700 mb-6">
-                    <table className="w-full text-left text-sm text-slate-300">
-                        <thead className="bg-slate-800 text-xs uppercase text-slate-400">
+                <div className="overflow-x-auto rounded-xl border border-slate-300 dark:border-slate-700 mb-6">
+                    <table className="w-full text-left text-sm text-slate-700 dark:text-slate-300">
+                        <thead className="bg-slate-50 dark:bg-slate-800 text-xs uppercase text-slate-600 dark:text-slate-400">
                             <tr>
                                 <th className="px-4 py-3">Producto / Lote</th>
                                 <th className="px-4 py-3 text-right">Cant.</th>
@@ -224,7 +224,7 @@ export function FormularioCompra({
                         <tbody className="divide-y divide-slate-700">
                             {detalles.length === 0 ? (
                                 <tr>
-                                    <td colSpan={5} className="px-4 py-6 text-center text-slate-500">
+                                    <td colSpan={5} className="px-4 py-6 text-center text-slate-500 dark:text-slate-600 dark:text-slate-400">
                                         No hay productos añadidos.
                                     </td>
                                 </tr>
@@ -232,14 +232,14 @@ export function FormularioCompra({
                                 detalles.map((d) => {
                                     const prod = productos.find(p => p.id === d.productoId);
                                     return (
-                                        <tr key={`${d.productoId}-${d.numeroLote}`} className="bg-slate-900/50">
+                                        <tr key={`${d.productoId}-${d.numeroLote}`} className="bg-white dark:bg-white dark:bg-slate-900/50">
                                             <td className="px-4 py-3">
-                                                <div className="text-white font-medium">{prod?.nombre}</div>
-                                                <div className="text-xs text-slate-400 mt-1">Lote: <span className="text-cyan-400">{d.numeroLote}</span> | Vence: {new Date(d.fechaVencimiento).toLocaleDateString('es-ES', { timeZone: 'UTC'})}</div>
+                                                <div className="text-slate-900 dark:text-white font-medium">{prod?.nombre}</div>
+                                                <div className="text-xs text-slate-600 dark:text-slate-400 mt-1">Lote: <span className="text-teal-600 dark:text-teal-400">{d.numeroLote}</span> | Vence: {new Date(d.fechaVencimiento).toLocaleDateString('es-ES', { timeZone: 'UTC'})}</div>
                                             </td>
                                             <td className="px-4 py-3 text-right">{d.cantidad}</td>
                                             <td className="px-4 py-3 text-right">Bs {d.precioUnitario.toFixed(2)}</td>
-                                            <td className="px-4 py-3 text-right font-medium text-cyan-400">Bs {(d.cantidad * d.precioUnitario).toFixed(2)}</td>
+                                            <td className="px-4 py-3 text-right font-medium text-teal-600 dark:text-teal-400">Bs {(d.cantidad * d.precioUnitario).toFixed(2)}</td>
                                             <td className="px-4 py-3 text-center">
                                                 <button onClick={() => quitarDetalle(d.productoId, d.numeroLote)} className="text-red-400 hover:text-red-300" type="button">X</button>
                                             </td>
@@ -248,7 +248,7 @@ export function FormularioCompra({
                                 })
                             )}
                         </tbody>
-                        <tfoot className="bg-slate-800 font-bold text-white">
+                        <tfoot className="bg-slate-50 dark:bg-slate-800 font-bold text-slate-900 dark:text-white">
                             <tr>
                                 <td colSpan={3} className="px-4 py-3 text-right">TOTAL COMPRA:</td>
                                 <td className="px-4 py-3 text-right text-emerald-400 text-lg">Bs {calcularTotal().toFixed(2)}</td>
@@ -258,11 +258,11 @@ export function FormularioCompra({
                     </table>
                 </div>
 
-                <div className="flex justify-end gap-3 pt-4 border-t border-slate-800">
+                <div className="flex justify-end gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
                     <button
                         type="button"
                         onClick={onClose}
-                        className="rounded-xl px-4 py-2 text-sm font-medium text-slate-300 hover:bg-slate-800 transition"
+                        className="rounded-xl px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:bg-slate-800 transition"
                         disabled={cargando}
                     >
                         Cancelar
@@ -271,7 +271,7 @@ export function FormularioCompra({
                         onClick={handleSubmit}
                         type="button"
                         disabled={cargando || detalles.length === 0 || proveedorId === 0}
-                        className="rounded-xl bg-cyan-600 px-6 py-2 text-sm font-medium text-white hover:bg-cyan-500 transition disabled:opacity-50"
+                        className="rounded-xl bg-teal-600 px-6 py-2 text-sm font-medium text-slate-900 dark:text-white hover:bg-teal-700 dark:hover:bg-teal-500 transition disabled:opacity-50"
                     >
                         {cargando ? "Registrando Compra..." : "Registrar Compra"}
                     </button>
@@ -296,20 +296,20 @@ export function ListaCompras({
         <div className="flex-1 p-6 lg:p-10">
             <header className="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-white">Compras</h1>
-                    <p className="mt-2 text-slate-400">Registra ingresos de mercadería al inventario.</p>
+                    <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Compras</h1>
+                    <p className="mt-2 text-slate-600 dark:text-slate-400">Registra ingresos de mercadería al inventario.</p>
                 </div>
                 <button
                     onClick={() => setMostrarModal(true)}
-                    className="rounded-xl bg-cyan-600 px-4 py-2.5 text-sm font-semibold text-white shadow-lg hover:bg-cyan-500 transition whitespace-nowrap"
+                    className="rounded-xl bg-teal-600 px-4 py-2.5 text-sm font-semibold text-slate-900 dark:text-white shadow-lg hover:bg-teal-700 dark:hover:bg-teal-500 transition whitespace-nowrap"
                 >
                     + Registrar Compra
                 </button>
             </header>
 
-            <div className="rounded-2xl border border-slate-800 bg-slate-900/50 overflow-hidden shadow-xl overflow-x-auto">
-                <table className="w-full text-left text-sm text-slate-300 min-w-[900px]">
-                    <thead className="border-b border-slate-800 bg-slate-900/80 text-xs uppercase text-slate-400">
+            <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-white dark:bg-slate-900/50 overflow-hidden shadow-xl overflow-x-auto">
+                <table className="w-full text-left text-sm text-slate-700 dark:text-slate-300 min-w-[900px]">
+                    <thead className="border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-white dark:bg-slate-900/80 text-xs uppercase text-slate-600 dark:text-slate-400">
                         <tr>
                             <th className="px-6 py-4 font-semibold">Nro. Compra</th>
                             <th className="px-6 py-4 font-semibold">Fecha</th>
@@ -322,23 +322,23 @@ export function ListaCompras({
                     <tbody className="divide-y divide-slate-800">
                         {compras.length === 0 ? (
                             <tr>
-                                <td colSpan={6} className="px-6 py-8 text-center text-slate-500">
+                                <td colSpan={6} className="px-6 py-8 text-center text-slate-500 dark:text-slate-600 dark:text-slate-400">
                                     No hay compras registradas.
                                 </td>
                             </tr>
                         ) : (
                             compras.map((comp) => (
-                                <tr key={comp.id} className="hover:bg-slate-800/50 transition">
-                                    <td className="px-6 py-4 font-mono text-cyan-400 font-medium">
+                                <tr key={comp.id} className="hover:hover:bg-slate-50 dark:hover:bg-slate-50 dark:bg-slate-800/50 transition">
+                                    <td className="px-6 py-4 font-mono text-teal-600 dark:text-teal-400 font-medium">
                                         {comp.numeroCompra}
                                     </td>
                                     <td className="px-6 py-4">
                                         {new Date(comp.fechaCompra).toLocaleDateString('es-ES')}
                                     </td>
-                                    <td className="px-6 py-4 font-medium text-white">
+                                    <td className="px-6 py-4 font-medium text-slate-900 dark:text-white">
                                         {comp.proveedor?.nombre}
                                     </td>
-                                    <td className="px-6 py-4 text-slate-400">
+                                    <td className="px-6 py-4 text-slate-600 dark:text-slate-400">
                                         {comp.observacion || "-"}
                                     </td>
                                     <td className="px-6 py-4 text-right font-semibold text-emerald-400">

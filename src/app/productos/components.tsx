@@ -84,8 +84,8 @@ export function FormularioProducto({
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 overflow-y-auto">
-            <div className="w-full max-w-2xl rounded-2xl border border-slate-700 bg-slate-900 p-6 shadow-2xl my-8">
-                <h3 className="text-xl font-bold text-white mb-4">
+            <div className="w-full max-w-2xl rounded-2xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 p-6 shadow-2xl my-8">
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4">
                     {productoAEditar ? "Editar Producto" : "Nuevo Producto"}
                 </h3>
                 
@@ -98,22 +98,22 @@ export function FormularioProducto({
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="md:col-span-2">
-                            <label className="block text-sm font-medium text-slate-300 mb-1">Nombre</label>
+                            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Nombre</label>
                             <input
                                 type="text"
                                 value={nombre}
                                 onChange={(e) => setNombre(e.target.value)}
-                                className="w-full rounded-xl border border-slate-700 bg-slate-800 p-3 text-white placeholder-slate-500 focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500"
+                                className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-3 text-slate-900 dark:text-white placeholder-slate-500 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
                                 required minLength={2}
                             />
                         </div>
 
                         <div className="md:col-span-2">
-                            <label className="block text-sm font-medium text-slate-300 mb-1">Categoría</label>
+                            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Categoría</label>
                             <select
                                 value={categoriaId}
                                 onChange={(e) => setCategoriaId(e.target.value)}
-                                className="w-full rounded-xl border border-slate-700 bg-slate-800 p-3 text-white focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500"
+                                className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-3 text-slate-900 dark:text-white focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
                                 required
                             >
                                 <option value="">Seleccione una categoría</option>
@@ -127,113 +127,113 @@ export function FormularioProducto({
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-slate-300 mb-1">Código de Barra</label>
+                            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Código de Barra</label>
                             <input
                                 type="text"
                                 value={codigoBarra}
                                 onChange={(e) => setCodigoBarra(e.target.value)}
-                                className="w-full rounded-xl border border-slate-700 bg-slate-800 p-3 text-white focus:border-cyan-500 focus:outline-none"
+                                className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-3 text-slate-900 dark:text-white focus:border-teal-500 focus:outline-none"
                             />
                         </div>
 
                         <div className="hidden md:block"></div>
 
                         <div>
-                            <label className="block text-sm font-medium text-slate-300 mb-1">Precio Compra</label>
+                            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Precio Compra</label>
                             <input
                                 type="number" step="0.01" min="0"
                                 value={precioCompra}
                                 onChange={(e) => setPrecioCompra(e.target.value)}
-                                className="w-full rounded-xl border border-slate-700 bg-slate-800 p-3 text-white focus:border-cyan-500 focus:outline-none"
+                                className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-3 text-slate-900 dark:text-white focus:border-teal-500 focus:outline-none"
                                 required
                             />
                         </div>
                         
                         <div>
-                            <label className="block text-sm font-medium text-slate-300 mb-1">Precio Venta</label>
+                            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Precio Venta</label>
                             <input
                                 type="number" step="0.01" min="0"
                                 value={precioVenta}
                                 onChange={(e) => setPrecioVenta(e.target.value)}
-                                className="w-full rounded-xl border border-slate-700 bg-slate-800 p-3 text-white focus:border-cyan-500 focus:outline-none"
+                                className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-3 text-slate-900 dark:text-white focus:border-teal-500 focus:outline-none"
                                 required
                             />
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-slate-300 mb-1">Stock Actual</label>
+                            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Stock Actual</label>
                             <input
                                 type="number" min="0"
                                 value={stockActual}
                                 onChange={(e) => setStockActual(e.target.value)}
-                                className="w-full rounded-xl border border-slate-700 bg-slate-800 p-3 text-white focus:border-cyan-500 focus:outline-none"
+                                className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-3 text-slate-900 dark:text-white focus:border-teal-500 focus:outline-none"
                                 required
                             />
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-slate-300 mb-1">Stock Mínimo</label>
+                            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Stock Mínimo</label>
                             <input
                                 type="number" min="0"
                                 value={stockMinimo}
                                 onChange={(e) => setStockMinimo(e.target.value)}
-                                className="w-full rounded-xl border border-slate-700 bg-slate-800 p-3 text-white focus:border-cyan-500 focus:outline-none"
+                                className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-3 text-slate-900 dark:text-white focus:border-teal-500 focus:outline-none"
                                 required
                             />
                         </div>
 
                         <div className="md:col-span-2">
-                            <label className="block text-sm font-medium text-slate-300 mb-1">Descripción</label>
+                            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Descripción</label>
                             <textarea
                                 value={descripcion}
                                 onChange={(e) => setDescripcion(e.target.value)}
-                                className="w-full rounded-xl border border-slate-700 bg-slate-800 p-3 text-white focus:border-cyan-500 focus:outline-none"
+                                className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-3 text-slate-900 dark:text-white focus:border-teal-500 focus:outline-none"
                                 rows={2}
                             />
                         </div>
 
                         {/* Sección Farmacia */}
-                        <div className="md:col-span-2 mt-4 border-t border-slate-800 pt-4">
-                            <h4 className="text-md font-semibold text-slate-200 mb-4">Datos Farmacéuticos (Opcional)</h4>
+                        <div className="md:col-span-2 mt-4 border-t border-slate-200 dark:border-slate-800 pt-4">
+                            <h4 className="text-md font-semibold text-slate-800 dark:text-slate-200 mb-4">Datos Farmacéuticos (Opcional)</h4>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-slate-300 mb-1">Principio Activo</label>
+                                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Principio Activo</label>
                                     <input
                                         type="text" value={principioActivo} onChange={(e) => setPrincipioActivo(e.target.value)}
-                                        className="w-full rounded-xl border border-slate-700 bg-slate-800 p-3 text-white focus:border-cyan-500 focus:outline-none"
+                                        className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-3 text-slate-900 dark:text-white focus:border-teal-500 focus:outline-none"
                                         placeholder="Ej. Paracetamol"
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-slate-300 mb-1">Laboratorio</label>
+                                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Laboratorio</label>
                                     <input
                                         type="text" value={laboratorio} onChange={(e) => setLaboratorio(e.target.value)}
-                                        className="w-full rounded-xl border border-slate-700 bg-slate-800 p-3 text-white focus:border-cyan-500 focus:outline-none"
+                                        className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-3 text-slate-900 dark:text-white focus:border-teal-500 focus:outline-none"
                                         placeholder="Ej. Bayer"
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-slate-300 mb-1">Presentación</label>
+                                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Presentación</label>
                                     <input
                                         type="text" value={presentacion} onChange={(e) => setPresentacion(e.target.value)}
-                                        className="w-full rounded-xl border border-slate-700 bg-slate-800 p-3 text-white focus:border-cyan-500 focus:outline-none"
+                                        className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-3 text-slate-900 dark:text-white focus:border-teal-500 focus:outline-none"
                                         placeholder="Ej. Caja x 100 comp."
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-slate-300 mb-1">Concentración</label>
+                                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Concentración</label>
                                     <input
                                         type="text" value={concentracion} onChange={(e) => setConcentracion(e.target.value)}
-                                        className="w-full rounded-xl border border-slate-700 bg-slate-800 p-3 text-white focus:border-cyan-500 focus:outline-none"
+                                        className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-3 text-slate-900 dark:text-white focus:border-teal-500 focus:outline-none"
                                         placeholder="Ej. 500mg"
                                     />
                                 </div>
                                 <div className="md:col-span-2 flex items-center mt-2">
                                     <input
                                         type="checkbox" id="receta" checked={requiereReceta} onChange={(e) => setRequiereReceta(e.target.checked)}
-                                        className="h-4 w-4 rounded border-slate-700 bg-slate-800 text-cyan-600 focus:ring-cyan-600 focus:ring-offset-slate-900"
+                                        className="h-4 w-4 rounded border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-teal-600 focus:ring-teal-600 focus:ring-offset-slate-900"
                                     />
-                                    <label htmlFor="receta" className="ml-2 block text-sm font-medium text-slate-300">
+                                    <label htmlFor="receta" className="ml-2 block text-sm font-medium text-slate-700 dark:text-slate-300">
                                         Requiere receta médica para su venta
                                     </label>
                                 </div>
@@ -241,11 +241,11 @@ export function FormularioProducto({
                         </div>
                     </div>
 
-                    <div className="mt-6 flex justify-end gap-3 pt-4 border-t border-slate-800">
+                    <div className="mt-6 flex justify-end gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
                         <button
                             type="button"
                             onClick={onClose}
-                            className="rounded-xl px-4 py-2 text-sm font-medium text-slate-300 hover:bg-slate-800 transition"
+                            className="rounded-xl px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:bg-slate-800 transition"
                             disabled={cargando}
                         >
                             Cancelar
@@ -253,7 +253,7 @@ export function FormularioProducto({
                         <button
                             type="submit"
                             disabled={cargando || categorias.length === 0}
-                            className="rounded-xl bg-cyan-600 px-4 py-2 text-sm font-medium text-white hover:bg-cyan-500 transition disabled:opacity-50"
+                            className="rounded-xl bg-teal-600 px-4 py-2 text-sm font-medium text-slate-900 dark:text-white hover:bg-teal-700 dark:hover:bg-teal-500 transition disabled:opacity-50"
                         >
                             {cargando ? "Guardando..." : "Guardar"}
                         </button>
@@ -289,20 +289,20 @@ export function ListaProductos({ productos, categorias }: { productos: ProductoC
         <div className="flex-1 p-6 lg:p-10">
             <header className="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-white">Productos</h1>
-                    <p className="mt-2 text-slate-400">Gestiona el catálogo de productos y su stock.</p>
+                    <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Productos</h1>
+                    <p className="mt-2 text-slate-600 dark:text-slate-400">Gestiona el catálogo de productos y su stock.</p>
                 </div>
                 <button
                     onClick={handleCrear}
-                    className="rounded-xl bg-cyan-600 px-4 py-2.5 text-sm font-semibold text-white shadow-lg hover:bg-cyan-500 transition whitespace-nowrap"
+                    className="rounded-xl bg-teal-600 px-4 py-2.5 text-sm font-semibold text-slate-900 dark:text-white shadow-lg hover:bg-teal-700 dark:hover:bg-teal-500 transition whitespace-nowrap"
                 >
                     + Nuevo Producto
                 </button>
             </header>
 
-            <div className="rounded-2xl border border-slate-800 bg-slate-900/50 overflow-hidden shadow-xl overflow-x-auto">
-                <table className="w-full text-left text-sm text-slate-300 min-w-[800px]">
-                    <thead className="border-b border-slate-800 bg-slate-900/80 text-xs uppercase text-slate-400">
+            <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-white dark:bg-slate-900/50 overflow-hidden shadow-xl overflow-x-auto">
+                <table className="w-full text-left text-sm text-slate-700 dark:text-slate-300 min-w-[800px]">
+                    <thead className="border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-white dark:bg-slate-900/80 text-xs uppercase text-slate-600 dark:text-slate-400">
                         <tr>
                             <th className="px-6 py-4 font-semibold">Producto</th>
                             <th className="px-6 py-4 font-semibold">Categoría</th>
@@ -315,36 +315,36 @@ export function ListaProductos({ productos, categorias }: { productos: ProductoC
                     <tbody className="divide-y divide-slate-800">
                         {productos.length === 0 ? (
                             <tr>
-                                <td colSpan={6} className="px-6 py-8 text-center text-slate-500">
+                                <td colSpan={6} className="px-6 py-8 text-center text-slate-500 dark:text-slate-600 dark:text-slate-400">
                                     No hay productos registrados.
                                 </td>
                             </tr>
                         ) : (
                             productos.map((prod) => (
-                                <tr key={prod.id} className="hover:bg-slate-800/50 transition">
+                                <tr key={prod.id} className="hover:hover:bg-slate-50 dark:hover:bg-slate-50 dark:bg-slate-800/50 transition">
                                     <td className="px-6 py-4">
-                                        <div className="font-medium text-white">{prod.nombre} {prod.concentracion ? `(${prod.concentracion})` : ''}</div>
-                                        {prod.principioActivo && <div className="text-xs text-cyan-400 mt-1">{prod.principioActivo}</div>}
-                                        {prod.laboratorio && <div className="text-xs text-slate-500">{prod.laboratorio}</div>}
-                                        {prod.codigoBarra && <div className="text-xs text-slate-500 mt-1">Cod: {prod.codigoBarra}</div>}
+                                        <div className="font-medium text-slate-900 dark:text-white">{prod.nombre} {prod.concentracion ? `(${prod.concentracion})` : ''}</div>
+                                        {prod.principioActivo && <div className="text-xs text-teal-600 dark:text-teal-400 mt-1">{prod.principioActivo}</div>}
+                                        {prod.laboratorio && <div className="text-xs text-slate-500 dark:text-slate-600 dark:text-slate-400">{prod.laboratorio}</div>}
+                                        {prod.codigoBarra && <div className="text-xs text-slate-500 dark:text-slate-600 dark:text-slate-400 mt-1">Cod: {prod.codigoBarra}</div>}
                                         {prod.requiereReceta && <span className="inline-flex mt-1 items-center rounded bg-rose-500/10 px-2 py-0.5 text-[10px] font-medium text-rose-400 border border-rose-500/20">Receta Obligatoria</span>}
                                     </td>
                                     <td className="px-6 py-4">{prod.categoria?.nombre || "-"}</td>
-                                    <td className="px-6 py-4 font-medium text-cyan-400">
+                                    <td className="px-6 py-4 font-medium text-teal-600 dark:text-teal-400">
                                         Bs {prod.precioVenta.toFixed(2)}
                                     </td>
                                     <td className="px-6 py-4">
                                         <div className="flex flex-col gap-1">
-                                            <span className={`font-medium ${prod.stockActual <= prod.stockMinimo ? 'text-amber-400' : 'text-slate-300'}`}>
-                                                {prod.stockActual} <span className="text-xs opacity-70 text-slate-400">Gral.</span>
+                                            <span className={`font-medium ${prod.stockActual <= prod.stockMinimo ? 'text-amber-400' : 'text-slate-700 dark:text-slate-300'}`}>
+                                                {prod.stockActual} <span className="text-xs opacity-70 text-slate-600 dark:text-slate-400">Gral.</span>
                                             </span>
                                             {prod.lotes && prod.lotes.length > 0 && (
                                                 <div className="flex flex-col mt-1 gap-1">
                                                     {prod.lotes.filter(l => l.stockActual > 0).map(l => {
                                                         const isVencido = new Date(l.fechaVencimiento) < new Date();
                                                         return (
-                                                            <div key={l.id} className="text-[10px] bg-slate-800/80 px-2 py-1 rounded flex justify-between border border-slate-700/50">
-                                                                <span className="text-slate-400">Lote: {l.numeroLote}</span>
+                                                            <div key={l.id} className="text-[10px] bg-slate-100 dark:bg-slate-50 dark:bg-slate-800/80 px-2 py-1 rounded flex justify-between border border-slate-200 dark:border-slate-300 dark:border-slate-700/50">
+                                                                <span className="text-slate-600 dark:text-slate-400">Lote: {l.numeroLote}</span>
                                                                 <span className={isVencido ? 'text-rose-400 font-bold' : 'text-emerald-400 font-bold'}>
                                                                     {l.stockActual} u.
                                                                 </span>
@@ -367,7 +367,7 @@ export function ListaProductos({ productos, categorias }: { productos: ProductoC
                                     <td className="px-6 py-4 text-right">
                                         <button
                                             onClick={() => handleEditar(prod)}
-                                            className="text-cyan-400 hover:text-cyan-300 mr-4 transition font-medium"
+                                            className="text-teal-600 dark:text-teal-400 hover:text-cyan-300 mr-4 transition font-medium"
                                         >
                                             Editar
                                         </button>

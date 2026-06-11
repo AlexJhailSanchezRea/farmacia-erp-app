@@ -18,12 +18,12 @@ export function LoginForm() {
     return (
         <form action={formAction} className="flex flex-col gap-5 w-full">
             <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1.5" htmlFor="correo">
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5" htmlFor="correo">
                     Correo Electrónico
                 </label>
                 <div className="relative">
                     <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                        <svg className="h-5 w-5 text-slate-500" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                        <svg className="h-5 w-5 text-slate-500 dark:text-slate-400" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 12a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Zm0 0c0 1.657 1.007 3 2.25 3S21 13.657 21 12a9 9 0 1 0-2.636 6.364M16.5 12V8.25" />
                         </svg>
                     </div>
@@ -33,19 +33,19 @@ export function LoginForm() {
                         type="email"
                         autoComplete="email"
                         required
-                        className="block w-full rounded-xl border-0 bg-slate-50 py-3 pl-10 pr-4 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-emerald-600 sm:text-sm sm:leading-6"
+                        className="block w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 py-3 pl-10 pr-4 text-slate-900 dark:text-slate-100 shadow-sm placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 dark:focus:ring-teal-500 sm:text-sm sm:leading-6 transition-colors"
                         placeholder="admin@nexaerp.com"
                     />
                 </div>
             </div>
 
             <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1.5" htmlFor="contrasena">
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5" htmlFor="contrasena">
                     Contraseña
                 </label>
                 <div className="relative">
                     <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                        <svg className="h-5 w-5 text-slate-500" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                        <svg className="h-5 w-5 text-slate-500 dark:text-slate-400" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
                         </svg>
                     </div>
@@ -55,22 +55,22 @@ export function LoginForm() {
                         type="password"
                         autoComplete="current-password"
                         required
-                        className="block w-full rounded-xl border-0 bg-slate-50 py-3 pl-10 pr-4 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-emerald-600 sm:text-sm sm:leading-6"
+                        className="block w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 py-3 pl-10 pr-4 text-slate-900 dark:text-slate-100 shadow-sm placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 dark:focus:ring-teal-500 sm:text-sm sm:leading-6 transition-colors"
                         placeholder="••••••••"
                     />
                 </div>
             </div>
 
             {state?.error && (
-                <div className="rounded-lg bg-rose-50 p-4 border border-rose-200">
+                <div className="rounded-lg bg-red-50 dark:bg-red-900/20 p-4 border border-red-200 dark:border-red-800/30">
                     <div className="flex">
                         <div className="flex-shrink-0">
-                            <svg className="h-5 w-5 text-rose-500" viewBox="0 0 20 20" fill="currentColor">
+                            <svg className="h-5 w-5 text-red-500 dark:text-red-400" viewBox="0 0 20 20" fill="currentColor">
                                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clipRule="evenodd" />
                             </svg>
                         </div>
                         <div className="ml-3">
-                            <h3 className="text-sm font-medium text-rose-800">{state.error}</h3>
+                            <h3 className="text-sm font-medium text-red-800 dark:text-red-300">{state.error}</h3>
                         </div>
                     </div>
                 </div>
@@ -79,7 +79,7 @@ export function LoginForm() {
             <button
                 type="submit"
                 disabled={isPending}
-                className="mt-2 flex w-full justify-center rounded-xl bg-emerald-600 px-3 py-3 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                className="mt-2 flex w-full justify-center rounded-xl bg-teal-600 px-3 py-3 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-teal-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
             >
                 {isPending ? (
                     <span className="flex items-center gap-2">
