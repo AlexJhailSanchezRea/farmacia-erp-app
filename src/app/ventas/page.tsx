@@ -1,4 +1,4 @@
-import { verificarAccesoModulo } from "@/lib/permissions";
+import { verificarAccesoModulo, verificarPermisoAccion } from "@/lib/permissions";
 import { NoAutorizado } from "@/components/layout/NoAutorizado";
 import { obtenerUsuarioAutenticado } from "@/lib/auth";
 import { accionObtenerVentas } from "@/modules/ventas/actions";
@@ -20,12 +20,15 @@ export default async function VentasPage() {
         accionObtenerProductos()
     ]);
 
+    const puedeAnular = verificarPermisoAccion(usuario.rol.nombre, "anular_venta");
+
     return (
         <main className="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
             <ListaVentas 
                 ventas={ventas} 
                 clientes={clientes} 
                 productos={productos} 
+                puedeAnular={puedeAnular}
             />
         </main>
     );

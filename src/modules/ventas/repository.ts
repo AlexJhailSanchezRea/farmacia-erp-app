@@ -19,6 +19,8 @@ function mapearVenta(ventaPrisma: VentaConRelaciones): VentaCliente {
         total: Number(ventaPrisma.total),
         observacion: ventaPrisma.observacion,
         estado: ventaPrisma.estado,
+        motivoAnulacion: ventaPrisma.motivoAnulacion,
+        fechaAnulacion: ventaPrisma.fechaAnulacion?.toISOString() || null,
         clienteId: ventaPrisma.clienteId,
         creadoEn: ventaPrisma.creadoEn.toISOString(),
         cliente: ventaPrisma.cliente ? {
@@ -228,4 +230,108 @@ export async function crearVentaConTransaccion(datos: CrearVentaInput): Promise<
     });
 
     return mapearVenta(ventaRegistrada);
+}
+
+export async function anularVentaConTransaccion(idVenta: number, motivo: string): Promise<VentaCliente> {
+    const ventaAnulada = await prisma.$transaction(async (tx) => {
+        // 1. Obtener la venta con comprobante
+        const venta = await tx.venta.findUniqueOrThrow({
+            where: { id: idVenta },
+            include: { comprobante: true }
+        });
+
+        if (venta.estado === "INACTIVO") {
+            throw new Error("La venta ya se encuentra anulada.");
+        }
+
+        // 2. Cambiar estado de venta a INACTIVO
+        const ventaActualizada = await tx.venta.update({
+            where: { id: idVenta },
+            data: {
+                estado: "INACTIVO",
+                motivoAnulacion: motivo,
+                fechaAnulacion: new Date()
+            },
+            include: {
+                cliente: true,
+                detalles: {
+                    include: { producto: true }
+                }
+            }
+        });
+
+        // 3. Cambiar estado de comprobante a INACTIVO
+        if (venta.comprobante) {
+            await tx.comprobante.update({
+                where: { id: venta.comprobante.id },
+                data: { estado: "INACTIVO" }
+            });
+        }
+
+        // 4. Devolver stock
+        // Buscar movimientos de salida originales de esta venta
+        const movimientosSalida = await tx.movimientoInventario.findMany({
+            where: { ventaId: idVenta, tipoMovimiento: "SALIDA" }
+        });
+
+        for (const mov of movimientosSalida) {
+            // Devolver al producto global
+            const productoActual = await tx.producto.findUniqueOrThrow({ where: { id: mov.productoId } });
+            await tx.producto.update({
+                where: { id: mov.productoId },
+                data: { stockActual: productoActual.stockActual + mov.cantidad }
+            });
+
+            // Devolver al lote si aplica
+            if (mov.loteId) {
+                const loteActual = await tx.loteProducto.findUniqueOrThrow({ where: { id: mov.loteId } });
+                await tx.loteProducto.update({
+                    where: { id: mov.loteId },
+                    data: { stockActual: loteActual.stockActual + mov.cantidad }
+                });
+
+                // Registrar movimiento de entrada (Devolución)
+                await tx.movimientoInventario.create({
+                    data: {
+                        tipoMovimiento: "ENTRADA",
+                        cantidad: mov.cantidad,
+                        stockAnterior: loteActual.stockActual,
+                        stockNuevo: loteActual.stockActual + mov.cantidad,
+                        motivo: `Anulación de Venta ${venta.numeroVenta}`,
+                        ventaId: idVenta,
+                        productoId: mov.productoId,
+                        loteId: mov.loteId
+                    }
+                });
+            } else {
+                // Si por alguna razón no tenía loteId, igual registrar entrada al producto
+                await tx.movimientoInventario.create({
+                    data: {
+                        tipoMovimiento: "ENTRADA",
+                        cantidad: mov.cantidad,
+                        stockAnterior: productoActual.stockActual,
+                        stockNuevo: productoActual.stockActual + mov.cantidad,
+                        motivo: `Anulación de Venta ${venta.numeroVenta}`,
+                        ventaId: idVenta,
+                        productoId: mov.productoId
+                    }
+                });
+            }
+        }
+
+        // 5. Crear Movimiento de Caja de reverso (EGRESO)
+        await tx.movimientoCaja.create({
+            data: {
+                tipoMovimiento: "EGRESO",
+                concepto: `Anulación de Venta ${venta.numeroVenta}`,
+                monto: venta.total,
+                referencia: `ANULACION-VENTA-${idVenta}`,
+                // No asignamos ventaId para no violar @unique
+            }
+        });
+
+        return ventaActualizada;
+    });
+
+    return mapearVenta(ventaAnulada);
 }

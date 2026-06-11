@@ -230,6 +230,8 @@ model Venta {
   total         Decimal        @db.Decimal(10, 2)
   observacion   String?
   estado        EstadoRegistro @default(ACTIVO)
+  motivoAnulacion String?
+  fechaAnulacion  DateTime?
   creadoEn      DateTime       @default(now())
   actualizadoEn DateTime       @updatedAt
 

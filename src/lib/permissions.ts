@@ -28,7 +28,8 @@ export type AccionNombre =
   | "crear_venta"
   | "crear_usuario"
   | "editar_usuario"
-  | "crear_movimiento_caja";
+  | "crear_movimiento_caja"
+  | "anular_venta";
 
 // Configuración centralizada de Roles y Accesos
 const PERMISOS_MODULOS: Record<string, ModuloNombre[]> = {
@@ -51,7 +52,7 @@ const PERMISOS_ACCIONES: Record<string, AccionNombre[]> = {
   "Administrador": [
     "crear_producto", "editar_producto", "crear_categoria", "crear_cliente", 
     "editar_cliente", "crear_proveedor", "editar_proveedor", "crear_compra", 
-    "crear_venta", "crear_usuario", "editar_usuario", "crear_movimiento_caja"
+    "crear_venta", "crear_usuario", "editar_usuario", "crear_movimiento_caja", "anular_venta"
   ],
   "Vendedor": [
     "crear_venta", "crear_cliente", "editar_cliente"
@@ -59,7 +60,9 @@ const PERMISOS_ACCIONES: Record<string, AccionNombre[]> = {
   "Inventario/Farmacia": [
     "crear_producto", "editar_producto", "crear_categoria", "crear_proveedor", "editar_proveedor", "crear_compra"
   ],
-  "Contador": []
+  "Contador": [
+    "anular_venta"
+  ]
 };
 
 /**

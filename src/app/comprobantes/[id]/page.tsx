@@ -40,9 +40,17 @@ export default async function DetalleComprobantePage({ params }: { params: { id:
                     <BotonImprimir />
                 </div>
 
-                <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 print:p-0 print:shadow-none print:border-none print:m-0 w-full" id="area-impresion">
+                <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 print:p-0 print:shadow-none print:border-none print:m-0 w-full relative overflow-hidden" id="area-impresion">
                     
-                    {/* Header Recibo */}
+                    {comprobante.estado === 'INACTIVO' && (
+                        <div className="absolute inset-0 z-0 flex items-center justify-center opacity-20 pointer-events-none select-none print:opacity-30">
+                            <span className="text-8xl font-black text-red-600 transform -rotate-45 tracking-widest border-8 border-red-600 px-8 py-4 rounded-3xl">ANULADO</span>
+                        </div>
+                    )}
+                    
+                    {/* Contenedor relativo para estar por encima del watermark */}
+                    <div className="relative z-10">
+                        {/* Header Recibo */}
                     <div className="text-center mb-8 border-b border-slate-200 pb-6 print:border-slate-800">
                         <h1 className="text-2xl font-bold text-slate-900 uppercase tracking-widest print:text-black">{config.nombreComercial}</h1>
                         <h2 className="text-lg font-semibold text-slate-700 mt-1 print:text-black">{config.razonSocial}</h2>
@@ -104,6 +112,7 @@ export default async function DetalleComprobantePage({ params }: { params: { id:
                     <div className="mt-12 text-center text-sm text-slate-500 pt-6 border-t border-slate-200 print:border-slate-800 print:text-black">
                         <p className="font-semibold text-slate-700 print:text-black mb-1">{config.mensajeComprobante}</p>
                         <p className="text-xs mt-2 text-slate-400 print:text-slate-600">Este no es un documento fiscal</p>
+                    </div>
                     </div>
 
                 </div>

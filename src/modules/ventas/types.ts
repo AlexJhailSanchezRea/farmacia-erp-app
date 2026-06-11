@@ -20,6 +20,8 @@ export interface VentaCliente {
     total: number;
     observacion: string | null;
     estado: EstadoRegistro;
+    motivoAnulacion?: string | null;
+    fechaAnulacion?: string | null;
     clienteId: number | null;
     creadoEn: string;
     

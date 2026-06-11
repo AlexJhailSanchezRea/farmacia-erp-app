@@ -20,6 +20,7 @@ export function ListaComprobantes({ comprobantes }: { comprobantes: ComprobanteC
                             <th className="px-6 py-4 font-semibold">Cliente</th>
                             <th className="px-6 py-4 font-semibold">Tipo</th>
                             <th className="px-6 py-4 font-semibold text-right">Total</th>
+                            <th className="px-6 py-4 font-semibold text-center">Estado</th>
                             <th className="px-6 py-4 font-semibold text-center">Acciones</th>
                         </tr>
                     </thead>
@@ -49,6 +50,15 @@ export function ListaComprobantes({ comprobantes }: { comprobantes: ComprobanteC
                                     </td>
                                     <td className="px-6 py-4 text-right font-bold text-emerald-600">
                                         Bs {comp.total.toFixed(2)}
+                                    </td>
+                                    <td className="px-6 py-4 text-center">
+                                        <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium border ${
+                                            comp.estado === 'INACTIVO' 
+                                                ? 'bg-red-50 text-red-700 border-red-200' 
+                                                : 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                                        }`}>
+                                            {comp.estado === 'INACTIVO' ? 'ANULADO' : 'VÁLIDO'}
+                                        </span>
                                     </td>
                                     <td className="px-6 py-4 text-center">
                                         <Link 

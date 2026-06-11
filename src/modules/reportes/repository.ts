@@ -75,6 +75,7 @@ export async function obtenerReporteGeneral(): Promise<ReporteMetricas> {
 
     const topProductosDB = await prisma.detalleVenta.groupBy({
         by: ['productoId'],
+        where: { venta: { estado: "ACTIVO" } },
         _sum: { cantidad: true },
         orderBy: { _sum: { cantidad: 'desc' } },
         take: 5
