@@ -20,6 +20,12 @@ export function validarCrearCompra(datos: CrearCompraInput): string | null {
         if (det.precioUnitario < 0) {
             return `El precio unitario en la línea ${i + 1} no puede ser negativo.`;
         }
+        if (!det.numeroLote || det.numeroLote.trim() === "") {
+            return `Debe ingresar el número de lote en la línea ${i + 1}.`;
+        }
+        if (!det.fechaVencimiento) {
+            return `Debe ingresar la fecha de vencimiento en la línea ${i + 1}.`;
+        }
     }
 
     return null;

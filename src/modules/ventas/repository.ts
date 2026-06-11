@@ -127,31 +127,64 @@ export async function crearVentaConTransaccion(datos: CrearVentaInput): Promise<
             }
         });
 
-        // 3. Procesar movimientos y descuentos de stock
+        // 3. Procesar movimientos y descuentos de stock (FEFO)
         for (const detalle of nuevaVenta.detalles) {
             const productoActual = detalle.producto;
+            let cantidadRestante = detalle.cantidad;
             
             const stockAnterior = productoActual.stockActual;
             const stockNuevo = stockAnterior - detalle.cantidad;
 
-            // Actualizar stock del producto
+            // Lógica FEFO: Obtener lotes activos ordenados por vencimiento ASC
+            const lotesDisponibles = await tx.loteProducto.findMany({
+                where: {
+                    productoId: productoActual.id,
+                    estado: "ACTIVO",
+                    stockActual: { gt: 0 },
+                    fechaVencimiento: { gt: new Date() } // Solo lotes no vencidos
+                },
+                orderBy: { fechaVencimiento: 'asc' }
+            });
+
+            const stockValidoTotal = lotesDisponibles.reduce((sum, l) => sum + l.stockActual, 0);
+            if (stockValidoTotal < detalle.cantidad) {
+                throw new Error(`Stock insuficiente o vencido para el producto ${productoActual.nombre}. Stock no vencido: ${stockValidoTotal}. Solicitado: ${detalle.cantidad}.`);
+            }
+
+            // Actualizar stock global del producto
             await tx.producto.update({
                 where: { id: productoActual.id },
                 data: { stockActual: stockNuevo }
             });
 
-            // Crear movimiento de inventario (SALIDA)
-            await tx.movimientoInventario.create({
-                data: {
-                    tipoMovimiento: TipoMovimientoInventario.SALIDA,
-                    cantidad: detalle.cantidad,
-                    stockAnterior: stockAnterior,
-                    stockNuevo: stockNuevo,
-                    motivo: `Venta ${numVenta}`,
-                    ventaId: nuevaVenta.id,
-                    productoId: productoActual.id
-                }
-            });
+            // Descontar por lote (FEFO)
+            for (const lote of lotesDisponibles) {
+                if (cantidadRestante <= 0) break;
+
+                const cantidadADescontar = Math.min(lote.stockActual, cantidadRestante);
+
+                // Actualizar stock del lote
+                await tx.loteProducto.update({
+                    where: { id: lote.id },
+                    data: { stockActual: lote.stockActual - cantidadADescontar }
+                });
+
+                // Crear movimiento de inventario (SALIDA) por cada lote afectado
+                await tx.movimientoInventario.create({
+                    data: {
+                        tipoMovimiento: TipoMovimientoInventario.SALIDA,
+                        cantidad: cantidadADescontar,
+                        stockAnterior: lote.stockActual,
+                        stockNuevo: lote.stockActual - cantidadADescontar,
+                        motivo: `Venta ${numVenta} - Lote ${lote.numeroLote}`,
+                        ventaId: nuevaVenta.id,
+                        productoId: productoActual.id,
+                        loteId: lote.id
+                    }
+                });
+
+                cantidadRestante -= cantidadADescontar;
+            }
         }
 
         // 4. Crear el comprobante

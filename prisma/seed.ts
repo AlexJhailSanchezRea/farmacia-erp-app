@@ -85,11 +85,12 @@ async function main() {
     const mapCat = new Map(categoriasDB.map(c => [c.nombre, c.id]));
 
     // 3. Productos (40) - Normalizados
+    // 3. Productos (40) - Normalizados Farmacia
     const productosBase = [
-        { nombre: "Paracetamol 500 mg", descripcion: "Caja x 100", codigoBarra: "770001", precioCompra: 15.00, precioVenta: 20.00, stockActual: 0, stockMinimo: 20, categoriaId: mapCat.get("Analgésicos") },
-        { nombre: "Ibuprofeno 400 mg", descripcion: "Caja x 50", codigoBarra: "770002", precioCompra: 12.00, precioVenta: 18.00, stockActual: 0, stockMinimo: 15, categoriaId: mapCat.get("Analgésicos") },
-        { nombre: "Diclofenaco 50 mg", descripcion: "Caja x 50", codigoBarra: "770003", precioCompra: 18.00, precioVenta: 25.00, stockActual: 0, stockMinimo: 10, categoriaId: mapCat.get("Analgésicos") },
-        { nombre: "Amoxicilina 500 mg", descripcion: "Caja x 100", codigoBarra: "770004", precioCompra: 30.00, precioVenta: 45.00, stockActual: 0, stockMinimo: 15, categoriaId: mapCat.get("Antibióticos") },
+        { nombre: "Paracetamol", concentracion: "500 mg", principioActivo: "Paracetamol", laboratorio: "Inti", presentacion: "Caja x 100", requiereReceta: false, codigoBarra: "770001", precioCompra: 15.00, precioVenta: 20.00, stockActual: 0, stockMinimo: 20, categoriaId: mapCat.get("Analgésicos") },
+        { nombre: "Ibuprofeno", concentracion: "400 mg", principioActivo: "Ibuprofeno", laboratorio: "Bagó", presentacion: "Caja x 50", requiereReceta: false, codigoBarra: "770002", precioCompra: 12.00, precioVenta: 18.00, stockActual: 0, stockMinimo: 15, categoriaId: mapCat.get("Analgésicos") },
+        { nombre: "Diclofenaco", concentracion: "50 mg", principioActivo: "Diclofenaco Sódico", laboratorio: "Cofar", presentacion: "Caja x 50", requiereReceta: true, codigoBarra: "770003", precioCompra: 18.00, precioVenta: 25.00, stockActual: 0, stockMinimo: 10, categoriaId: mapCat.get("Analgésicos") },
+        { nombre: "Amoxicilina", concentracion: "500 mg", principioActivo: "Amoxicilina", laboratorio: "Terbol", presentacion: "Caja x 100", requiereReceta: true, codigoBarra: "770004", precioCompra: 30.00, precioVenta: 45.00, stockActual: 0, stockMinimo: 15, categoriaId: mapCat.get("Antibióticos") },
         { nombre: "Vitamina C 1000 mg", descripcion: "Frasco x 30", codigoBarra: "770005", precioCompra: 20.00, precioVenta: 35.00, stockActual: 0, stockMinimo: 10, categoriaId: mapCat.get("Vitaminas") },
         { nombre: "Complejo B", descripcion: "Caja x 30", codigoBarra: "770006", precioCompra: 25.00, precioVenta: 38.00, stockActual: 0, stockMinimo: 10, categoriaId: mapCat.get("Vitaminas") },
         { nombre: "Alcohol medicinal 70", descripcion: "Frasco 1000 ml", codigoBarra: "770007", precioCompra: 10.00, precioVenta: 15.00, stockActual: 0, stockMinimo: 30, categoriaId: mapCat.get("Primeros auxilios") },
@@ -136,21 +137,31 @@ async function main() {
             where: { codigoBarra: prod.codigoBarra },
             update: { 
                 nombre: nombreReal,
-                descripcion: prod.descripcion,
+                descripcion: prod.presentacion,
                 precioCompra: prod.precioCompra,
                 precioVenta: prod.precioVenta,
                 stockMinimo: prod.stockMinimo,
-                categoriaId: prod.categoriaId
+                categoriaId: prod.categoriaId,
+                principioActivo: prod.principioActivo,
+                laboratorio: prod.laboratorio,
+                presentacion: prod.presentacion,
+                concentracion: prod.concentracion,
+                requiereReceta: prod.requiereReceta
             },
             create: { 
                 nombre: nombreReal,
-                descripcion: prod.descripcion,
+                descripcion: prod.presentacion,
                 codigoBarra: prod.codigoBarra,
                 precioCompra: prod.precioCompra,
                 precioVenta: prod.precioVenta,
                 stockActual: 0,
                 stockMinimo: prod.stockMinimo,
-                categoriaId: prod.categoriaId
+                categoriaId: prod.categoriaId,
+                principioActivo: prod.principioActivo,
+                laboratorio: prod.laboratorio,
+                presentacion: prod.presentacion,
+                concentracion: prod.concentracion,
+                requiereReceta: prod.requiereReceta
             },
         });
     }
@@ -217,16 +228,36 @@ async function main() {
     const prodsDB = await prisma.producto.findMany();
 
     // 6. Compras y Movimientos (8 operaciones para crear stock)
+    // Fechas de prueba
+    const hoy = new Date();
+    const manana = new Date(hoy); manana.setDate(hoy.getDate() + 1);
+    const vencido = new Date(hoy); vencido.setDate(hoy.getDate() - 10);
+    const riesgo30 = new Date(hoy); riesgo30.setDate(hoy.getDate() + 15);
+    const riesgo60 = new Date(hoy); riesgo60.setDate(hoy.getDate() + 45);
+    const largoPlazo = new Date(hoy); largoPlazo.setFullYear(hoy.getFullYear() + 2);
+
     if (proveedoresDB.length > 0 && prodsDB.length >= 40) {
         const comprasDePrueba = [
-            { numeroCompra: "SEED-COMP-001", proveedor: proveedoresDB[0], detalles: [ { prod: prodsDB[0], cant: 200 }, { prod: prodsDB[1], cant: 150 }, { prod: prodsDB[2], cant: 100 } ] },
-            { numeroCompra: "SEED-COMP-002", proveedor: proveedoresDB[1], detalles: [ { prod: prodsDB[3], cant: 100 }, { prod: prodsDB[4], cant: 200 }, { prod: prodsDB[5], cant: 100 } ] },
-            { numeroCompra: "SEED-COMP-003", proveedor: proveedoresDB[2], detalles: [ { prod: prodsDB[6], cant: 50 }, { prod: prodsDB[7], cant: 50 }, { prod: prodsDB[8], cant: 100 }, { prod: prodsDB[9], cant: 150 } ] },
-            { numeroCompra: "SEED-COMP-004", proveedor: proveedoresDB[3], detalles: [ { prod: prodsDB[10], cant: 20 }, { prod: prodsDB[11], cant: 10 }, { prod: prodsDB[12], cant: 300 } ] },
-            { numeroCompra: "SEED-COMP-005", proveedor: proveedoresDB[4], detalles: [ { prod: prodsDB[13], cant: 200 }, { prod: prodsDB[14], cant: 50 }, { prod: prodsDB[15], cant: 100 } ] },
-            { numeroCompra: "SEED-COMP-006", proveedor: proveedoresDB[5], detalles: [ { prod: prodsDB[16], cant: 80 }, { prod: prodsDB[17], cant: 100 }, { prod: prodsDB[18], cant: 200 } ] },
-            { numeroCompra: "SEED-COMP-007", proveedor: proveedoresDB[6], detalles: [ { prod: prodsDB[19], cant: 100 }, { prod: prodsDB[20], cant: 150 }, { prod: prodsDB[21], cant: 80 } ] },
-            { numeroCompra: "SEED-COMP-008", proveedor: proveedoresDB[7], detalles: [ { prod: prodsDB[22], cant: 50 }, { prod: prodsDB[23], cant: 100 }, { prod: prodsDB[24], cant: 40 }, { prod: prodsDB[25], cant: 60 } ] },
+            { numeroCompra: "SEED-COMP-001", proveedor: proveedoresDB[0], detalles: [ 
+                { prod: prodsDB[0], cant: 50, lote: "L-VENC-01", v: vencido }, 
+                { prod: prodsDB[0], cant: 200, lote: "L-SAFE-01", v: largoPlazo },
+                { prod: prodsDB[1], cant: 60, lote: "L-R30-01", v: riesgo30 }, 
+                { prod: prodsDB[1], cant: 150, lote: "L-SAFE-02", v: largoPlazo },
+                { prod: prodsDB[2], cant: 80, lote: "L-R60-01", v: riesgo60 },
+                { prod: prodsDB[2], cant: 100, lote: "L-SAFE-03", v: largoPlazo }
+            ] },
+            { numeroCompra: "SEED-COMP-002", proveedor: proveedoresDB[1], detalles: [ 
+                { prod: prodsDB[3], cant: 40, lote: "L-VENC-02", v: vencido }, 
+                { prod: prodsDB[3], cant: 100, lote: "L-SAFE-04", v: largoPlazo },
+                { prod: prodsDB[4], cant: 50, lote: "L-R30-02", v: riesgo30 }, 
+                { prod: prodsDB[5], cant: 100, lote: "L-SAFE-05", v: largoPlazo } 
+            ] },
+            { numeroCompra: "SEED-COMP-003", proveedor: proveedoresDB[2], detalles: [ { prod: prodsDB[6], cant: 50, lote: "L-106", v: largoPlazo }, { prod: prodsDB[7], cant: 50, lote: "L-107", v: largoPlazo }, { prod: prodsDB[8], cant: 100, lote: "L-108", v: largoPlazo }, { prod: prodsDB[9], cant: 150, lote: "L-109", v: largoPlazo } ] },
+            { numeroCompra: "SEED-COMP-004", proveedor: proveedoresDB[3], detalles: [ { prod: prodsDB[10], cant: 20, lote: "L-110", v: largoPlazo }, { prod: prodsDB[11], cant: 10, lote: "L-111", v: largoPlazo }, { prod: prodsDB[12], cant: 300, lote: "L-112", v: largoPlazo } ] },
+            { numeroCompra: "SEED-COMP-005", proveedor: proveedoresDB[4], detalles: [ { prod: prodsDB[13], cant: 200, lote: "L-113", v: largoPlazo }, { prod: prodsDB[14], cant: 50, lote: "L-114", v: largoPlazo }, { prod: prodsDB[15], cant: 100, lote: "L-115", v: largoPlazo } ] },
+            { numeroCompra: "SEED-COMP-006", proveedor: proveedoresDB[5], detalles: [ { prod: prodsDB[16], cant: 80, lote: "L-116", v: largoPlazo }, { prod: prodsDB[17], cant: 100, lote: "L-117", v: largoPlazo }, { prod: prodsDB[18], cant: 200, lote: "L-118", v: largoPlazo } ] },
+            { numeroCompra: "SEED-COMP-007", proveedor: proveedoresDB[6], detalles: [ { prod: prodsDB[19], cant: 100, lote: "L-119", v: largoPlazo }, { prod: prodsDB[20], cant: 150, lote: "L-120", v: largoPlazo }, { prod: prodsDB[21], cant: 80, lote: "L-121", v: largoPlazo } ] },
+            { numeroCompra: "SEED-COMP-008", proveedor: proveedoresDB[7], detalles: [ { prod: prodsDB[22], cant: 50, lote: "L-122", v: largoPlazo }, { prod: prodsDB[23], cant: 100, lote: "L-123", v: largoPlazo }, { prod: prodsDB[24], cant: 40, lote: "L-124", v: largoPlazo }, { prod: prodsDB[25], cant: 60, lote: "L-125", v: largoPlazo } ] },
         ];
 
         for (const compBase of comprasDePrueba) {
@@ -263,6 +294,24 @@ async function main() {
                         const stockAnterior = prodActual.stockActual;
                         const stockNuevo = stockAnterior + det.cant;
 
+                        const lote = await tx.loteProducto.upsert({
+                            where: {
+                                productoId_numeroLote: { productoId: det.prod.id, numeroLote: det.lote }
+                            },
+                            create: {
+                                productoId: det.prod.id,
+                                numeroLote: det.lote,
+                                fechaVencimiento: det.v,
+                                stockActual: det.cant,
+                                stockInicial: det.cant,
+                                precioCompra: det.prod.precioCompra
+                            },
+                            update: {
+                                stockActual: { increment: det.cant },
+                                stockInicial: { increment: det.cant }
+                            }
+                        });
+
                         await tx.producto.update({
                             where: { id: det.prod.id },
                             data: { stockActual: stockNuevo }
@@ -276,7 +325,8 @@ async function main() {
                                 stockNuevo: stockNuevo,
                                 motivo: `Compra Fac. ${compBase.numeroCompra}`,
                                 compraId: nuevaCompra.id,
-                                productoId: det.prod.id
+                                productoId: det.prod.id,
+                                loteId: lote.id
                             }
                         });
                     }
@@ -350,23 +400,50 @@ async function main() {
                         const prodActual = await tx.producto.findUniqueOrThrow({ where: { id: det.prod.id } });
                         const stockAnterior = prodActual.stockActual;
                         const stockNuevo = stockAnterior - det.cant;
+                        let cantidadRestante = det.cant;
+
+                        const lotesDisp = await tx.loteProducto.findMany({
+                            where: { 
+                                productoId: prodActual.id, 
+                                stockActual: { gt: 0 },
+                                fechaVencimiento: { gt: new Date() } // FEFO real: ignorar vencidos
+                            },
+                            orderBy: { fechaVencimiento: 'asc' }
+                        });
+
+                        const stockValido = lotesDisp.reduce((acc, l) => acc + l.stockActual, 0);
+                        if (stockValido < det.cant) {
+                            throw new Error(`Stock no vencido insuficiente para vender ${det.prod.nombre}. En seed.`);
+                        }
 
                         await tx.producto.update({
                             where: { id: det.prod.id },
                             data: { stockActual: stockNuevo }
                         });
 
-                        await tx.movimientoInventario.create({
-                            data: {
-                                tipoMovimiento: "SALIDA",
-                                cantidad: det.cant,
-                                stockAnterior: stockAnterior,
-                                stockNuevo: stockNuevo,
-                                motivo: `Venta ${ventaBase.numeroVenta}`,
-                                ventaId: nuevaVenta.id,
-                                productoId: det.prod.id
-                            }
-                        });
+                        for (const lote of lotesDisp) {
+                            if (cantidadRestante <= 0) break;
+                            const desc = Math.min(lote.stockActual, cantidadRestante);
+
+                            await tx.loteProducto.update({
+                                where: { id: lote.id },
+                                data: { stockActual: lote.stockActual - desc }
+                            });
+
+                            await tx.movimientoInventario.create({
+                                data: {
+                                    tipoMovimiento: "SALIDA",
+                                    cantidad: desc,
+                                    stockAnterior: lote.stockActual,
+                                    stockNuevo: lote.stockActual - desc,
+                                    motivo: `Venta ${ventaBase.numeroVenta} Lote ${lote.numeroLote}`,
+                                    ventaId: nuevaVenta.id,
+                                    productoId: det.prod.id,
+                                    loteId: lote.id
+                                }
+                            });
+                            cantidadRestante -= desc;
+                        }
                     }
 
                     await tx.venta.update({

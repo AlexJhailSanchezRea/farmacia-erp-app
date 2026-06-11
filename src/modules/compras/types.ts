@@ -31,6 +31,8 @@ export interface DetalleCompraInput {
     productoId: number;
     cantidad: number;
     precioUnitario: number;
+    numeroLote: string;
+    fechaVencimiento: string;
 }
 
 export interface CrearCompraInput {

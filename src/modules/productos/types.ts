@@ -16,6 +16,24 @@ export interface ProductoCliente {
     actualizadoEn: string;
     categoriaId: number;
     categoria?: Categoria; // Relación serializada opcional
+    
+    // Especialidad Farmacia
+    principioActivo?: string | null;
+    laboratorio?: string | null;
+    presentacion?: string | null;
+    concentracion?: string | null;
+    requiereReceta: boolean;
+    lotes?: LoteProductoCliente[];
+}
+
+export interface LoteProductoCliente {
+    id: number;
+    numeroLote: string;
+    fechaVencimiento: string;
+    stockActual: number;
+    stockInicial: number;
+    precioCompra: number;
+    estado: string;
 }
 
 export interface CrearProductoInput {
@@ -27,6 +45,11 @@ export interface CrearProductoInput {
     stockActual: number;
     stockMinimo: number;
     categoriaId: number;
+    principioActivo?: string;
+    laboratorio?: string;
+    presentacion?: string;
+    concentracion?: string;
+    requiereReceta?: boolean;
 }
 
 export interface ActualizarProductoInput {
@@ -39,6 +62,11 @@ export interface ActualizarProductoInput {
     stockActual: number;
     stockMinimo: number;
     categoriaId: number;
+    principioActivo?: string;
+    laboratorio?: string;
+    presentacion?: string;
+    concentracion?: string;
+    requiereReceta?: boolean;
 }
 
 export interface RespuestaAccionProducto<T = void> {

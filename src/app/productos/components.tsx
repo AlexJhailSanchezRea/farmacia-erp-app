@@ -28,6 +28,13 @@ export function FormularioProducto({
     const [stockMinimo, setStockMinimo] = useState(productoAEditar?.stockMinimo?.toString() || "0");
     const [categoriaId, setCategoriaId] = useState(productoAEditar?.categoriaId?.toString() || "");
     
+    // Campos Farmacia
+    const [principioActivo, setPrincipioActivo] = useState(productoAEditar?.principioActivo || "");
+    const [laboratorio, setLaboratorio] = useState(productoAEditar?.laboratorio || "");
+    const [presentacion, setPresentacion] = useState(productoAEditar?.presentacion || "");
+    const [concentracion, setConcentracion] = useState(productoAEditar?.concentracion || "");
+    const [requiereReceta, setRequiereReceta] = useState(productoAEditar?.requiereReceta || false);
+
     const [cargando, setCargando] = useState(false);
     const [error, setError] = useState("");
 
@@ -51,7 +58,12 @@ export function FormularioProducto({
             precioVenta: parseFloat(precioVenta) || 0,
             stockActual: parseInt(stockActual) || 0,
             stockMinimo: parseInt(stockMinimo) || 0,
-            categoriaId: idCat
+            categoriaId: idCat,
+            principioActivo,
+            laboratorio,
+            presentacion,
+            concentracion,
+            requiereReceta
         };
 
         let res;
@@ -179,6 +191,54 @@ export function FormularioProducto({
                                 rows={2}
                             />
                         </div>
+
+                        {/* Sección Farmacia */}
+                        <div className="md:col-span-2 mt-4 border-t border-slate-800 pt-4">
+                            <h4 className="text-md font-semibold text-slate-200 mb-4">Datos Farmacéuticos (Opcional)</h4>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-300 mb-1">Principio Activo</label>
+                                    <input
+                                        type="text" value={principioActivo} onChange={(e) => setPrincipioActivo(e.target.value)}
+                                        className="w-full rounded-xl border border-slate-700 bg-slate-800 p-3 text-white focus:border-cyan-500 focus:outline-none"
+                                        placeholder="Ej. Paracetamol"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-300 mb-1">Laboratorio</label>
+                                    <input
+                                        type="text" value={laboratorio} onChange={(e) => setLaboratorio(e.target.value)}
+                                        className="w-full rounded-xl border border-slate-700 bg-slate-800 p-3 text-white focus:border-cyan-500 focus:outline-none"
+                                        placeholder="Ej. Bayer"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-300 mb-1">Presentación</label>
+                                    <input
+                                        type="text" value={presentacion} onChange={(e) => setPresentacion(e.target.value)}
+                                        className="w-full rounded-xl border border-slate-700 bg-slate-800 p-3 text-white focus:border-cyan-500 focus:outline-none"
+                                        placeholder="Ej. Caja x 100 comp."
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-300 mb-1">Concentración</label>
+                                    <input
+                                        type="text" value={concentracion} onChange={(e) => setConcentracion(e.target.value)}
+                                        className="w-full rounded-xl border border-slate-700 bg-slate-800 p-3 text-white focus:border-cyan-500 focus:outline-none"
+                                        placeholder="Ej. 500mg"
+                                    />
+                                </div>
+                                <div className="md:col-span-2 flex items-center mt-2">
+                                    <input
+                                        type="checkbox" id="receta" checked={requiereReceta} onChange={(e) => setRequiereReceta(e.target.checked)}
+                                        className="h-4 w-4 rounded border-slate-700 bg-slate-800 text-cyan-600 focus:ring-cyan-600 focus:ring-offset-slate-900"
+                                    />
+                                    <label htmlFor="receta" className="ml-2 block text-sm font-medium text-slate-300">
+                                        Requiere receta médica para su venta
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div className="mt-6 flex justify-end gap-3 pt-4 border-t border-slate-800">
@@ -263,17 +323,37 @@ export function ListaProductos({ productos, categorias }: { productos: ProductoC
                             productos.map((prod) => (
                                 <tr key={prod.id} className="hover:bg-slate-800/50 transition">
                                     <td className="px-6 py-4">
-                                        <div className="font-medium text-white">{prod.nombre}</div>
+                                        <div className="font-medium text-white">{prod.nombre} {prod.concentracion ? `(${prod.concentracion})` : ''}</div>
+                                        {prod.principioActivo && <div className="text-xs text-cyan-400 mt-1">{prod.principioActivo}</div>}
+                                        {prod.laboratorio && <div className="text-xs text-slate-500">{prod.laboratorio}</div>}
                                         {prod.codigoBarra && <div className="text-xs text-slate-500 mt-1">Cod: {prod.codigoBarra}</div>}
+                                        {prod.requiereReceta && <span className="inline-flex mt-1 items-center rounded bg-rose-500/10 px-2 py-0.5 text-[10px] font-medium text-rose-400 border border-rose-500/20">Receta Obligatoria</span>}
                                     </td>
                                     <td className="px-6 py-4">{prod.categoria?.nombre || "-"}</td>
                                     <td className="px-6 py-4 font-medium text-cyan-400">
                                         Bs {prod.precioVenta.toFixed(2)}
                                     </td>
                                     <td className="px-6 py-4">
-                                        <span className={`font-medium ${prod.stockActual <= prod.stockMinimo ? 'text-amber-400' : 'text-slate-300'}`}>
-                                            {prod.stockActual}
-                                        </span>
+                                        <div className="flex flex-col gap-1">
+                                            <span className={`font-medium ${prod.stockActual <= prod.stockMinimo ? 'text-amber-400' : 'text-slate-300'}`}>
+                                                {prod.stockActual} <span className="text-xs opacity-70 text-slate-400">Gral.</span>
+                                            </span>
+                                            {prod.lotes && prod.lotes.length > 0 && (
+                                                <div className="flex flex-col mt-1 gap-1">
+                                                    {prod.lotes.filter(l => l.stockActual > 0).map(l => {
+                                                        const isVencido = new Date(l.fechaVencimiento) < new Date();
+                                                        return (
+                                                            <div key={l.id} className="text-[10px] bg-slate-800/80 px-2 py-1 rounded flex justify-between border border-slate-700/50">
+                                                                <span className="text-slate-400">Lote: {l.numeroLote}</span>
+                                                                <span className={isVencido ? 'text-rose-400 font-bold' : 'text-emerald-400 font-bold'}>
+                                                                    {l.stockActual} u.
+                                                                </span>
+                                                            </div>
+                                                        );
+                                                    })}
+                                                </div>
+                                            )}
+                                        </div>
                                     </td>
                                     <td className="px-6 py-4">
                                         <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${

@@ -76,6 +76,14 @@ model Producto {
   precioVenta   Decimal        @db.Decimal(10, 2)
   stockActual   Int            @default(0)
   stockMinimo   Int            @default(0)
+  
+  // Especialización Farmacia
+  principioActivo String?
+  laboratorio     String?
+  presentacion    String?
+  concentracion   String?
+  requiereReceta  Boolean        @default(false)
+
   estado        EstadoRegistro @default(ACTIVO)
   creadoEn      DateTime       @default(now())
   actualizadoEn DateTime       @updatedAt
@@ -86,8 +94,29 @@ model Producto {
   detallesCompra        DetalleCompra[]
   detallesVenta         DetalleVenta[]
   movimientosInventario MovimientoInventario[]
+  lotes                 LoteProducto[]
 
   @@map("productos")
+}
+
+model LoteProducto {
+  id               Int            @id @default(autoincrement())
+  numeroLote       String
+  fechaVencimiento DateTime
+  stockActual      Int            @default(0)
+  stockInicial     Int            @default(0)
+  precioCompra     Decimal        @db.Decimal(10, 2)
+  estado           EstadoRegistro @default(ACTIVO)
+  creadoEn         DateTime       @default(now())
+  actualizadoEn    DateTime       @updatedAt
+
+  productoId Int
+  producto   Producto @relation(fields: [productoId], references: [id])
+
+  movimientosInventario MovimientoInventario[]
+
+  @@unique([productoId, numeroLote])
+  @@map("lotes_producto")
 }
 
 model Cliente {
@@ -183,6 +212,9 @@ model MovimientoInventario {
   
   ventaId Int?
   venta   Venta? @relation(fields: [ventaId], references: [id])
+
+  loteId Int?
+  lote   LoteProducto? @relation(fields: [loteId], references: [id])
 
   @@map("movimientos_inventario")
 }

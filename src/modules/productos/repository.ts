@@ -3,7 +3,7 @@ import { EstadoRegistro, Prisma } from "@/generated/prisma/client";
 import { CrearProductoInput, ActualizarProductoInput, ProductoCliente } from "./types";
 
 type ProductoConCategoria = Prisma.ProductoGetPayload<{
-    include: { categoria: true }
+    include: { categoria: true, lotes: true }
 }>;
 
 // Helper para convertir el Producto de Prisma a ProductoCliente
@@ -27,16 +27,31 @@ function mapearProducto(productoPrisma: ProductoConCategoria): ProductoCliente {
             nombre: productoPrisma.categoria.nombre,
             descripcion: productoPrisma.categoria.descripcion,
             estado: productoPrisma.categoria.estado,
-            creadoEn: productoPrisma.categoria.creadoEn, // Asumimos que para componentes cliente no se usará Date nativo, o Nextjs 14 serializa Date pero no Decimal. Nextjs app router ya maneja Date ok en Server Actions, pero Decimal no.
+            creadoEn: productoPrisma.categoria.creadoEn,
             actualizadoEn: productoPrisma.categoria.actualizadoEn,
-        } : undefined
+        } : undefined,
+        principioActivo: productoPrisma.principioActivo,
+        laboratorio: productoPrisma.laboratorio,
+        presentacion: productoPrisma.presentacion,
+        concentracion: productoPrisma.concentracion,
+        requiereReceta: productoPrisma.requiereReceta,
+        lotes: productoPrisma.lotes?.map(l => ({
+            id: l.id,
+            numeroLote: l.numeroLote,
+            fechaVencimiento: l.fechaVencimiento.toISOString(),
+            stockActual: l.stockActual,
+            stockInicial: l.stockInicial,
+            precioCompra: Number(l.precioCompra),
+            estado: l.estado
+        })) || []
     };
 }
 
 export async function obtenerProductos(): Promise<ProductoCliente[]> {
     const productos = await prisma.producto.findMany({
         include: {
-            categoria: true
+            categoria: true,
+            lotes: true
         },
         orderBy: {
             nombre: 'asc'
@@ -47,14 +62,16 @@ export async function obtenerProductos(): Promise<ProductoCliente[]> {
 
 export async function buscarProductoPorNombre(nombre: string): Promise<ProductoCliente | null> {
     const producto = await prisma.producto.findFirst({
-        where: { nombre }
+        where: { nombre },
+        include: { categoria: true, lotes: true }
     });
     return producto ? mapearProducto(producto) : null;
 }
 
 export async function buscarProductoPorId(id: number): Promise<ProductoCliente | null> {
     const producto = await prisma.producto.findUnique({
-        where: { id }
+        where: { id },
+        include: { categoria: true, lotes: true }
     });
     return producto ? mapearProducto(producto) : null;
 }
@@ -69,10 +86,16 @@ export async function crearProducto(datos: CrearProductoInput): Promise<Producto
             precioVenta: datos.precioVenta,
             stockActual: datos.stockActual,
             stockMinimo: datos.stockMinimo,
-            categoriaId: datos.categoriaId
+            categoriaId: datos.categoriaId,
+            principioActivo: datos.principioActivo?.trim() || null,
+            laboratorio: datos.laboratorio?.trim() || null,
+            presentacion: datos.presentacion?.trim() || null,
+            concentracion: datos.concentracion?.trim() || null,
+            requiereReceta: datos.requiereReceta || false
         },
         include: {
-            categoria: true
+            categoria: true,
+            lotes: true
         }
     });
     return mapearProducto(producto);
@@ -89,10 +112,16 @@ export async function actualizarProducto(datos: ActualizarProductoInput): Promis
             precioVenta: datos.precioVenta,
             stockActual: datos.stockActual,
             stockMinimo: datos.stockMinimo,
-            categoriaId: datos.categoriaId
+            categoriaId: datos.categoriaId,
+            principioActivo: datos.principioActivo?.trim() || null,
+            laboratorio: datos.laboratorio?.trim() || null,
+            presentacion: datos.presentacion?.trim() || null,
+            concentracion: datos.concentracion?.trim() || null,
+            requiereReceta: datos.requiereReceta || false
         },
         include: {
-            categoria: true
+            categoria: true,
+            lotes: true
         }
     });
     return mapearProducto(producto);
@@ -103,7 +132,8 @@ export async function cambiarEstadoProducto(id: number, estado: EstadoRegistro):
         where: { id },
         data: { estado },
         include: {
-            categoria: true
+            categoria: true,
+            lotes: true
         }
     });
     return mapearProducto(producto);

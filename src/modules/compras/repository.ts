@@ -115,11 +115,37 @@ export async function crearCompraConTransaccion(datos: CrearCompraInput): Promis
         });
 
         // 2. Procesar cada detalle: actualizar stock y registrar movimiento
-        for (const detalle of nuevaCompra.detalles) {
-            const productoActual = detalle.producto;
+        for (const detalleInput of datos.detalles) {
+            const detalleGrabado = nuevaCompra.detalles.find(d => d.productoId === detalleInput.productoId);
+            if (!detalleGrabado) continue;
+            
+            const productoActual = detalleGrabado.producto;
             
             const stockAnterior = productoActual.stockActual;
-            const stockNuevo = stockAnterior + detalle.cantidad;
+            const stockNuevo = stockAnterior + detalleInput.cantidad;
+
+            // 2.a Crear o Actualizar Lote (Farmacia)
+            const lote = await tx.loteProducto.upsert({
+                where: {
+                    productoId_numeroLote: {
+                        productoId: productoActual.id,
+                        numeroLote: detalleInput.numeroLote
+                    }
+                },
+                create: {
+                    productoId: productoActual.id,
+                    numeroLote: detalleInput.numeroLote,
+                    fechaVencimiento: new Date(detalleInput.fechaVencimiento),
+                    stockActual: detalleInput.cantidad,
+                    stockInicial: detalleInput.cantidad,
+                    precioCompra: new Prisma.Decimal(detalleInput.precioUnitario)
+                },
+                update: {
+                    stockActual: { increment: detalleInput.cantidad },
+                    stockInicial: { increment: detalleInput.cantidad },
+                    precioCompra: new Prisma.Decimal(detalleInput.precioUnitario)
+                }
+            });
 
             // Actualizar stock del producto
             await tx.producto.update({
@@ -131,12 +157,13 @@ export async function crearCompraConTransaccion(datos: CrearCompraInput): Promis
             await tx.movimientoInventario.create({
                 data: {
                     tipoMovimiento: TipoMovimientoInventario.ENTRADA,
-                    cantidad: detalle.cantidad,
+                    cantidad: detalleInput.cantidad,
                     stockAnterior: stockAnterior,
                     stockNuevo: stockNuevo,
-                    motivo: `Compra ${numCompra}`,
+                    motivo: `Compra ${numCompra} - Lote ${detalleInput.numeroLote}`,
                     compraId: nuevaCompra.id,
-                    productoId: productoActual.id
+                    productoId: productoActual.id,
+                    loteId: lote.id
                 }
             });
         }

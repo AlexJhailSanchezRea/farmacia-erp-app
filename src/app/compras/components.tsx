@@ -19,10 +19,11 @@ export function FormularioCompra({
     const [observacion, setObservacion] = useState("");
     const [detalles, setDetalles] = useState<DetalleCompraInput[]>([]);
     
-    // Selectores temporales
     const [productoSelec, setProductoSelec] = useState<number>(0);
     const [cantidadSelec, setCantidadSelec] = useState<number>(1);
     const [precioSelec, setPrecioSelec] = useState<number>(0);
+    const [loteSelec, setLoteSelec] = useState("");
+    const [fechaVencimientoSelec, setFechaVencimientoSelec] = useState("");
 
     const [cargando, setCargando] = useState(false);
     const [error, setError] = useState("");
@@ -32,25 +33,37 @@ export function FormularioCompra({
 
     const agregarDetalle = () => {
         if (!productoSelec || cantidadSelec <= 0 || precioSelec < 0) return;
+        if (!loteSelec.trim() || !fechaVencimientoSelec) {
+            setError("Debe especificar el número de lote y fecha de vencimiento del producto.");
+            return;
+        }
         
-        // Evitar duplicados en el detalle
-        if (detalles.find(d => d.productoId === productoSelec)) {
-            setError("El producto ya fue agregado al detalle.");
+        // Evitar duplicados en el detalle (del mismo lote)
+        if (detalles.find(d => d.productoId === productoSelec && d.numeroLote === loteSelec)) {
+            setError("El producto con este lote ya fue agregado al detalle.");
             return;
         }
 
         setDetalles([
             ...detalles, 
-            { productoId: productoSelec, cantidad: cantidadSelec, precioUnitario: precioSelec }
+            { 
+                productoId: productoSelec, 
+                cantidad: cantidadSelec, 
+                precioUnitario: precioSelec,
+                numeroLote: loteSelec.trim().toUpperCase(),
+                fechaVencimiento: fechaVencimientoSelec
+            }
         ]);
         setProductoSelec(0);
         setCantidadSelec(1);
         setPrecioSelec(0);
+        setLoteSelec("");
+        setFechaVencimientoSelec("");
         setError("");
     };
 
-    const quitarDetalle = (prodId: number) => {
-        setDetalles(detalles.filter(d => d.productoId !== prodId));
+    const quitarDetalle = (prodId: number, numLote: string) => {
+        setDetalles(detalles.filter(d => !(d.productoId === prodId && d.numeroLote === numLote)));
     };
 
     const calcularTotal = () => {
@@ -164,7 +177,28 @@ export function FormularioCompra({
                             />
                         </div>
                     </div>
-                    <div className="mt-3 flex justify-end">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 items-end">
+                        <div>
+                            <label className="block text-xs text-slate-400 mb-1">Nro. Lote (Obligatorio)</label>
+                            <input
+                                type="text"
+                                value={loteSelec}
+                                onChange={(e) => setLoteSelec(e.target.value)}
+                                className="w-full rounded-lg border border-slate-700 bg-slate-800 p-2 text-sm text-white focus:border-cyan-500 focus:outline-none"
+                                placeholder="Lote del producto"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-xs text-slate-400 mb-1">Vencimiento (Obligatorio)</label>
+                            <input
+                                type="date"
+                                value={fechaVencimientoSelec}
+                                onChange={(e) => setFechaVencimientoSelec(e.target.value)}
+                                className="w-full rounded-lg border border-slate-700 bg-slate-800 p-2 text-sm text-white focus:border-cyan-500 focus:outline-none"
+                            />
+                        </div>
+                    </div>
+                    <div className="mt-4 flex justify-end">
                         <button
                             type="button"
                             onClick={agregarDetalle}
@@ -180,7 +214,7 @@ export function FormularioCompra({
                     <table className="w-full text-left text-sm text-slate-300">
                         <thead className="bg-slate-800 text-xs uppercase text-slate-400">
                             <tr>
-                                <th className="px-4 py-3">Producto</th>
+                                <th className="px-4 py-3">Producto / Lote</th>
                                 <th className="px-4 py-3 text-right">Cant.</th>
                                 <th className="px-4 py-3 text-right">P. Unitario</th>
                                 <th className="px-4 py-3 text-right">Subtotal</th>
@@ -198,13 +232,16 @@ export function FormularioCompra({
                                 detalles.map((d) => {
                                     const prod = productos.find(p => p.id === d.productoId);
                                     return (
-                                        <tr key={d.productoId} className="bg-slate-900/50">
-                                            <td className="px-4 py-3 text-white">{prod?.nombre}</td>
+                                        <tr key={`${d.productoId}-${d.numeroLote}`} className="bg-slate-900/50">
+                                            <td className="px-4 py-3">
+                                                <div className="text-white font-medium">{prod?.nombre}</div>
+                                                <div className="text-xs text-slate-400 mt-1">Lote: <span className="text-cyan-400">{d.numeroLote}</span> | Vence: {new Date(d.fechaVencimiento).toLocaleDateString('es-ES', { timeZone: 'UTC'})}</div>
+                                            </td>
                                             <td className="px-4 py-3 text-right">{d.cantidad}</td>
                                             <td className="px-4 py-3 text-right">Bs {d.precioUnitario.toFixed(2)}</td>
                                             <td className="px-4 py-3 text-right font-medium text-cyan-400">Bs {(d.cantidad * d.precioUnitario).toFixed(2)}</td>
                                             <td className="px-4 py-3 text-center">
-                                                <button onClick={() => quitarDetalle(d.productoId)} className="text-red-400 hover:text-red-300" type="button">X</button>
+                                                <button onClick={() => quitarDetalle(d.productoId, d.numeroLote)} className="text-red-400 hover:text-red-300" type="button">X</button>
                                             </td>
                                         </tr>
                                     );
