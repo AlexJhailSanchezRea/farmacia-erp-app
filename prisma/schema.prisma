@@ -1,8 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
@@ -10,4 +5,98 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+}
+
+enum EstadoRegistro {
+  ACTIVO
+  INACTIVO
+}
+
+model Rol {
+  id            Int            @id @default(autoincrement())
+  nombre        String         @unique
+  descripcion   String?
+  estado        EstadoRegistro @default(ACTIVO)
+  creadoEn      DateTime       @default(now())
+  actualizadoEn DateTime       @updatedAt
+
+  usuarios Usuario[]
+
+  @@map("roles")
+}
+
+model Usuario {
+  id             Int            @id @default(autoincrement())
+  nombre         String
+  correo         String         @unique
+  contrasenaHash String
+  estado         EstadoRegistro @default(ACTIVO)
+  creadoEn       DateTime       @default(now())
+  actualizadoEn  DateTime       @updatedAt
+
+  rolId Int
+  rol   Rol @relation(fields: [rolId], references: [id])
+
+  @@map("usuarios")
+}
+
+model Categoria {
+  id            Int            @id @default(autoincrement())
+  nombre        String         @unique
+  descripcion   String?
+  estado        EstadoRegistro @default(ACTIVO)
+  creadoEn      DateTime       @default(now())
+  actualizadoEn DateTime       @updatedAt
+
+  productos Producto[]
+
+  @@map("categorias")
+}
+
+model Producto {
+  id            Int            @id @default(autoincrement())
+  nombre        String
+  descripcion   String?
+  codigoBarra   String?        @unique
+  precioCompra  Decimal        @db.Decimal(10, 2)
+  precioVenta   Decimal        @db.Decimal(10, 2)
+  stockActual   Int            @default(0)
+  stockMinimo   Int            @default(0)
+  estado        EstadoRegistro @default(ACTIVO)
+  creadoEn      DateTime       @default(now())
+  actualizadoEn DateTime       @updatedAt
+
+  categoriaId Int
+  categoria   Categoria @relation(fields: [categoriaId], references: [id])
+
+  @@map("productos")
+}
+
+model Cliente {
+  id            Int            @id @default(autoincrement())
+  nombre        String
+  ciNit         String?
+  telefono      String?
+  direccion     String?
+  correo        String?
+  estado        EstadoRegistro @default(ACTIVO)
+  creadoEn      DateTime       @default(now())
+  actualizadoEn DateTime       @updatedAt
+
+  @@map("clientes")
+}
+
+model Proveedor {
+  id            Int            @id @default(autoincrement())
+  nombre        String
+  nit           String?
+  telefono      String?
+  direccion     String?
+  correo        String?
+  contacto      String?
+  estado        EstadoRegistro @default(ACTIVO)
+  creadoEn      DateTime       @default(now())
+  actualizadoEn DateTime       @updatedAt
+
+  @@map("proveedores")
 }
