@@ -3,12 +3,14 @@ type PaginaModuloProps = {
     titulo: string;
     descripcion: string;
     modulo: string;
+    children?: React.ReactNode;
 };
 
 export function PaginaModulo({
     titulo,
     descripcion,
     modulo,
+    children
 }: PaginaModuloProps) {
     return (
         <main className="min-h-screen bg-slate-950 p-6 text-slate-100 lg:p-10">
@@ -34,17 +36,23 @@ export function PaginaModulo({
                     </p>
                 </header>
 
-                <section className="mt-8 rounded-2xl border border-dashed border-slate-700 bg-slate-900/60 p-8">
-                    <h2 className="text-xl font-semibold text-white">
-                        Módulo en construcción
-                    </h2>
+                {children ? (
+                    <section className="mt-8">
+                        {children}
+                    </section>
+                ) : (
+                    <section className="mt-8 rounded-2xl border border-dashed border-slate-700 bg-slate-900/60 p-8">
+                        <h2 className="text-xl font-semibold text-white">
+                            Módulo en construcción
+                        </h2>
 
-                    <p className="mt-3 text-sm leading-6 text-slate-400">
-                        Esta pantalla forma parte de la estructura inicial de NexaERP. Más
-                        adelante se conectará con la capa de aplicación, servicios,
-                        repositorios y base de datos mediante Prisma.
-                    </p>
-                </section>
+                        <p className="mt-3 text-sm leading-6 text-slate-400">
+                            Esta pantalla forma parte de la estructura inicial de NexaERP. Más
+                            adelante se conectará con la capa de aplicación, servicios,
+                            repositorios y base de datos mediante Prisma.
+                        </p>
+                    </section>
+                )}
             </section>
         </main>
     );

@@ -6,6 +6,8 @@ export interface DashboardResumen {
     productosStockBajo: number;
     movimientosEntradaMes: number;
     movimientosSalidaMes: number;
+    ingresosTotales: number;
+    egresosTotales: number;
 }
 
 export interface ReporteMetricas {
@@ -14,4 +16,5 @@ export interface ReporteMetricas {
     ultimasCompras: { id: number, numero: string, total: number, fecha: string }[];
     ultimosMovimientosInventario: { id: number, tipo: string, producto: string, cantidad: number, fecha: string }[];
     ultimosMovimientosCaja: { id: number, tipo: string, concepto: string, monto: number, fecha: string }[];
+    topProductos: { nombre: string, cantidad: number }[];
 }

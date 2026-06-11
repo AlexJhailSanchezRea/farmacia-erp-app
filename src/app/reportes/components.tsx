@@ -35,6 +35,83 @@ export function ReportesDashboard({ datos }: { datos: ReporteMetricas }) {
                 />
             </div>
 
+            {/* Gráficos Simples */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                {/* Ventas vs Compras */}
+                <div className="rounded-2xl border border-slate-800 bg-slate-900/50 p-6 flex flex-col gap-4">
+                    <h3 className="text-lg font-semibold text-white">Ventas vs Compras</h3>
+                    <div className="flex flex-col gap-4 mt-2">
+                        {[
+                            { label: "Ventas", value: datos.resumen.ventasTotalesMes, color: "bg-emerald-500" },
+                            { label: "Compras", value: datos.resumen.comprasTotalesMes, color: "bg-rose-500" }
+                        ].map(item => {
+                            const max = Math.max(datos.resumen.ventasTotalesMes, datos.resumen.comprasTotalesMes, 1);
+                            const pct = Math.round((item.value / max) * 100);
+                            return (
+                                <div key={item.label} className="flex flex-col gap-1">
+                                    <div className="flex justify-between text-sm">
+                                        <span className="text-slate-300">{item.label}</span>
+                                        <span className="font-bold text-white">{formatSoles(item.value)}</span>
+                                    </div>
+                                    <div className="h-2 w-full bg-slate-800 rounded-full overflow-hidden">
+                                        <div className={`h-full ${item.color} rounded-full`} style={{ width: `${pct}%` }} />
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+
+                {/* Flujo de Caja */}
+                <div className="rounded-2xl border border-slate-800 bg-slate-900/50 p-6 flex flex-col gap-4">
+                    <h3 className="text-lg font-semibold text-white">Flujo de Caja</h3>
+                    <div className="flex flex-col gap-4 mt-2">
+                        {[
+                            { label: "Ingresos", value: datos.resumen.ingresosTotales, color: "bg-emerald-500" },
+                            { label: "Egresos", value: datos.resumen.egresosTotales, color: "bg-rose-500" }
+                        ].map(item => {
+                            const max = Math.max(datos.resumen.ingresosTotales, datos.resumen.egresosTotales, 1);
+                            const pct = Math.round((item.value / max) * 100);
+                            return (
+                                <div key={item.label} className="flex flex-col gap-1">
+                                    <div className="flex justify-between text-sm">
+                                        <span className="text-slate-300">{item.label}</span>
+                                        <span className="font-bold text-white">{formatSoles(item.value)}</span>
+                                    </div>
+                                    <div className="h-2 w-full bg-slate-800 rounded-full overflow-hidden">
+                                        <div className={`h-full ${item.color} rounded-full`} style={{ width: `${pct}%` }} />
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+
+                {/* Top Productos */}
+                <div className="rounded-2xl border border-slate-800 bg-slate-900/50 p-6 flex flex-col gap-4">
+                    <h3 className="text-lg font-semibold text-white">Top 5 Productos Vendidos</h3>
+                    <div className="flex flex-col gap-3 mt-1">
+                        {datos.topProductos.length > 0 ? datos.topProductos.map(p => {
+                            const max = Math.max(...datos.topProductos.map(x => x.cantidad), 1);
+                            const pct = Math.round((p.cantidad / max) * 100);
+                            return (
+                                <div key={p.nombre} className="flex flex-col gap-1">
+                                    <div className="flex justify-between text-xs">
+                                        <span className="text-slate-300 truncate max-w-[180px]">{p.nombre}</span>
+                                        <span className="font-bold text-indigo-400">{p.cantidad} und.</span>
+                                    </div>
+                                    <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+                                        <div className="h-full bg-indigo-500 rounded-full" style={{ width: `${pct}%` }} />
+                                    </div>
+                                </div>
+                            );
+                        }) : (
+                            <span className="text-sm text-slate-500 text-center mt-4">No hay datos de ventas aún.</span>
+                        )}
+                    </div>
+                </div>
+            </div>
+
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 {/* Últimas Ventas */}
                 <TablaReporte 

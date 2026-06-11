@@ -63,6 +63,26 @@ export async function obtenerReporteGeneral(): Promise<ReporteMetricas> {
         take: 5
     });
 
+    const topProductosDB = await prisma.detalleVenta.groupBy({
+        by: ['productoId'],
+        _sum: { cantidad: true },
+        orderBy: { _sum: { cantidad: 'desc' } },
+        take: 5
+    });
+
+    const topProductosIds = topProductosDB.map(t => t.productoId);
+    const topProductosData = await prisma.producto.findMany({
+        where: { id: { in: topProductosIds } }
+    });
+
+    const topProductos = topProductosDB.map(t => {
+        const prod = topProductosData.find(p => p.id === t.productoId);
+        return {
+            nombre: prod?.nombre || "Producto desconocido",
+            cantidad: t._sum.cantidad || 0
+        };
+    });
+
     return {
         resumen: {
             ventasTotalesMes: Number(ventasTotalesMes._sum.total || 0),
@@ -71,7 +91,9 @@ export async function obtenerReporteGeneral(): Promise<ReporteMetricas> {
             productosActivos,
             productosStockBajo,
             movimientosEntradaMes: entradasInventarioMes,
-            movimientosSalidaMes: salidasInventarioMes
+            movimientosSalidaMes: salidasInventarioMes,
+            ingresosTotales: saldoCaja.totalIngresos,
+            egresosTotales: saldoCaja.totalEgresos
         },
         ultimasVentas: ultimasVentas.map(v => ({ id: v.id, numero: v.numeroVenta, total: Number(v.total), fecha: v.fechaVenta.toISOString() })),
         ultimasCompras: ultimasCompras.map(c => ({ id: c.id, numero: c.numeroCompra, total: Number(c.total), fecha: c.fechaCompra.toISOString() })),
@@ -88,6 +110,7 @@ export async function obtenerReporteGeneral(): Promise<ReporteMetricas> {
             concepto: m.concepto,
             monto: Number(m.monto),
             fecha: m.fechaMovimiento.toISOString()
-        }))
+        })),
+        topProductos
     };
 }
