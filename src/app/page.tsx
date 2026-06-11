@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const indicadores = [
   {
     titulo: "Ventas del día",
@@ -22,16 +24,16 @@ const indicadores = [
 ];
 
 const modulos = [
-  "Productos",
-  "Categorías",
-  "Clientes",
-  "Proveedores",
-  "Compras",
-  "Ventas",
-  "Inventario",
-  "Caja",
-  "Reportes",
-  "Comprobantes",
+  { nombre: "Productos", ruta: "/productos" },
+  { nombre: "Categorías", ruta: "/categorias" },
+  { nombre: "Clientes", ruta: "/clientes" },
+  { nombre: "Proveedores", ruta: "/proveedores" },
+  { nombre: "Compras", ruta: "/compras" },
+  { nombre: "Ventas", ruta: "/ventas" },
+  { nombre: "Inventario", ruta: "/inventario" },
+  { nombre: "Caja", ruta: "/caja" },
+  { nombre: "Reportes", ruta: "/reportes" },
+  { nombre: "Comprobantes", ruta: "/comprobantes" },
 ];
 
 export default function Inicio() {
@@ -53,13 +55,13 @@ export default function Inicio() {
 
           <nav className="space-y-2">
             {modulos.map((modulo) => (
-              <a
-                key={modulo}
-                href="#"
+              <Link
+                key={modulo.nombre}
+                href={modulo.ruta}
                 className="block rounded-xl px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white"
               >
-                {modulo}
-              </a>
+                {modulo.nombre}
+              </Link>
             ))}
           </nav>
         </aside>
