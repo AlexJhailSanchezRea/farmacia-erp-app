@@ -3,7 +3,7 @@ import { Prisma } from "@/generated/prisma/client";
 import { MovimientoInventarioCliente } from "./types";
 
 type MovimientoConProducto = Prisma.MovimientoInventarioGetPayload<{
-    include: { producto: true }
+    include: { producto: { include: { categoria: true } } }
 }>;
 
 function mapearMovimiento(mov: MovimientoConProducto): MovimientoInventarioCliente {
@@ -18,6 +18,7 @@ function mapearMovimiento(mov: MovimientoConProducto): MovimientoInventarioClien
         creadoEn: mov.creadoEn.toISOString(),
         productoId: mov.productoId,
         compraId: mov.compraId,
+        ventaId: mov.ventaId,
         producto: mov.producto ? {
             id: mov.producto.id,
             nombre: mov.producto.nombre,
@@ -31,6 +32,7 @@ function mapearMovimiento(mov: MovimientoConProducto): MovimientoInventarioClien
             categoriaId: mov.producto.categoriaId,
             creadoEn: mov.producto.creadoEn.toISOString(),
             actualizadoEn: mov.producto.actualizadoEn.toISOString(),
+            categoria: mov.producto.categoria ? { nombre: mov.producto.categoria.nombre } : undefined
         } : undefined
     };
 }
@@ -38,7 +40,7 @@ function mapearMovimiento(mov: MovimientoConProducto): MovimientoInventarioClien
 export async function obtenerMovimientosInventario(): Promise<MovimientoInventarioCliente[]> {
     const movimientos = await prisma.movimientoInventario.findMany({
         orderBy: { creadoEn: 'desc' },
-        include: { producto: true }
+        include: { producto: { include: { categoria: true } } }
     });
     return movimientos.map(mapearMovimiento);
 }

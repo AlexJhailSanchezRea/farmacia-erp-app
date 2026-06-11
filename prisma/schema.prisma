@@ -70,6 +70,7 @@ model Producto {
   categoria   Categoria @relation(fields: [categoriaId], references: [id])
 
   detallesCompra        DetalleCompra[]
+  detallesVenta         DetalleVenta[]
   movimientosInventario MovimientoInventario[]
 
   @@map("productos")
@@ -85,6 +86,8 @@ model Cliente {
   estado        EstadoRegistro @default(ACTIVO)
   creadoEn      DateTime       @default(now())
   actualizadoEn DateTime       @updatedAt
+
+  ventas Venta[]
 
   @@map("clientes")
 }
@@ -162,6 +165,66 @@ model MovimientoInventario {
 
   compraId Int?
   compra   Compra? @relation(fields: [compraId], references: [id])
+  
+  ventaId Int?
+  venta   Venta? @relation(fields: [ventaId], references: [id])
 
   @@map("movimientos_inventario")
+}
+
+enum TipoComprobante {
+  NOTA_VENTA
+}
+
+model Venta {
+  id            Int            @id @default(autoincrement())
+  numeroVenta   String         @unique
+  fechaVenta    DateTime       @default(now())
+  total         Decimal        @db.Decimal(10, 2)
+  observacion   String?
+  estado        EstadoRegistro @default(ACTIVO)
+  creadoEn      DateTime       @default(now())
+  actualizadoEn DateTime       @updatedAt
+
+  clienteId Int?
+  cliente   Cliente? @relation(fields: [clienteId], references: [id])
+
+  detalles    DetalleVenta[]
+  movimientos MovimientoInventario[]
+  comprobante Comprobante?
+
+  @@map("ventas")
+}
+
+model DetalleVenta {
+  id             Int      @id @default(autoincrement())
+  cantidad       Int
+  precioUnitario Decimal  @db.Decimal(10, 2)
+  subtotal       Decimal  @db.Decimal(10, 2)
+  creadoEn       DateTime @default(now())
+
+  ventaId Int
+  venta   Venta @relation(fields: [ventaId], references: [id])
+
+  productoId Int
+  producto   Producto @relation(fields: [productoId], references: [id])
+
+  @@map("detalles_venta")
+}
+
+model Comprobante {
+  id                Int             @id @default(autoincrement())
+  numeroComprobante String          @unique
+  tipoComprobante   TipoComprobante @default(NOTA_VENTA)
+  fechaEmision      DateTime        @default(now())
+  total             Decimal         @db.Decimal(10, 2)
+  clienteNombre     String
+  estado            EstadoRegistro  @default(ACTIVO)
+  creadoEn          DateTime        @default(now())
+  actualizadoEn     DateTime        @updatedAt
+
+  ventaId Int   @unique
+  venta   Venta @relation(fields: [ventaId], references: [id])
+
+  @@map("comprobantes")
 }

@@ -36,8 +36,22 @@ export function ListaMovimientos({ movimientos }: { movimientos: MovimientoInven
                                     <td className="px-6 py-4 whitespace-nowrap text-slate-400">
                                         {new Date(mov.creadoEn).toLocaleString('es-ES', { dateStyle: 'short', timeStyle: 'short' })}
                                     </td>
-                                    <td className="px-6 py-4 font-medium text-white">
-                                        {mov.producto?.nombre}
+                                    <td className="px-6 py-4">
+                                        <div className="flex flex-col gap-1">
+                                            <span className="font-semibold text-white">
+                                                {mov.producto?.nombre}
+                                            </span>
+                                            <div className="flex items-center gap-2 text-xs text-slate-400">
+                                                <span>Cod: <span className="text-slate-300">{mov.producto?.codigoBarra}</span></span>
+                                                <span>&bull;</span>
+                                                <span>ID: {mov.producto?.id}</span>
+                                            </div>
+                                            {mov.producto?.categoria?.nombre && (
+                                                <span className="inline-flex w-fit items-center rounded-md bg-slate-800 px-2 py-0.5 text-[10px] font-medium text-indigo-300">
+                                                    {mov.producto.categoria.nombre}
+                                                </span>
+                                            )}
+                                        </div>
                                     </td>
                                     <td className="px-6 py-4">
                                         <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${

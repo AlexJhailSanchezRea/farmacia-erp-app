@@ -1,11 +1,14 @@
-import { PaginaModulo } from "@/components/layout/PaginaModulo";
+import { accionObtenerComprobantes } from "@/modules/comprobantes/actions";
+import { ListaComprobantes } from "./components";
 
-export default function ComprobantesPage() {
+export const dynamic = 'force-dynamic';
+
+export default async function ComprobantesPage() {
+    const comprobantes = await accionObtenerComprobantes();
+
     return (
-        <PaginaModulo
-            modulo="Documentos"
-            titulo="Comprobantes"
-            descripcion="Gestión de comprobantes internos, notas de venta y documentos generados por el sistema."
-        />
+        <main className="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
+            <ListaComprobantes comprobantes={comprobantes} />
+        </main>
     );
 }

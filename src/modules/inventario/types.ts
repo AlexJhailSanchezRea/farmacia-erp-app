@@ -12,7 +12,10 @@ export interface MovimientoInventarioCliente {
     creadoEn: string;
     productoId: number;
     compraId: number | null;
+    ventaId: number | null;
     
     // Relación opcional
-    producto?: ProductoCliente;
+    producto?: ProductoCliente & {
+        categoria?: { nombre: string };
+    };
 }
