@@ -480,23 +480,39 @@ async function main() {
         }
     }
 
-    // 8. Movimientos de Caja de Ajuste (Manual)
-    const cajaFondoInitial = await prisma.movimientoCaja.findFirst({ where: { concepto: "Fondo de Caja Inicial" } });
-    if (!cajaFondoInitial) {
+    // 8. Movimientos de Caja de Ajuste (Manual) e Ingreso Inicial
+    const capitalInicial = await prisma.movimientoCaja.findFirst({ where: { referencia: "CAPITAL-INICIAL" } });
+    if (!capitalInicial) {
         await prisma.movimientoCaja.create({
             data: {
-                tipoMovimiento: "AJUSTE",
-                concepto: "Fondo de Caja Inicial",
-                monto: 500.00,
-                referencia: "Apertura"
+                tipoMovimiento: "INGRESO",
+                concepto: "Apertura de caja",
+                monto: 100000.00,
+                referencia: "CAPITAL-INICIAL",
+                estado: "ACTIVO"
             }
         });
+    } else {
+        await prisma.movimientoCaja.update({
+            where: { id: capitalInicial.id },
+            data: {
+                monto: 100000.00,
+                concepto: "Apertura de caja",
+                tipoMovimiento: "INGRESO",
+                estado: "ACTIVO"
+            }
+        });
+    }
+
+    const cajaPagoServicios = await prisma.movimientoCaja.findFirst({ where: { referencia: "Pago Luz y Agua" } });
+    if (!cajaPagoServicios) {
         await prisma.movimientoCaja.create({
             data: {
                 tipoMovimiento: "AJUSTE",
                 concepto: "Retiro para pago servicios",
-                monto: -150.00, // Ajuste negativo
-                referencia: "Pago Luz y Agua"
+                monto: -150.00,
+                referencia: "Pago Luz y Agua",
+                estado: "ACTIVO"
             }
         });
     }
