@@ -37,7 +37,21 @@ model Usuario {
   rolId Int
   rol   Rol @relation(fields: [rolId], references: [id])
 
+  sesiones SesionUsuario[]
+
   @@map("usuarios")
+}
+
+model SesionUsuario {
+  id        Int      @id @default(autoincrement())
+  tokenHash String   @unique
+  expiraEn  DateTime
+  creadoEn  DateTime @default(now())
+
+  usuarioId Int
+  usuario   Usuario @relation(fields: [usuarioId], references: [id])
+
+  @@map("sesiones_usuario")
 }
 
 model Categoria {

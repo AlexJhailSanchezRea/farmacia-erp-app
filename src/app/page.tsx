@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { obtenerUsuarioAutenticado } from "@/lib/auth";
+import { LogoutButton } from "@/components/layout/LogoutButton";
 
 const indicadores = [
   {
@@ -34,9 +36,12 @@ const modulos = [
   { nombre: "Caja", ruta: "/caja" },
   { nombre: "Reportes", ruta: "/reportes" },
   { nombre: "Comprobantes", ruta: "/comprobantes" },
+  { nombre: "Usuarios y Roles", ruta: "/usuarios" }
 ];
 
-export default function Inicio() {
+export default async function Inicio() {
+  const usuario = await obtenerUsuarioAutenticado();
+
   return (
     <main className="min-h-screen bg-slate-950 text-slate-100">
       <div className="flex min-h-screen">
@@ -64,6 +69,21 @@ export default function Inicio() {
               </Link>
             ))}
           </nav>
+          
+          {usuario && (
+            <div className="mt-8 border-t border-slate-800 pt-6">
+                <div className="flex items-center gap-3 px-4 mb-2">
+                    <div className="h-10 w-10 rounded-full bg-indigo-500/20 flex items-center justify-center border border-indigo-500/30">
+                        <span className="text-indigo-300 font-bold">{usuario.nombre.charAt(0).toUpperCase()}</span>
+                    </div>
+                    <div>
+                        <p className="text-sm font-medium text-white">{usuario.nombre}</p>
+                        <p className="text-xs text-slate-400">{usuario.rol.nombre}</p>
+                    </div>
+                </div>
+                <LogoutButton />
+            </div>
+          )}
         </aside>
 
         <section className="flex-1 p-6 lg:p-10">

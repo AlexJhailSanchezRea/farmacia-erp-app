@@ -1,4 +1,5 @@
 import "dotenv/config";
+import crypto from "crypto";
 import { PrismaClient } from "../src/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 
@@ -56,6 +57,28 @@ async function main() {
             update: { descripcion: cat.descripcion },
             create: cat,
         });
+    }
+
+    // 2.5 Usuario Administrador (Demo)
+    const adminEmail = "admin@nexaerp.com";
+    const adminRole = await prisma.rol.findUniqueOrThrow({ where: { nombre: "Administrador" } });
+    
+    const adminUser = await prisma.usuario.findUnique({ where: { correo: adminEmail } });
+    if (!adminUser) {
+        // Generar hash usando crypto nativo directamente para no importar dependencias de Next.js
+        const salt = crypto.randomBytes(16).toString("hex");
+        const derivedKey = crypto.scryptSync("Admin12345", salt, 64);
+        const hashGuardado = `${salt}:${derivedKey.toString("hex")}`;
+
+        await prisma.usuario.create({
+            data: {
+                nombre: "Administrador Principal",
+                correo: adminEmail,
+                contrasenaHash: hashGuardado,
+                rolId: adminRole.id
+            }
+        });
+        console.log("Usuario administrador creado.");
     }
 
     const categoriasDB = await prisma.categoria.findMany();
