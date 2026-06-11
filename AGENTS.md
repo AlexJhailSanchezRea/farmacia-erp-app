@@ -222,9 +222,11 @@ Antes de modificar archivos, el agente debe indicar:
 
 El agente no debe realizar cambios grandes sin aprobacion.
 
-El agente debe mantener la arquitectura en capas y la organizacion modular.
+El agente debe mantener la arquitectura en capas y la organización modular.
 
-El agente debe explicar el codigo de forma clara para que el desarrollador pueda defenderlo en una exposicion o defensa tecnica.
+El agente debe explicar el código de forma clara para que el desarrollador pueda defenderlo en una exposición o defensa técnica.
+
+Cada vez que se cree un nuevo modulo con tablas en base de datos, tambien se debe actualizar prisma/seed.ts con datos de prueba coherentes para ese modulo, manteniendo el seed idempotente y seguro.
 
 ## 12. Objetivo academico y profesional
 
