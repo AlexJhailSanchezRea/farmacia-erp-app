@@ -20,11 +20,12 @@ const prisma = new PrismaClient({
 async function main() {
     console.log("Iniciando inyección masiva de datos (Seed)...");
 
-    // 1. Roles (3)
+    // 1. Roles (4)
     const rolesBase = [
         { nombre: "Administrador", descripcion: "Acceso total al sistema" },
         { nombre: "Vendedor", descripcion: "Acceso a ventas y clientes" },
-        { nombre: "Inventariador", descripcion: "Acceso a productos y almacén" }
+        { nombre: "Inventario/Farmacia", descripcion: "Acceso a productos y almacén" },
+        { nombre: "Contador", descripcion: "Acceso a finanzas y reportes" }
     ];
 
     for (const r of rolesBase) {
@@ -59,26 +60,37 @@ async function main() {
         });
     }
 
-    // 2.5 Usuario Administrador (Demo)
-    const adminEmail = "admin@nexaerp.com";
-    const adminRole = await prisma.rol.findUniqueOrThrow({ where: { nombre: "Administrador" } });
-    
-    const adminUser = await prisma.usuario.findUnique({ where: { correo: adminEmail } });
-    if (!adminUser) {
-        // Generar hash usando crypto nativo directamente para no importar dependencias de Next.js
-        const salt = crypto.randomBytes(16).toString("hex");
-        const derivedKey = crypto.scryptSync("Admin12345", salt, 64);
-        const hashGuardado = `${salt}:${derivedKey.toString("hex")}`;
+    // 2.5 Usuarios Demo (4)
+    const usuariosDemo = [
+        { nombre: "Administrador", correo: "admin@nexaerp.com", pass: "Admin12345", rol: "Administrador" },
+        { nombre: "Vendedor", correo: "vendedor@nexaerp.com", pass: "Vendedor12345", rol: "Vendedor" },
+        { nombre: "Inventario", correo: "inventario@nexaerp.com", pass: "Inventario12345", rol: "Inventario/Farmacia" },
+        { nombre: "Contador", correo: "contador@nexaerp.com", pass: "Contador12345", rol: "Contador" }
+    ];
 
-        await prisma.usuario.create({
-            data: {
-                nombre: "Administrador Principal",
-                correo: adminEmail,
-                contrasenaHash: hashGuardado,
-                rolId: adminRole.id
-            }
-        });
-        console.log("Usuario administrador creado.");
+    for (const ud of usuariosDemo) {
+        const rolBD = await prisma.rol.findUniqueOrThrow({ where: { nombre: ud.rol } });
+        const userBD = await prisma.usuario.findUnique({ where: { correo: ud.correo } });
+        if (!userBD) {
+            const salt = crypto.randomBytes(16).toString("hex");
+            const derivedKey = crypto.scryptSync(ud.pass, salt, 64);
+            const hashGuardado = `${salt}:${derivedKey.toString("hex")}`;
+            await prisma.usuario.create({
+                data: {
+                    nombre: ud.nombre,
+                    correo: ud.correo,
+                    contrasenaHash: hashGuardado,
+                    rolId: rolBD.id
+                }
+            });
+            console.log(`Usuario demo creado: ${ud.correo}`);
+        } else if (userBD.rolId !== rolBD.id) {
+            // Actualizar el rol en caso de que lo hayamos renombrado previamente
+            await prisma.usuario.update({
+                where: { correo: ud.correo },
+                data: { rolId: rolBD.id }
+            });
+        }
     }
 
     const categoriasDB = await prisma.categoria.findMany();

@@ -1,4 +1,6 @@
 "use server";
+import { obtenerUsuarioAutenticado } from "@/lib/auth";
+import { verificarPermisoAccion } from "@/lib/permissions";
 
 import { revalidatePath } from "next/cache";
 import { EstadoRegistro } from "@/generated/prisma/client";
@@ -14,7 +16,11 @@ export async function accionObtenerProveedores(): Promise<ProveedorCliente[]> {
     return servicioObtenerProveedores();
 }
 
-export async function accionCrearProveedor(datos: CrearProveedorInput): Promise<RespuestaAccionProveedor<ProveedorCliente>> {
+export async function accionCrearProveedor(datos: CrearProveedorInput): Promise<RespuestaAccion<Proveedor>> {
+    const usuario = await obtenerUsuarioAutenticado();
+    if (!usuario || !verificarPermisoAccion(usuario.rol.nombre, "crear_proveedor")) {
+        return { exito: false, mensaje: "No tienes permisos para realizar esta acción." };
+    }
     try {
         const resultado = await servicioCrearProveedor(datos);
         if (resultado.exito) {
@@ -27,7 +33,11 @@ export async function accionCrearProveedor(datos: CrearProveedorInput): Promise<
     }
 }
 
-export async function accionActualizarProveedor(datos: ActualizarProveedorInput): Promise<RespuestaAccionProveedor<ProveedorCliente>> {
+export async function accionActualizarProveedor(datos: ActualizarProveedorInput): Promise<RespuestaAccion<Proveedor>> {
+    const usuario = await obtenerUsuarioAutenticado();
+    if (!usuario || !verificarPermisoAccion(usuario.rol.nombre, "editar_proveedor")) {
+        return { exito: false, mensaje: "No tienes permisos para realizar esta acción." };
+    }
     try {
         const resultado = await servicioActualizarProveedor(datos);
         if (resultado.exito) {

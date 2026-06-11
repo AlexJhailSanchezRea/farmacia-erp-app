@@ -1,4 +1,6 @@
 "use server";
+import { obtenerUsuarioAutenticado } from "@/lib/auth";
+import { verificarPermisoAccion } from "@/lib/permissions";
 
 import { revalidatePath } from "next/cache";
 import { EstadoRegistro } from "@/generated/prisma/client";
@@ -8,13 +10,17 @@ import {
     servicioActualizarCliente,
     servicioCambiarEstadoCliente
 } from "./services";
-import { ClienteCliente, CrearClienteInput, ActualizarClienteInput, RespuestaAccionCliente } from "./types";
+import { Cliente, CrearClienteInput, ActualizarClienteInput, RespuestaAccion } from "./types";
 
-export async function accionObtenerClientes(): Promise<ClienteCliente[]> {
+export async function accionObtenerClientes(): Promise<Cliente[]> {
     return servicioObtenerClientes();
 }
 
-export async function accionCrearCliente(datos: CrearClienteInput): Promise<RespuestaAccionCliente<ClienteCliente>> {
+export async function accionCrearCliente(datos: CrearClienteInput): Promise<RespuestaAccion<Cliente>> {
+    const usuario = await obtenerUsuarioAutenticado();
+    if (!usuario || !verificarPermisoAccion(usuario.rol.nombre, "crear_cliente")) {
+        return { exito: false, mensaje: "No tienes permisos para realizar esta acción." };
+    }
     try {
         const resultado = await servicioCrearCliente(datos);
         if (resultado.exito) {
@@ -27,7 +33,11 @@ export async function accionCrearCliente(datos: CrearClienteInput): Promise<Resp
     }
 }
 
-export async function accionActualizarCliente(datos: ActualizarClienteInput): Promise<RespuestaAccionCliente<ClienteCliente>> {
+export async function accionActualizarCliente(datos: ActualizarClienteInput): Promise<RespuestaAccion<Cliente>> {
+    const usuario = await obtenerUsuarioAutenticado();
+    if (!usuario || !verificarPermisoAccion(usuario.rol.nombre, "editar_cliente")) {
+        return { exito: false, mensaje: "No tienes permisos para realizar esta acción." };
+    }
     try {
         const resultado = await servicioActualizarCliente(datos);
         if (resultado.exito) {
@@ -40,7 +50,7 @@ export async function accionActualizarCliente(datos: ActualizarClienteInput): Pr
     }
 }
 
-export async function accionCambiarEstadoCliente(id: number, estado: EstadoRegistro): Promise<RespuestaAccionCliente> {
+export async function accionCambiarEstadoCliente(id: number, estado: EstadoRegistro): Promise<RespuestaAccion> {
     try {
         const resultado = await servicioCambiarEstadoCliente(id, estado);
         if (resultado.exito) {

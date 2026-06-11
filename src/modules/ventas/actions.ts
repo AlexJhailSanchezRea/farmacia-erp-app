@@ -1,4 +1,6 @@
 "use server";
+import { obtenerUsuarioAutenticado } from "@/lib/auth";
+import { verificarPermisoAccion } from "@/lib/permissions";
 
 import { revalidatePath } from "next/cache";
 import { 
@@ -12,6 +14,10 @@ export async function accionObtenerVentas(): Promise<VentaCliente[]> {
 }
 
 export async function accionCrearVenta(datos: CrearVentaInput): Promise<RespuestaAccionVenta<VentaCliente>> {
+    const usuario = await obtenerUsuarioAutenticado();
+    if (!usuario || !verificarPermisoAccion(usuario.rol.nombre, "crear_venta")) {
+        return { exito: false, mensaje: "No tienes permisos para realizar esta acción." };
+    }
     try {
         const resultado = await servicioCrearVenta(datos);
         if (resultado.exito) {

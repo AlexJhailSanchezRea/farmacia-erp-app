@@ -1,4 +1,6 @@
 "use server";
+import { obtenerUsuarioAutenticado } from "@/lib/auth";
+import { verificarPermisoAccion } from "@/lib/permissions";
 
 import { revalidatePath } from "next/cache";
 import { EstadoRegistro } from "@/generated/prisma/client";
@@ -20,7 +22,11 @@ export async function accionObtenerCategoriasActivas(): Promise<Categoria[]> {
     return servicioObtenerCategoriasActivas();
 }
 
-export async function accionCrearProducto(datos: CrearProductoInput): Promise<RespuestaAccionProducto<ProductoCliente>> {
+export async function accionCrearProducto(datos: CrearProductoInput): Promise<RespuestaAccion<Producto>> {
+    const usuario = await obtenerUsuarioAutenticado();
+    if (!usuario || !verificarPermisoAccion(usuario.rol.nombre, "crear_producto")) {
+        return { exito: false, mensaje: "No tienes permisos para realizar esta acción." };
+    }
     try {
         const resultado = await servicioCrearProducto(datos);
         if (resultado.exito) {
@@ -33,7 +39,11 @@ export async function accionCrearProducto(datos: CrearProductoInput): Promise<Re
     }
 }
 
-export async function accionActualizarProducto(datos: ActualizarProductoInput): Promise<RespuestaAccionProducto<ProductoCliente>> {
+export async function accionActualizarProducto(datos: ActualizarProductoInput): Promise<RespuestaAccion<Producto>> {
+    const usuario = await obtenerUsuarioAutenticado();
+    if (!usuario || !verificarPermisoAccion(usuario.rol.nombre, "editar_producto")) {
+        return { exito: false, mensaje: "No tienes permisos para realizar esta acción." };
+    }
     try {
         const resultado = await servicioActualizarProducto(datos);
         if (resultado.exito) {

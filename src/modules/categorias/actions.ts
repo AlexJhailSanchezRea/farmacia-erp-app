@@ -1,4 +1,6 @@
 "use server";
+import { obtenerUsuarioAutenticado } from "@/lib/auth";
+import { verificarPermisoAccion } from "@/lib/permissions";
 
 import { revalidatePath } from "next/cache";
 import { EstadoRegistro } from "@/generated/prisma/client";
@@ -15,6 +17,10 @@ export async function accionObtenerCategorias(): Promise<Categoria[]> {
 }
 
 export async function accionCrearCategoria(datos: CrearCategoriaInput): Promise<RespuestaAccion<Categoria>> {
+    const usuario = await obtenerUsuarioAutenticado();
+    if (!usuario || !verificarPermisoAccion(usuario.rol.nombre, "crear_categoria")) {
+        return { exito: false, mensaje: "No tienes permisos para realizar esta acción." };
+    }
     try {
         const resultado = await servicioCrearCategoria(datos);
         if (resultado.exito) {
@@ -28,6 +34,10 @@ export async function accionCrearCategoria(datos: CrearCategoriaInput): Promise<
 }
 
 export async function accionActualizarCategoria(datos: ActualizarCategoriaInput): Promise<RespuestaAccion<Categoria>> {
+    const usuario = await obtenerUsuarioAutenticado();
+    if (!usuario || !verificarPermisoAccion(usuario.rol.nombre, "crear_categoria")) {
+        return { exito: false, mensaje: "No tienes permisos para realizar esta acción." };
+    }
     try {
         const resultado = await servicioActualizarCategoria(datos);
         if (resultado.exito) {

@@ -1,7 +1,9 @@
-import Link from "next/link";
 import { obtenerUsuarioAutenticado } from "@/lib/auth";
 import { LogoutButton } from "@/components/layout/LogoutButton";
+import { AutoLogout } from "@/components/layout/AutoLogout";
 import { servicioObtenerReporteGeneral } from "@/modules/reportes/services";
+import { DashboardSidebar } from "./DashboardSidebar";
+import { verificarAccesoModulo, ModuloNombre } from "@/lib/permissions";
 
 const modulos = [
   { nombre: "Productos", ruta: "/productos" },
@@ -21,6 +23,11 @@ const modulos = [
 export default async function Inicio() {
   const usuario = await obtenerUsuarioAutenticado();
   const reporte = await servicioObtenerReporteGeneral();
+
+  // Filtrar módulos según permisos del rol
+  const modulosPermitidos = usuario 
+    ? modulos.filter(m => verificarAccesoModulo(usuario.rol.nombre, m.nombre as ModuloNombre))
+    : [];
 
   const formatSoles = (valor: number) => `Bs ${valor.toFixed(2)}`;
 
@@ -57,51 +64,31 @@ export default async function Inicio() {
     },
   ];
 
+  if (!usuario) {
+    return <AutoLogout />;
+  }
+
   return (
-    <main className="min-h-screen bg-slate-950 text-slate-100">
-      <div className="flex min-h-screen">
-        <aside className="hidden w-72 border-r border-slate-800 bg-slate-900/80 p-6 lg:block">
-          <div className="mb-10">
-            <p className="text-sm font-semibold uppercase tracking-[0.35em] text-cyan-400">
-              NexaERP
-            </p>
-            <h1 className="mt-3 text-2xl font-bold text-white">
-              Panel administrativo
-            </h1>
-            <p className="mt-2 text-sm text-slate-400">
-              ERP modular para pequeños y medianos negocios.
-            </p>
-          </div>
-
-          <nav className="space-y-2">
-            {modulos.map((modulo) => (
-              <Link
-                key={modulo.nombre}
-                href={modulo.ruta}
-                className="block rounded-xl px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white"
-              >
-                {modulo.nombre}
-              </Link>
-            ))}
-          </nav>
-          
-          {usuario && (
-            <div className="mt-8 border-t border-slate-800 pt-6">
-                <div className="flex items-center gap-3 px-4 mb-2">
-                    <div className="h-10 w-10 rounded-full bg-indigo-500/20 flex items-center justify-center border border-indigo-500/30">
-                        <span className="text-indigo-300 font-bold">{usuario.nombre.charAt(0).toUpperCase()}</span>
-                    </div>
-                    <div>
-                        <p className="text-sm font-medium text-white">{usuario.nombre}</p>
-                        <p className="text-xs text-slate-400">{usuario.rol.nombre}</p>
-                    </div>
+    <main className="min-h-screen bg-slate-950 text-slate-100 flex flex-col lg:flex-row">
+      <DashboardSidebar 
+        modulosPermitidos={modulosPermitidos}
+        usuarioInfo={
+          usuario && (
+            <div className="flex items-center gap-3 px-4 mb-4">
+                <div className="h-10 w-10 rounded-full bg-indigo-500/20 flex items-center justify-center border border-indigo-500/30">
+                    <span className="text-indigo-300 font-bold">{usuario.nombre.charAt(0).toUpperCase()}</span>
                 </div>
-                <LogoutButton />
+                <div>
+                    <p className="text-sm font-medium text-white">{usuario.nombre}</p>
+                    <p className="text-xs text-slate-400">{usuario.rol.nombre}</p>
+                </div>
             </div>
-          )}
-        </aside>
+          )
+        }
+        logoutButton={<LogoutButton />}
+      />
 
-        <section className="flex-1 p-6 lg:p-10">
+      <section className="flex-1 p-6 lg:p-10 w-full lg:w-auto">
           <header className="mb-10 rounded-3xl border border-slate-800 bg-slate-900 p-8 shadow-2xl shadow-slate-950/40">
             <p className="text-sm font-semibold uppercase tracking-[0.35em] text-cyan-400">
               Sistema ERP modular
@@ -163,7 +150,6 @@ export default async function Inicio() {
             </article>
           </section>
         </section>
-      </div>
     </main>
   );
 }

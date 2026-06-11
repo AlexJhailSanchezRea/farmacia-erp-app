@@ -37,8 +37,10 @@ export function PaginaModulo({
                 </header>
 
                 {children ? (
-                    <section className="mt-8">
-                        {children}
+                    <section className="mt-8 w-full overflow-x-auto pb-4">
+                        <div className="min-w-[800px] lg:min-w-0">
+                            {children}
+                        </div>
                     </section>
                 ) : (
                     <section className="mt-8 rounded-2xl border border-dashed border-slate-700 bg-slate-900/60 p-8">

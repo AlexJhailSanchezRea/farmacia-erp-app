@@ -1,10 +1,16 @@
 "use server";
+import { obtenerUsuarioAutenticado } from "@/lib/auth";
+import { verificarPermisoAccion } from "@/lib/permissions";
 
 import { revalidatePath } from "next/cache";
 import { servicioRegistrarMovimientoManual } from "./services";
 import { movimientoCajaSchema } from "./validations";
 
 export async function registrarMovimientoAccion(prevState: unknown, formData: FormData) {
+    const usuario = await obtenerUsuarioAutenticado();
+    if (!usuario || !verificarPermisoAccion(usuario.rol.nombre, "crear_movimiento_caja")) {
+        return { error: "No tienes permisos para realizar esta acción." };
+    }
     try {
         const tipoMovimiento = formData.get("tipoMovimiento")?.toString() as "INGRESO" | "EGRESO" | "AJUSTE";
         const concepto = formData.get("concepto")?.toString() || "";

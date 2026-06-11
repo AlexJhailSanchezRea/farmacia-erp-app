@@ -1,10 +1,17 @@
 "use server";
+import { obtenerUsuarioAutenticado } from "@/lib/auth";
+import { verificarPermisoAccion } from "@/lib/permissions";
 
 import { revalidatePath } from "next/cache";
 import { usuarioSchema } from "./validations";
 import { registrarUsuarioService, editarUsuarioService, cambiarEstadoUsuarioService } from "./services";
 
 export async function guardarUsuarioAction(prevState: unknown, formData: FormData) {
+    const usuario = await obtenerUsuarioAutenticado();
+    if (!usuario || !verificarPermisoAccion(usuario.rol.nombre, "crear_usuario")) {
+        return { error: "No tienes permisos para realizar esta acción." };
+    }
+
     try {
         const id = formData.get("id") ? Number(formData.get("id")) : undefined;
         const nombre = formData.get("nombre")?.toString() || "";

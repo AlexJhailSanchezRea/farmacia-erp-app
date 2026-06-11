@@ -1,3 +1,6 @@
+import { verificarAccesoModulo } from "@/lib/permissions";
+import { NoAutorizado } from "@/components/layout/NoAutorizado";
+import { obtenerUsuarioAutenticado } from "@/lib/auth";
 import { PaginaModulo } from "@/components/layout/PaginaModulo";
 import { UsuariosManager } from "./components";
 import { obtenerUsuarios, obtenerRoles } from "@/modules/usuarios/repository";
@@ -7,6 +10,11 @@ export const metadata = {
 };
 
 export default async function UsuariosPage() {
+    const usuario = await obtenerUsuarioAutenticado();
+    if (!usuario || !verificarAccesoModulo(usuario.rol.nombre, "Usuarios y Roles")) {
+        return <NoAutorizado />;
+    }
+
     const [usuarios, roles] = await Promise.all([
         obtenerUsuarios(),
         obtenerRoles()
