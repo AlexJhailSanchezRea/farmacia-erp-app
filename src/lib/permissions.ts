@@ -19,7 +19,9 @@ export type AccionNombre =
   | "editar_producto"
   | "crear_categoria"
   | "crear_cliente"
+  | "editar_cliente"
   | "crear_proveedor"
+  | "editar_proveedor"
   | "crear_compra"
   | "crear_venta"
   | "crear_usuario"
@@ -46,14 +48,14 @@ const PERMISOS_MODULOS: Record<string, ModuloNombre[]> = {
 const PERMISOS_ACCIONES: Record<string, AccionNombre[]> = {
   "Administrador": [
     "crear_producto", "editar_producto", "crear_categoria", "crear_cliente", 
-    "crear_proveedor", "crear_compra", "crear_venta", "crear_usuario", 
-    "editar_usuario", "crear_movimiento_caja"
+    "editar_cliente", "crear_proveedor", "editar_proveedor", "crear_compra", 
+    "crear_venta", "crear_usuario", "editar_usuario", "crear_movimiento_caja"
   ],
   "Vendedor": [
-    "crear_venta", "crear_cliente"
+    "crear_venta", "crear_cliente", "editar_cliente"
   ],
   "Inventario/Farmacia": [
-    "crear_producto", "editar_producto", "crear_categoria", "crear_proveedor", "crear_compra"
+    "crear_producto", "editar_producto", "crear_categoria", "crear_proveedor", "editar_proveedor", "crear_compra"
   ],
   "Contador": []
 };

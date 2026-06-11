@@ -25,7 +25,7 @@ export async function registrarMovimientoAccion(prevState: unknown, formData: Fo
         });
 
         if (!validacion.success) {
-            return { error: validacion.error.errors[0].message };
+            return { error: validacion.error.issues[0].message };
         }
 
         await servicioRegistrarMovimientoManual(validacion.data);

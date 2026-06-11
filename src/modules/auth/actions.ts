@@ -13,7 +13,7 @@ export async function loginAction(prevState: unknown, formData: FormData) {
         const validacion = loginSchema.safeParse({ correo, contrasena });
         
         if (!validacion.success) {
-            return { error: validacion.error.errors[0].message };
+            return { error: validacion.error.issues[0].message };
         }
 
         // Ejecutar servicio

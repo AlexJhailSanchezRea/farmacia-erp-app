@@ -52,6 +52,11 @@ function mapearVenta(ventaPrisma: VentaConRelaciones): VentaCliente {
                 categoriaId: d.producto.categoriaId,
                 creadoEn: d.producto.creadoEn.toISOString(),
                 actualizadoEn: d.producto.actualizadoEn.toISOString(),
+                principioActivo: d.producto.principioActivo,
+                laboratorio: d.producto.laboratorio,
+                presentacion: d.producto.presentacion,
+                concentracion: d.producto.concentracion,
+                requiereReceta: d.producto.requiereReceta,
             } : undefined
         }))
     };

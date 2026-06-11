@@ -22,7 +22,7 @@ export async function guardarUsuarioAction(prevState: unknown, formData: FormDat
         const validacion = usuarioSchema.safeParse({ id, nombre, correo, contrasena, rolId });
         
         if (!validacion.success) {
-            return { error: validacion.error.errors[0].message };
+            return { error: validacion.error.issues[0].message };
         }
 
         if (id) {

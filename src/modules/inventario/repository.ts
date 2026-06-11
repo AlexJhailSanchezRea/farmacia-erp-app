@@ -32,7 +32,19 @@ function mapearMovimiento(mov: MovimientoConProducto): MovimientoInventarioClien
             categoriaId: mov.producto.categoriaId,
             creadoEn: mov.producto.creadoEn.toISOString(),
             actualizadoEn: mov.producto.actualizadoEn.toISOString(),
-            categoria: mov.producto.categoria ? { nombre: mov.producto.categoria.nombre } : undefined
+            principioActivo: mov.producto.principioActivo,
+            laboratorio: mov.producto.laboratorio,
+            presentacion: mov.producto.presentacion,
+            concentracion: mov.producto.concentracion,
+            requiereReceta: mov.producto.requiereReceta,
+            categoria: mov.producto.categoria ? { 
+                id: mov.producto.categoria.id,
+                nombre: mov.producto.categoria.nombre,
+                descripcion: mov.producto.categoria.descripcion,
+                estado: mov.producto.categoria.estado,
+                creadoEn: mov.producto.categoria.creadoEn,
+                actualizadoEn: mov.producto.categoria.actualizadoEn
+            } : undefined
         } : undefined
     };
 }

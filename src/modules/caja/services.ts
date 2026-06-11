@@ -12,7 +12,7 @@ export async function servicioObtenerResumenCaja() {
 export async function servicioRegistrarMovimientoManual(data: MovimientoCajaFormValues) {
     const validacion = movimientoCajaSchema.safeParse(data);
     if (!validacion.success) {
-        throw new Error(validacion.error.errors[0].message);
+        throw new Error(validacion.error.issues[0].message);
     }
 
     await registrarMovimientoManual(validacion.data);

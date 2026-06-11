@@ -10,13 +10,13 @@ import {
     servicioActualizarCliente,
     servicioCambiarEstadoCliente
 } from "./services";
-import { Cliente, CrearClienteInput, ActualizarClienteInput, RespuestaAccion } from "./types";
+import { ClienteCliente, CrearClienteInput, ActualizarClienteInput, RespuestaAccionCliente } from "./types";
 
-export async function accionObtenerClientes(): Promise<Cliente[]> {
+export async function accionObtenerClientes(): Promise<ClienteCliente[]> {
     return servicioObtenerClientes();
 }
 
-export async function accionCrearCliente(datos: CrearClienteInput): Promise<RespuestaAccion<Cliente>> {
+export async function accionCrearCliente(datos: CrearClienteInput): Promise<RespuestaAccionCliente<ClienteCliente>> {
     const usuario = await obtenerUsuarioAutenticado();
     if (!usuario || !verificarPermisoAccion(usuario.rol.nombre, "crear_cliente")) {
         return { exito: false, mensaje: "No tienes permisos para realizar esta acción." };
@@ -33,7 +33,7 @@ export async function accionCrearCliente(datos: CrearClienteInput): Promise<Resp
     }
 }
 
-export async function accionActualizarCliente(datos: ActualizarClienteInput): Promise<RespuestaAccion<Cliente>> {
+export async function accionActualizarCliente(datos: ActualizarClienteInput): Promise<RespuestaAccionCliente<ClienteCliente>> {
     const usuario = await obtenerUsuarioAutenticado();
     if (!usuario || !verificarPermisoAccion(usuario.rol.nombre, "editar_cliente")) {
         return { exito: false, mensaje: "No tienes permisos para realizar esta acción." };
@@ -50,7 +50,7 @@ export async function accionActualizarCliente(datos: ActualizarClienteInput): Pr
     }
 }
 
-export async function accionCambiarEstadoCliente(id: number, estado: EstadoRegistro): Promise<RespuestaAccion> {
+export async function accionCambiarEstadoCliente(id: number, estado: EstadoRegistro): Promise<RespuestaAccionCliente> {
     try {
         const resultado = await servicioCambiarEstadoCliente(id, estado);
         if (resultado.exito) {

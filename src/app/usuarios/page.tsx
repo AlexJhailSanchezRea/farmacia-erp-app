@@ -24,6 +24,7 @@ export default async function UsuariosPage() {
         <PaginaModulo 
             titulo="Gestión de Usuarios" 
             descripcion="Administre el acceso al sistema, roles y estados de los usuarios."
+            modulo="Usuarios y Roles"
         >
             <UsuariosManager usuarios={usuarios} roles={roles} />
         </PaginaModulo>

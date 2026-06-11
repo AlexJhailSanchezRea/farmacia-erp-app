@@ -16,7 +16,7 @@ export async function accionObtenerProveedores(): Promise<ProveedorCliente[]> {
     return servicioObtenerProveedores();
 }
 
-export async function accionCrearProveedor(datos: CrearProveedorInput): Promise<RespuestaAccion<Proveedor>> {
+export async function accionCrearProveedor(datos: CrearProveedorInput): Promise<RespuestaAccionProveedor<ProveedorCliente>> {
     const usuario = await obtenerUsuarioAutenticado();
     if (!usuario || !verificarPermisoAccion(usuario.rol.nombre, "crear_proveedor")) {
         return { exito: false, mensaje: "No tienes permisos para realizar esta acción." };
@@ -33,7 +33,7 @@ export async function accionCrearProveedor(datos: CrearProveedorInput): Promise<
     }
 }
 
-export async function accionActualizarProveedor(datos: ActualizarProveedorInput): Promise<RespuestaAccion<Proveedor>> {
+export async function accionActualizarProveedor(datos: ActualizarProveedorInput): Promise<RespuestaAccionProveedor<ProveedorCliente>> {
     const usuario = await obtenerUsuarioAutenticado();
     if (!usuario || !verificarPermisoAccion(usuario.rol.nombre, "editar_proveedor")) {
         return { exito: false, mensaje: "No tienes permisos para realizar esta acción." };
