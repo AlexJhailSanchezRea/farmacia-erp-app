@@ -37,7 +37,9 @@ model Usuario {
   rolId Int
   rol   Rol @relation(fields: [rolId], references: [id])
 
-  sesiones SesionUsuario[]
+  sesiones      SesionUsuario[]
+  cajasAbiertas CajaTurno[]     @relation("AperturaCaja")
+  cajasCerradas CajaTurno[]     @relation("CierreCaja")
 
   @@map("usuarios")
 }
@@ -244,6 +246,9 @@ model Venta {
   facturaDemo    FacturaDemo?
   movimientoCaja MovimientoCaja?
 
+  cajaTurnoId Int?
+  cajaTurno   CajaTurno? @relation(fields: [cajaTurnoId], references: [id])
+
   @@map("ventas")
 }
 
@@ -301,6 +306,9 @@ model MovimientoCaja {
   compraId Int?    @unique
   compra   Compra? @relation(fields: [compraId], references: [id])
 
+  cajaTurnoId Int?
+  cajaTurno   CajaTurno? @relation(fields: [cajaTurnoId], references: [id])
+
   creadoEn      DateTime @default(now())
   actualizadoEn DateTime @updatedAt
 
@@ -354,4 +362,38 @@ model FacturaDemo {
   venta   Venta @relation(fields: [ventaId], references: [id])
 
   @@map("facturas_demo")
+}
+
+enum EstadoCajaTurno {
+  ABIERTA
+  CERRADA
+}
+
+model CajaTurno {
+  id                  Int             @id @default(autoincrement())
+  fechaApertura       DateTime        @default(now())
+  fechaCierre         DateTime?
+  montoInicial        Decimal         @db.Decimal(10, 2)
+  ingresosVentas      Decimal         @default(0) @db.Decimal(10, 2)
+  otrosIngresos       Decimal         @default(0) @db.Decimal(10, 2)
+  egresos             Decimal         @default(0) @db.Decimal(10, 2)
+  saldoEsperado       Decimal         @default(0) @db.Decimal(10, 2)
+  montoContado        Decimal?        @db.Decimal(10, 2)
+  diferencia          Decimal?        @db.Decimal(10, 2)
+  observacionApertura String?
+  observacionCierre   String?
+  estado              EstadoCajaTurno @default(ABIERTA)
+  creadoEn            DateTime        @default(now())
+  actualizadoEn       DateTime        @updatedAt
+
+  usuarioAperturaId Int
+  usuarioApertura   Usuario @relation("AperturaCaja", fields: [usuarioAperturaId], references: [id])
+
+  usuarioCierreId Int?
+  usuarioCierre   Usuario? @relation("CierreCaja", fields: [usuarioCierreId], references: [id])
+
+  movimientos MovimientoCaja[]
+  ventas      Venta[]
+
+  @@map("cajas_turno")
 }

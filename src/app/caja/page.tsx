@@ -3,7 +3,7 @@ import { NoAutorizado } from "@/components/layout/NoAutorizado";
 import { obtenerUsuarioAutenticado } from "@/lib/auth";
 import { PaginaModulo } from "@/components/layout/PaginaModulo";
 import { CajaManager } from "./components";
-import { servicioObtenerHistorialCaja, servicioObtenerResumenCaja } from "@/modules/caja/services";
+import { servicioObtenerHistorialMovimientos, servicioObtenerResumenCaja, servicioObtenerCajaAbierta } from "@/modules/caja/services";
 
 export const metadata = {
     title: "Caja | NexaERP",
@@ -15,9 +15,10 @@ export default async function CajaPage() {
         return <NoAutorizado />;
     }
 
-    const [movimientos, resumen] = await Promise.all([
-        servicioObtenerHistorialCaja(),
-        servicioObtenerResumenCaja()
+    const [movimientos, resumen, cajaAbierta] = await Promise.all([
+        servicioObtenerHistorialMovimientos(),
+        servicioObtenerResumenCaja(),
+        servicioObtenerCajaAbierta()
     ]);
 
     return (
@@ -26,7 +27,12 @@ export default async function CajaPage() {
             descripcion="Administre el flujo de efectivo, observe el saldo real e inserte movimientos manuales."
             modulo="Caja"
         >
-            <CajaManager movimientos={movimientos} resumen={resumen} />
+            <CajaManager 
+                movimientos={movimientos} 
+                resumen={resumen} 
+                cajaAbierta={cajaAbierta}
+                rolUsuario={usuario.rol.nombre}
+            />
         </PaginaModulo>
     );
 }

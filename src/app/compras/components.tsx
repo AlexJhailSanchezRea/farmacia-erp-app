@@ -284,11 +284,13 @@ export function FormularioCompra({
 export function ListaCompras({ 
     compras, 
     proveedores, 
-    productos 
+    productos,
+    cajaAbierta
 }: { 
     compras: CompraCliente[];
     proveedores: ProveedorCliente[];
     productos: ProductoCliente[];
+    cajaAbierta?: boolean;
 }) {
     const [mostrarModal, setMostrarModal] = useState(false);
 
@@ -300,8 +302,14 @@ export function ListaCompras({
                     <p className="mt-2 text-slate-600 dark:text-slate-400">Registra ingresos de mercadería al inventario.</p>
                 </div>
                 <button
-                    onClick={() => setMostrarModal(true)}
-                    className="rounded-xl bg-teal-600 px-4 py-2.5 text-sm font-semibold text-slate-900 dark:text-white shadow-lg hover:bg-teal-700 dark:hover:bg-teal-500 transition whitespace-nowrap"
+                    onClick={() => {
+                        if (!cajaAbierta) {
+                            alert("Debe abrir caja antes de registrar una compra.");
+                            return;
+                        }
+                        setMostrarModal(true);
+                    }}
+                    className="rounded-xl bg-teal-600 px-4 py-2.5 text-sm font-semibold text-slate-900 dark:text-white shadow-lg hover:bg-teal-700 dark:hover:bg-teal-500 transition whitespace-nowrap disabled:opacity-50"
                 >
                     + Registrar Compra
                 </button>

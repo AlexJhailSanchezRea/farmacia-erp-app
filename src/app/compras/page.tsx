@@ -4,6 +4,7 @@ import { obtenerUsuarioAutenticado } from "@/lib/auth";
 import { accionObtenerCompras } from "@/modules/compras/actions";
 import { accionObtenerProveedores } from "@/modules/proveedores/actions";
 import { accionObtenerProductos } from "@/modules/productos/actions";
+import { servicioObtenerCajaAbierta } from "@/modules/caja/services";
 import { ListaCompras } from "./components";
 
 export const dynamic = 'force-dynamic';
@@ -14,10 +15,11 @@ export default async function ComprasPage() {
         return <NoAutorizado />;
     }
 
-    const [compras, proveedores, productos] = await Promise.all([
+    const [compras, proveedores, productos, cajaAbierta] = await Promise.all([
         accionObtenerCompras(),
         accionObtenerProveedores(),
-        accionObtenerProductos()
+        accionObtenerProductos(),
+        servicioObtenerCajaAbierta()
     ]);
 
     return (
@@ -26,6 +28,7 @@ export default async function ComprasPage() {
                 compras={compras} 
                 proveedores={proveedores} 
                 productos={productos} 
+                cajaAbierta={!!cajaAbierta}
             />
         </main>
     );

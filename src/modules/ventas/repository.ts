@@ -97,6 +97,12 @@ export async function crearVentaConTransaccion(datos: CrearVentaInput): Promise<
     const numVenta = generarNumeroVentaUnico();
 
     const ventaRegistrada = await prisma.$transaction(async (tx) => {
+        // 0. Validar Caja Abierta
+        const cajaAbierta = await tx.cajaTurno.findFirst({ where: { estado: "ABIERTA" } });
+        if (!cajaAbierta) {
+            throw new Error("Debe abrir caja antes de registrar operaciones de dinero (Venta).");
+        }
+
         let totalCalculado = 0;
         
         // 1. Validar Stock y recalcular total exacto antes de crear nada
@@ -125,6 +131,7 @@ export async function crearVentaConTransaccion(datos: CrearVentaInput): Promise<
                 clienteId: datos.clienteId || null,
                 observacion: datos.observacion?.trim() || null,
                 total: new Prisma.Decimal(totalCalculado),
+                cajaTurnoId: cajaAbierta.id,
                 detalles: {
                     create: detallesData
                 }
@@ -226,7 +233,8 @@ export async function crearVentaConTransaccion(datos: CrearVentaInput): Promise<
                 concepto: `Venta ${numVenta}`,
                 monto: new Prisma.Decimal(totalCalculado),
                 referencia: clienteNombre,
-                ventaId: nuevaVenta.id
+                ventaId: nuevaVenta.id,
+                cajaTurnoId: cajaAbierta.id
             }
         });
 
@@ -238,6 +246,12 @@ export async function crearVentaConTransaccion(datos: CrearVentaInput): Promise<
 
 export async function anularVentaConTransaccion(idVenta: number, motivo: string): Promise<VentaCliente> {
     const ventaAnulada = await prisma.$transaction(async (tx) => {
+        // 0. Validar Caja Abierta
+        const cajaAbierta = await tx.cajaTurno.findFirst({ where: { estado: "ABIERTA" } });
+        if (!cajaAbierta) {
+            throw new Error("Debe abrir caja antes de registrar operaciones de dinero (Anulación).");
+        }
+
         // 1. Obtener la venta con comprobante
         const venta = await tx.venta.findUniqueOrThrow({
             where: { id: idVenta },
@@ -339,6 +353,7 @@ export async function anularVentaConTransaccion(idVenta: number, motivo: string)
                 concepto: `Anulación de Venta ${venta.numeroVenta}`,
                 monto: venta.total,
                 referencia: `ANULACION-VENTA-${idVenta}`,
+                cajaTurnoId: cajaAbierta.id
                 // No asignamos ventaId para no violar @unique
             }
         });

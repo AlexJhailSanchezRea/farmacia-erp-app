@@ -265,6 +265,21 @@ async function main() {
     const riesgo60 = new Date(hoy); riesgo60.setDate(hoy.getDate() + 45);
     const largoPlazo = new Date(hoy); largoPlazo.setFullYear(hoy.getFullYear() + 2);
 
+    // 5.5 CajaTurno Inicial
+    const adminUser = await prisma.usuario.findFirstOrThrow({ where: { rol: { nombre: "Administrador" } } });
+    let cajaTurno = await prisma.cajaTurno.findFirst({ where: { estado: "ABIERTA" } });
+    if (!cajaTurno) {
+        cajaTurno = await prisma.cajaTurno.create({
+            data: {
+                usuarioAperturaId: adminUser.id,
+                montoInicial: 100000.00,
+                observacionApertura: "Caja de inicialización automática",
+                estado: "ABIERTA"
+            }
+        });
+        console.log("CajaTurno de inicialización creada.");
+    }
+
     if (proveedoresDB.length > 0 && prodsDB.length >= 40) {
         const comprasDePrueba = [
             { numeroCompra: "SEED-COMP-001", proveedor: proveedoresDB[0], detalles: [ 
@@ -371,7 +386,8 @@ async function main() {
                             concepto: `Compra Fac. ${compBase.numeroCompra}`,
                             monto: totalCompra,
                             referencia: compBase.proveedor.nombre,
-                            compraId: nuevaCompra.id
+                            compraId: nuevaCompra.id,
+                            cajaTurnoId: cajaTurno.id
                         }
                     });
                 });
@@ -408,7 +424,8 @@ async function main() {
                             numeroVenta: ventaBase.numeroVenta,
                             clienteId: ventaBase.cliente ? ventaBase.cliente.id : null,
                             observacion: "Venta automática de semilla",
-                            total: 0
+                            total: 0,
+                            cajaTurnoId: cajaTurno.id
                         }
                     });
 
@@ -501,7 +518,8 @@ async function main() {
                             concepto: `Venta Fac. ${ventaBase.numeroVenta}`,
                             monto: totalVenta,
                             referencia: ventaBase.cliente ? ventaBase.cliente.nombre : "Cliente General",
-                            ventaId: nuevaVenta.id
+                            ventaId: nuevaVenta.id,
+                            cajaTurnoId: cajaTurno.id
                         }
                     });
                 });
@@ -515,10 +533,11 @@ async function main() {
         await prisma.movimientoCaja.create({
             data: {
                 tipoMovimiento: "INGRESO",
-                concepto: "Apertura de caja",
+                concepto: "Apertura de caja inicial",
                 monto: 100000.00,
                 referencia: "CAPITAL-INICIAL",
-                estado: "ACTIVO"
+                estado: "ACTIVO",
+                cajaTurnoId: cajaTurno.id
             }
         });
     } else {
@@ -526,9 +545,10 @@ async function main() {
             where: { id: capitalInicial.id },
             data: {
                 monto: 100000.00,
-                concepto: "Apertura de caja",
+                concepto: "Apertura de caja inicial",
                 tipoMovimiento: "INGRESO",
-                estado: "ACTIVO"
+                estado: "ACTIVO",
+                cajaTurnoId: cajaTurno.id
             }
         });
     }
@@ -541,7 +561,8 @@ async function main() {
                 concepto: "Retiro para pago servicios",
                 monto: -150.00,
                 referencia: "Pago Luz y Agua",
-                estado: "ACTIVO"
+                estado: "ACTIVO",
+                cajaTurnoId: cajaTurno.id
             }
         });
     }

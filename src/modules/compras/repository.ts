@@ -100,6 +100,12 @@ export async function crearCompraConTransaccion(datos: CrearCompraInput): Promis
     const numCompra = generarNumeroCompraUnico();
 
     const compraRegistrada = await prisma.$transaction(async (tx) => {
+        // 0. Validar Caja Abierta
+        const cajaAbierta = await tx.cajaTurno.findFirst({ where: { estado: "ABIERTA" } });
+        if (!cajaAbierta) {
+            throw new Error("Debe abrir caja antes de registrar operaciones de dinero (Compra).");
+        }
+
         // 1. Crear la cabecera y el detalle de la compra
         const nuevaCompra = await tx.compra.create({
             data: {
@@ -180,7 +186,8 @@ export async function crearCompraConTransaccion(datos: CrearCompraInput): Promis
                 concepto: `Compra ${numCompra}`,
                 monto: new Prisma.Decimal(totalCalculado),
                 referencia: nuevaCompra.proveedor.nombre,
-                compraId: nuevaCompra.id
+                compraId: nuevaCompra.id,
+                cajaTurnoId: cajaAbierta.id
             }
         });
 

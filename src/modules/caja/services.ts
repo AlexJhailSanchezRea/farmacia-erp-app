@@ -1,7 +1,33 @@
-import { obtenerMovimientosCaja, registrarMovimientoManual, calcularResumenCaja } from "./repository";
+import { 
+    obtenerMovimientosCaja, 
+    registrarMovimientoManual, 
+    calcularResumenCaja,
+    repositoryObtenerCajaAbierta,
+    repositoryAbrirCaja,
+    repositoryCerrarCaja,
+    repositoryObtenerHistorialCajas
+} from "./repository";
 import { movimientoCajaSchema, MovimientoCajaFormValues } from "./validations";
 
-export async function servicioObtenerHistorialCaja() {
+export async function servicioObtenerCajaAbierta() {
+    return await repositoryObtenerCajaAbierta();
+}
+
+export async function servicioAbrirCaja(usuarioId: number, montoInicial: number, observacion?: string) {
+    if (montoInicial < 0) throw new Error("El monto inicial no puede ser negativo");
+    return await repositoryAbrirCaja({ usuarioId, montoInicial, observacion });
+}
+
+export async function servicioCerrarCaja(cajaId: number, usuarioId: number, montoContado: number, observacion?: string) {
+    if (montoContado < 0) throw new Error("El monto contado no puede ser negativo");
+    return await repositoryCerrarCaja({ cajaId, usuarioId, montoContado, observacion });
+}
+
+export async function servicioObtenerHistorialCajas() {
+    return await repositoryObtenerHistorialCajas();
+}
+
+export async function servicioObtenerHistorialMovimientos() {
     return await obtenerMovimientosCaja();
 }
 

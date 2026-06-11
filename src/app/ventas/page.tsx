@@ -4,6 +4,7 @@ import { obtenerUsuarioAutenticado } from "@/lib/auth";
 import { accionObtenerVentas } from "@/modules/ventas/actions";
 import { accionObtenerClientes } from "@/modules/clientes/actions";
 import { accionObtenerProductos } from "@/modules/productos/actions";
+import { servicioObtenerCajaAbierta } from "@/modules/caja/services";
 import { ListaVentas } from "./components";
 
 export const dynamic = 'force-dynamic';
@@ -14,10 +15,11 @@ export default async function VentasPage() {
         return <NoAutorizado />;
     }
 
-    const [ventas, clientes, productos] = await Promise.all([
+    const [ventas, clientes, productos, cajaAbierta] = await Promise.all([
         accionObtenerVentas(),
         accionObtenerClientes(),
-        accionObtenerProductos()
+        accionObtenerProductos(),
+        servicioObtenerCajaAbierta()
     ]);
 
     const puedeAnular = verificarPermisoAccion(usuario.rol.nombre, "anular_venta");
@@ -29,6 +31,7 @@ export default async function VentasPage() {
                 clientes={clientes} 
                 productos={productos} 
                 puedeAnular={puedeAnular}
+                cajaAbierta={!!cajaAbierta}
             />
         </main>
     );

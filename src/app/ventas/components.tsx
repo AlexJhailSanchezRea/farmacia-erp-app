@@ -345,12 +345,14 @@ export function ListaVentas({
     ventas, 
     clientes, 
     productos,
-    puedeAnular
+    puedeAnular,
+    cajaAbierta
 }: { 
     ventas: VentaCliente[];
     clientes: ClienteCliente[];
     productos: ProductoCliente[];
     puedeAnular?: boolean;
+    cajaAbierta?: boolean;
 }) {
     const [mostrarModal, setMostrarModal] = useState(false);
     const [ventaParaAnular, setVentaParaAnular] = useState<VentaCliente | null>(null);
@@ -363,8 +365,14 @@ export function ListaVentas({
                     <p className="mt-2 text-slate-600 dark:text-slate-400">Registra salidas de mercadería y emite comprobantes.</p>
                 </div>
                 <button
-                    onClick={() => setMostrarModal(true)}
-                    className="rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-slate-900 dark:text-white shadow-lg hover:bg-indigo-500 transition whitespace-nowrap"
+                    onClick={() => {
+                        if (!cajaAbierta) {
+                            alert("Debe abrir caja antes de registrar una venta.");
+                            return;
+                        }
+                        setMostrarModal(true);
+                    }}
+                    className="rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-slate-900 dark:text-white shadow-lg hover:bg-indigo-500 transition whitespace-nowrap disabled:opacity-50"
                 >
                     + Registrar Venta
                 </button>
@@ -442,8 +450,14 @@ export function ListaVentas({
                                         <td className="px-6 py-4 text-center">
                                             {v.estado === "ACTIVO" && (
                                                 <button
-                                                    onClick={() => setVentaParaAnular(v)}
-                                                    className="text-xs font-medium text-red-400 hover:text-red-300 transition underline underline-offset-2"
+                                                    onClick={() => {
+                                                        if (!cajaAbierta) {
+                                                            alert("Debe abrir caja antes de anular una venta.");
+                                                            return;
+                                                        }
+                                                        setVentaParaAnular(v);
+                                                    }}
+                                                    className="text-xs font-medium text-red-400 hover:text-red-300 transition underline underline-offset-2 disabled:opacity-50"
                                                 >
                                                     Anular
                                                 </button>
