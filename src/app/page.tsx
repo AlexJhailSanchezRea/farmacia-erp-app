@@ -21,7 +21,8 @@ const modulos = [
   { nombre: "Usuarios y Roles", ruta: "/usuarios" },
   { nombre: "Configuracion", ruta: "/configuracion" },
   { nombre: "Auditoria", ruta: "/auditoria" },
-  { nombre: "Facturación Demo", ruta: "/facturas" }
+  { nombre: "Facturación Demo", ruta: "/facturas" },
+  { nombre: "Mantenimiento", ruta: "/mantenimiento" }
 ];
 
 export default async function Inicio() {
