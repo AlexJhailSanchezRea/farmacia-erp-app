@@ -17,11 +17,11 @@ function ThemeToggle() {
     const toggleTheme = () => {
         if (theme === "dark") {
             document.documentElement.classList.remove("dark");
-            localStorage.theme = "light";
+            localStorage.setItem("nexa-theme", "light");
             setTheme("light");
         } else {
             document.documentElement.classList.add("dark");
-            localStorage.theme = "dark";
+            localStorage.setItem("nexa-theme", "dark");
             setTheme("dark");
         }
     };
