@@ -1,11 +1,15 @@
 "use client";
 
 import { FacturaConDetalles } from "@/modules/facturas/types";
+import { Buscador } from "@/components/layout/Buscador";
+import { Paginacion } from "@/components/layout/Paginacion";
 
 export function ListaFacturas({ 
-    facturas 
+    facturas,
+    totalPages
 }: { 
     facturas: FacturaConDetalles[];
+    totalPages: number;
 }) {
     return (
         <div className="flex-1 p-6 lg:p-10">
@@ -16,6 +20,9 @@ export function ListaFacturas({
                         <span className="bg-indigo-500/10 text-indigo-500 text-xs px-2.5 py-1 rounded-full font-bold border border-indigo-500/20">MODO DEMO</span>
                     </h1>
                     <p className="mt-2 text-slate-600 dark:text-slate-400">Listado de facturas generadas. No tienen validez fiscal.</p>
+                </div>
+                <div className="flex flex-col sm:flex-row gap-4">
+                    <Buscador placeholder="Buscar por nro. factura o cliente..." />
                 </div>
             </header>
 
@@ -80,6 +87,10 @@ export function ListaFacturas({
                     </tbody>
                 </table>
             </div>
+
+            {totalPages > 1 && (
+                <Paginacion totalPages={totalPages} />
+            )}
         </div>
     );
 }

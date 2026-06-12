@@ -23,8 +23,8 @@ export async function servicioCerrarCaja(cajaId: number, usuarioId: number, mont
     return await repositoryCerrarCaja({ cajaId, usuarioId, montoContado, observacion });
 }
 
-export async function servicioObtenerHistorialCajas() {
-    return await repositoryObtenerHistorialCajas();
+export async function servicioObtenerHistorialCajas(q?: string, pagina: number = 1, limite: number = 15) {
+    return await repositoryObtenerHistorialCajas(q, pagina, limite);
 }
 
 export async function servicioObtenerHistorialMovimientos() {

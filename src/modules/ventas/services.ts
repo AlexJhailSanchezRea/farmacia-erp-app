@@ -6,8 +6,8 @@ import {
 import { VentaCliente, CrearVentaInput } from "./types";
 import { validarCrearVenta } from "./validations";
 
-export async function servicioObtenerVentas(): Promise<VentaCliente[]> {
-    return repoObtenerVentas();
+export async function servicioObtenerVentas(q?: string, pagina: number = 1, limite: number = 15): Promise<{ data: VentaCliente[], total: number, totalPages: number }> {
+    return repoObtenerVentas(q, pagina, limite);
 }
 
 export async function servicioCrearVenta(datos: CrearVentaInput): Promise<{exito: boolean; mensaje: string; venta?: VentaCliente}> {

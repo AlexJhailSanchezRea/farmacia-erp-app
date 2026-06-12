@@ -6,12 +6,12 @@ import { revalidatePath } from "next/cache";
 import { servicioObtenerFacturas, servicioGenerarFacturaDemo, servicioObtenerFacturaPorId } from "./services";
 import { accionRegistrarAuditoria } from "@/modules/auditoria/actions";
 
-export async function accionObtenerFacturas() {
+export async function accionObtenerFacturas(q?: string, pagina: number = 1, limite: number = 15) {
     const usuario = await obtenerUsuarioAutenticado();
     if (!usuario || !verificarAccesoModulo(usuario.rol.nombre, "Facturación Demo")) {
         throw new Error("No autorizado");
     }
-    return servicioObtenerFacturas();
+    return servicioObtenerFacturas(q, pagina, limite);
 }
 
 export async function accionGenerarFacturaDemo(ventaId: number) {

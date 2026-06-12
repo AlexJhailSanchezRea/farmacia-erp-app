@@ -2,8 +2,19 @@ import { prisma } from "@/lib/prisma";
 import { FacturaDemo } from "@/generated/prisma/client";
 import { FacturaConDetalles } from "./types";
 
-export async function repositoryObtenerFacturas(): Promise<FacturaConDetalles[]> {
-    return prisma.facturaDemo.findMany({
+export async function repositoryObtenerFacturas(q?: string, pagina: number = 1, limite: number = 15): Promise<{ data: FacturaConDetalles[], total: number, totalPages: number }> {
+    const whereClause: import("@/generated/prisma/client").Prisma.FacturaDemoWhereInput = q ? {
+        OR: [
+            { numeroFactura: { contains: q, mode: 'insensitive' as const } },
+            { venta: { cliente: { nombre: { contains: q, mode: 'insensitive' as const } } } }
+        ]
+    } : {};
+
+    const total = await prisma.facturaDemo.count({ where: whereClause });
+    const totalPages = Math.ceil(total / limite);
+
+    const data = await prisma.facturaDemo.findMany({
+        where: whereClause,
         orderBy: { fechaEmision: 'desc' },
         include: {
             venta: {
@@ -14,8 +25,12 @@ export async function repositoryObtenerFacturas(): Promise<FacturaConDetalles[]>
                     }
                 }
             }
-        }
+        },
+        skip: (pagina - 1) * limite,
+        take: limite
     });
+
+    return { data, total, totalPages };
 }
 
 export async function repositoryObtenerFacturaPorId(id: number): Promise<FacturaConDetalles | null> {

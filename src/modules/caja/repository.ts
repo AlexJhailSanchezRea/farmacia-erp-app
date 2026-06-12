@@ -32,32 +32,49 @@ export async function repositoryObtenerCajaAbierta(): Promise<CajaTurnoCliente |
     };
 }
 
-export async function repositoryObtenerHistorialCajas(): Promise<CajaTurnoCliente[]> {
+export async function repositoryObtenerHistorialCajas(q?: string, pagina: number = 1, limite: number = 15): Promise<{ data: CajaTurnoCliente[], total: number, totalPages: number }> {
+    const whereClause: Prisma.CajaTurnoWhereInput = q ? {
+        OR: [
+            { usuarioApertura: { nombre: { contains: q, mode: 'insensitive' as const } } },
+            { usuarioCierre: { nombre: { contains: q, mode: 'insensitive' as const } } }
+        ]
+    } : {};
+
+    const total = await prisma.cajaTurno.count({ where: whereClause });
+    const totalPages = Math.ceil(total / limite);
+
     const cajas = await prisma.cajaTurno.findMany({
+        where: whereClause,
         orderBy: { fechaApertura: "desc" },
         include: {
             usuarioApertura: true,
             usuarioCierre: true
-        }
+        },
+        skip: (pagina - 1) * limite,
+        take: limite
     });
 
-    return cajas.map(caja => ({
-        id: caja.id,
-        fechaApertura: caja.fechaApertura.toISOString(),
-        fechaCierre: caja.fechaCierre ? caja.fechaCierre.toISOString() : null,
-        montoInicial: Number(caja.montoInicial),
-        ingresosVentas: Number(caja.ingresosVentas),
-        otrosIngresos: Number(caja.otrosIngresos),
-        egresos: Number(caja.egresos),
-        saldoEsperado: Number(caja.saldoEsperado),
-        montoContado: caja.montoContado ? Number(caja.montoContado) : null,
-        diferencia: caja.diferencia ? Number(caja.diferencia) : null,
-        observacionApertura: caja.observacionApertura,
-        observacionCierre: caja.observacionCierre,
-        estado: caja.estado,
-        usuarioAperturaNombre: caja.usuarioApertura.nombre,
-        usuarioCierreNombre: caja.usuarioCierre?.nombre || null
-    }));
+    return {
+        data: cajas.map(caja => ({
+            id: caja.id,
+            fechaApertura: caja.fechaApertura.toISOString(),
+            fechaCierre: caja.fechaCierre ? caja.fechaCierre.toISOString() : null,
+            montoInicial: Number(caja.montoInicial),
+            ingresosVentas: Number(caja.ingresosVentas),
+            otrosIngresos: Number(caja.otrosIngresos),
+            egresos: Number(caja.egresos),
+            saldoEsperado: Number(caja.saldoEsperado),
+            montoContado: caja.montoContado ? Number(caja.montoContado) : null,
+            diferencia: caja.diferencia ? Number(caja.diferencia) : null,
+            observacionApertura: caja.observacionApertura,
+            observacionCierre: caja.observacionCierre,
+            estado: caja.estado,
+            usuarioAperturaNombre: caja.usuarioApertura.nombre,
+            usuarioCierreNombre: caja.usuarioCierre?.nombre || null
+        })),
+        total,
+        totalPages
+    };
 }
 
 export async function repositoryAbrirCaja(data: { usuarioId: number, montoInicial: number, observacion?: string }) {

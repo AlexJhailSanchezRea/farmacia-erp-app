@@ -11,13 +11,16 @@ export const metadata = {
 
 export const dynamic = 'force-dynamic';
 
-export default async function HistorialCajasPage() {
+export default async function HistorialCajasPage(props: { searchParams?: Promise<{ q?: string; page?: string }> }) {
+    const searchParams = await props.searchParams;
+    const q = searchParams?.q || "";
+    const page = Number(searchParams?.page) || 1;
     const usuario = await obtenerUsuarioAutenticado();
     if (!usuario || !verificarAccesoModulo(usuario.rol.nombre, "Caja")) {
         return <NoAutorizado />;
     }
 
-    const cajas = await servicioObtenerHistorialCajas();
+    const { data: cajas, totalPages } = await servicioObtenerHistorialCajas(q, page, 15);
 
     return (
         <PaginaModulo 
@@ -27,7 +30,7 @@ export default async function HistorialCajasPage() {
             volverA="/caja"
             volverTexto="Volver a Caja"
         >
-            <ListaHistorialCajas cajas={cajas} />
+            <ListaHistorialCajas cajas={cajas} totalPages={totalPages} />
         </PaginaModulo>
     );
 }

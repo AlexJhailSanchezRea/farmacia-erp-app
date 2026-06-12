@@ -12,8 +12,8 @@ import { ProductoCliente, CrearProductoInput, ActualizarProductoInput } from "./
 import { validarCrearProducto, validarActualizarProducto } from "./validations";
 import { Categoria } from "@/modules/categorias/types";
 
-export async function servicioObtenerProductos(): Promise<ProductoCliente[]> {
-    return repoObtenerProductos();
+export async function servicioObtenerProductos(q?: string, pagina: number = 1, limite: number = 15): Promise<{ data: ProductoCliente[], total: number, totalPages: number }> {
+    return repoObtenerProductos(q, pagina, limite);
 }
 
 export async function servicioObtenerCategoriasActivas(): Promise<Categoria[]> {

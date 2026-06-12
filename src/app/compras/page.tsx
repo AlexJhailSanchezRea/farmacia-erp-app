@@ -9,16 +9,19 @@ import { ListaCompras } from "./components";
 
 export const dynamic = 'force-dynamic';
 
-export default async function ComprasPage() {
+export default async function ComprasPage(props: { searchParams?: Promise<{ q?: string; page?: string }> }) {
+    const searchParams = await props.searchParams;
+    const q = searchParams?.q || "";
+    const page = Number(searchParams?.page) || 1;
     const usuario = await obtenerUsuarioAutenticado();
     if (!usuario || !verificarAccesoModulo(usuario.rol.nombre, "Compras")) {
         return <NoAutorizado />;
     }
 
-    const [compras, proveedores, productos, cajaAbierta] = await Promise.all([
-        accionObtenerCompras(),
-        accionObtenerProveedores(),
-        accionObtenerProductos(),
+    const [{ data: compras, totalPages }, { data: proveedores }, { data: productos }, cajaAbierta] = await Promise.all([
+        accionObtenerCompras(q, page, 15),
+        accionObtenerProveedores("", 1, 10000), // Get all providers for the dropdown
+        accionObtenerProductos("", 1, 10000), // Get all products for the dropdown
         servicioObtenerCajaAbierta()
     ]);
 
@@ -29,6 +32,7 @@ export default async function ComprasPage() {
                 proveedores={proveedores} 
                 productos={productos} 
                 cajaAbierta={!!cajaAbierta}
+                totalPages={totalPages}
             />
         </main>
     );

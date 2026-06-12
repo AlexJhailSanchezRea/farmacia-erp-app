@@ -25,10 +25,29 @@ export async function registrarAuditoriaEnBD(data: Omit<Auditoria, "id" | "cread
     return mapearAuditoria(aud);
 }
 
-export async function obtenerRegistrosAuditoria(limite: number = 100): Promise<AuditoriaRegistro[]> {
+export async function obtenerRegistrosAuditoria(q?: string, pagina: number = 1, limite: number = 15): Promise<{ data: AuditoriaRegistro[], total: number, totalPages: number }> {
+    const whereClause = q ? {
+        OR: [
+            { usuarioCorreo: { contains: q, mode: 'insensitive' as const } },
+            { modulo: { contains: q, mode: 'insensitive' as const } },
+            { accion: { contains: q, mode: 'insensitive' as const } },
+            { descripcion: { contains: q, mode: 'insensitive' as const } }
+        ]
+    } : {};
+
+    const total = await prisma.auditoria.count({ where: whereClause });
+    const totalPages = Math.ceil(total / limite);
+
     const logs = await prisma.auditoria.findMany({
+        where: whereClause,
         orderBy: { creadoEn: 'desc' },
+        skip: (pagina - 1) * limite,
         take: limite
     });
-    return logs.map(mapearAuditoria);
+    
+    return {
+        data: logs.map(mapearAuditoria),
+        total,
+        totalPages
+    };
 }

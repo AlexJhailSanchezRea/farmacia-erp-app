@@ -8,6 +8,8 @@ import {
     accionActualizarCliente, 
     accionCambiarEstadoCliente 
 } from "@/modules/clientes/actions";
+import { Buscador } from "@/components/layout/Buscador";
+import { Paginacion } from "@/components/layout/Paginacion";
 
 export function FormularioCliente({ 
     clienteAEditar, 
@@ -149,7 +151,7 @@ export function FormularioCliente({
     );
 }
 
-export function ListaClientes({ clientes }: { clientes: ClienteCliente[] }) {
+export function ListaClientes({ clientes, totalPages }: { clientes: ClienteCliente[], totalPages: number }) {
     const [mostrarModal, setMostrarModal] = useState(false);
     const [clienteAEditar, setClienteAEditar] = useState<ClienteCliente | null>(null);
 
@@ -177,12 +179,15 @@ export function ListaClientes({ clientes }: { clientes: ClienteCliente[] }) {
                     <h1 className="text-3xl font-bold text-white">Clientes</h1>
                     <p className="mt-2 text-slate-400">Gestiona el directorio de clientes de la empresa.</p>
                 </div>
-                <button
-                    onClick={handleCrear}
-                    className="rounded-xl bg-cyan-600 px-4 py-2.5 text-sm font-semibold text-white shadow-lg hover:bg-cyan-500 transition whitespace-nowrap"
-                >
-                    + Nuevo Cliente
-                </button>
+                <div className="flex flex-col sm:flex-row gap-4 items-center">
+                    <Buscador placeholder="Buscar por nombre o CI/NIT..." />
+                    <button
+                        onClick={handleCrear}
+                        className="rounded-xl bg-cyan-600 px-4 py-2.5 text-sm font-semibold text-white shadow-lg hover:bg-cyan-500 transition whitespace-nowrap"
+                    >
+                        + Nuevo Cliente
+                    </button>
+                </div>
             </header>
 
             <div className="rounded-2xl border border-slate-800 bg-slate-900/50 overflow-hidden shadow-xl overflow-x-auto">
@@ -250,6 +255,10 @@ export function ListaClientes({ clientes }: { clientes: ClienteCliente[] }) {
                     </tbody>
                 </table>
             </div>
+
+            {totalPages > 1 && (
+                <Paginacion totalPages={totalPages} />
+            )}
 
             {mostrarModal && (
                 <FormularioCliente 

@@ -11,8 +11,8 @@ import {
 import { VentaCliente, CrearVentaInput, RespuestaAccionVenta } from "./types";
 import { accionRegistrarAuditoria } from "@/modules/auditoria/actions";
 
-export async function accionObtenerVentas(): Promise<VentaCliente[]> {
-    return servicioObtenerVentas();
+export async function accionObtenerVentas(q?: string, pagina: number = 1, limite: number = 15): Promise<{ data: VentaCliente[], total: number, totalPages: number }> {
+    return servicioObtenerVentas(q, pagina, limite);
 }
 
 export async function accionCrearVenta(datos: CrearVentaInput): Promise<RespuestaAccionVenta<VentaCliente>> {

@@ -5,12 +5,12 @@ import { servicioObtenerAuditoria, servicioRegistrarAuditoria } from "./services
 import { AuditoriaRegistro, CrearAuditoriaData } from "./types";
 import { obtenerUsuarioAutenticado } from "@/lib/auth";
 
-export async function accionObtenerAuditoria(): Promise<AuditoriaRegistro[]> {
+export async function accionObtenerAuditoria(q?: string, pagina: number = 1, limite: number = 15): Promise<{ data: AuditoriaRegistro[], total: number, totalPages: number }> {
     const usuario = await obtenerUsuarioAutenticado();
     if (!usuario || usuario.rol.nombre !== "Administrador") {
-        return [];
+        return { data: [], total: 0, totalPages: 0 };
     }
-    return servicioObtenerAuditoria();
+    return servicioObtenerAuditoria(q, pagina, limite);
 }
 
 /**

@@ -1,33 +1,17 @@
 "use client";
 
 import { AuditoriaRegistro } from "@/modules/auditoria/types";
-import { useState } from "react";
+import { Buscador } from "@/components/layout/Buscador";
+import { Paginacion } from "@/components/layout/Paginacion";
 
-export function TablaAuditoria({ registros }: { registros: AuditoriaRegistro[] }) {
-    const [filtro, setFiltro] = useState("");
-
-    const registrosFiltrados = registros.filter(r => 
-        r.modulo.toLowerCase().includes(filtro.toLowerCase()) ||
-        r.accion.toLowerCase().includes(filtro.toLowerCase()) ||
-        r.descripcion.toLowerCase().includes(filtro.toLowerCase()) ||
-        (r.usuarioCorreo && r.usuarioCorreo.toLowerCase().includes(filtro.toLowerCase()))
-    );
+export function TablaAuditoria({ registros, totalPages }: { registros: AuditoriaRegistro[], totalPages: number }) {
 
     return (
         <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
             <div className="p-4 lg:p-6 border-b border-slate-200 bg-slate-50 flex flex-col sm:flex-row gap-4 justify-between items-center">
-                <h3 className="font-semibold text-slate-800">Últimos registros ({registros.length})</h3>
-                <div className="relative w-full sm:w-72">
-                    <input 
-                        type="text"
-                        placeholder="Buscar por módulo, acción, correo..."
-                        value={filtro}
-                        onChange={(e) => setFiltro(e.target.value)}
-                        className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all"
-                    />
-                    <svg className="w-5 h-5 text-slate-600 dark:text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
+                <h3 className="font-semibold text-slate-800">Últimos registros</h3>
+                <div className="w-full sm:w-auto">
+                    <Buscador placeholder="Buscar módulo, acción, correo..." />
                 </div>
             </div>
             
@@ -45,14 +29,14 @@ export function TablaAuditoria({ registros }: { registros: AuditoriaRegistro[] }
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100">
-                        {registrosFiltrados.length === 0 ? (
+                        {registros.length === 0 ? (
                             <tr>
                                 <td colSpan={7} className="px-6 py-8 text-center text-slate-500 dark:text-slate-600 dark:text-slate-400">
                                     No se encontraron registros de auditoría que coincidan con la búsqueda.
                                 </td>
                             </tr>
                         ) : (
-                            registrosFiltrados.map((registro) => (
+                            registros.map((registro) => (
                                 <tr key={registro.id} className="hover:bg-slate-50/50 transition-colors">
                                     <td className="px-4 lg:px-6 py-4 whitespace-nowrap">
                                         <span className="text-slate-900 font-medium">
@@ -96,6 +80,9 @@ export function TablaAuditoria({ registros }: { registros: AuditoriaRegistro[] }
                     </tbody>
                 </table>
             </div>
+            {totalPages > 1 && (
+                <Paginacion totalPages={totalPages} />
+            )}
         </div>
     );
 }

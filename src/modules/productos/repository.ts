@@ -47,17 +47,37 @@ function mapearProducto(productoPrisma: ProductoConCategoria): ProductoCliente {
     };
 }
 
-export async function obtenerProductos(): Promise<ProductoCliente[]> {
+export async function obtenerProductos(q?: string, pagina: number = 1, limite: number = 15): Promise<{ data: ProductoCliente[], total: number, totalPages: number }> {
+    const whereClause: Prisma.ProductoWhereInput = q ? {
+        OR: [
+            { nombre: { contains: q, mode: 'insensitive' as const } },
+            { principioActivo: { contains: q, mode: 'insensitive' as const } },
+            { laboratorio: { contains: q, mode: 'insensitive' as const } },
+            { categoria: { nombre: { contains: q, mode: 'insensitive' as const } } }
+        ]
+    } : {};
+
+    const total = await prisma.producto.count({ where: whereClause });
+    const totalPages = Math.ceil(total / limite);
+
     const productos = await prisma.producto.findMany({
+        where: whereClause,
         include: {
             categoria: true,
             lotes: true
         },
         orderBy: {
             nombre: 'asc'
-        }
+        },
+        skip: (pagina - 1) * limite,
+        take: limite
     });
-    return productos.map(mapearProducto);
+    
+    return {
+        data: productos.map(mapearProducto),
+        total,
+        totalPages
+    };
 }
 
 export async function buscarProductoPorNombre(nombre: string): Promise<ProductoCliente | null> {

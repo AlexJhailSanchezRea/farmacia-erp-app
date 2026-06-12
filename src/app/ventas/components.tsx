@@ -6,6 +6,8 @@ import { accionCrearVenta, accionAnularVenta } from "@/modules/ventas/actions";
 import { accionGenerarFacturaDemo } from "@/modules/facturas/actions";
 import { ClienteCliente } from "@/modules/clientes/types";
 import { ProductoCliente } from "@/modules/productos/types";
+import { Buscador } from "@/components/layout/Buscador";
+import { Paginacion } from "@/components/layout/Paginacion";
 
 export function FormularioVenta({
     clientes,
@@ -346,13 +348,15 @@ export function ListaVentas({
     clientes, 
     productos,
     puedeAnular,
-    cajaAbierta
+    cajaAbierta,
+    totalPages
 }: { 
     ventas: VentaCliente[];
     clientes: ClienteCliente[];
     productos: ProductoCliente[];
     puedeAnular?: boolean;
     cajaAbierta?: boolean;
+    totalPages: number;
 }) {
     const [mostrarModal, setMostrarModal] = useState(false);
     const [ventaParaAnular, setVentaParaAnular] = useState<VentaCliente | null>(null);
@@ -364,18 +368,21 @@ export function ListaVentas({
                     <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Ventas</h1>
                     <p className="mt-2 text-slate-600 dark:text-slate-400">Registra salidas de mercadería y emite comprobantes.</p>
                 </div>
-                <button
-                    onClick={() => {
-                        if (!cajaAbierta) {
-                            alert("Debe abrir caja antes de registrar una venta.");
-                            return;
-                        }
-                        setMostrarModal(true);
-                    }}
-                    className="rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-slate-900 dark:text-white shadow-lg hover:bg-indigo-500 transition whitespace-nowrap disabled:opacity-50"
-                >
-                    + Registrar Venta
-                </button>
+                <div className="flex flex-col sm:flex-row gap-4">
+                    <Buscador placeholder="Buscar por nro. venta o cliente..." />
+                    <button
+                        onClick={() => {
+                            if (!cajaAbierta) {
+                                alert("Debe abrir caja antes de registrar una venta.");
+                                return;
+                            }
+                            setMostrarModal(true);
+                        }}
+                        className="rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-slate-900 dark:text-white shadow-lg hover:bg-indigo-500 transition whitespace-nowrap disabled:opacity-50"
+                    >
+                        + Registrar Venta
+                    </button>
+                </div>
             </header>
 
             <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-white dark:bg-slate-900/50 overflow-hidden shadow-xl overflow-x-auto">
@@ -470,6 +477,10 @@ export function ListaVentas({
                     </tbody>
                 </table>
             </div>
+
+            {totalPages > 1 && (
+                <Paginacion totalPages={totalPages} />
+            )}
 
             {mostrarModal && (
                 <FormularioVenta 

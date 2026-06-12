@@ -18,13 +18,30 @@ function mapearCliente(clientePrisma: Cliente): ClienteCliente {
     };
 }
 
-export async function obtenerClientes(): Promise<ClienteCliente[]> {
+export async function obtenerClientes(q?: string, pagina: number = 1, limite: number = 15): Promise<{ data: ClienteCliente[], total: number, totalPages: number }> {
+    const whereClause: import("@/generated/prisma/client").Prisma.ClienteWhereInput = q ? {
+        OR: [
+            { nombre: { contains: q, mode: 'insensitive' as const } },
+            { ciNit: { contains: q, mode: 'insensitive' as const } }
+        ]
+    } : {};
+
+    const total = await prisma.cliente.count({ where: whereClause });
+    const totalPages = Math.ceil(total / limite);
+
     const clientes = await prisma.cliente.findMany({
+        where: whereClause,
         orderBy: {
             nombre: 'asc'
-        }
+        },
+        skip: (pagina - 1) * limite,
+        take: limite
     });
-    return clientes.map(mapearCliente);
+    return {
+        data: clientes.map(mapearCliente),
+        total,
+        totalPages
+    };
 }
 
 export async function buscarClientePorNombre(nombre: string): Promise<ClienteCliente | null> {

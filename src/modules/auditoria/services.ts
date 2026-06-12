@@ -1,8 +1,8 @@
 import { obtenerRegistrosAuditoria, registrarAuditoriaEnBD } from "./repository";
 import { AuditoriaRegistro, CrearAuditoriaData } from "./types";
 
-export async function servicioObtenerAuditoria(limite?: number): Promise<AuditoriaRegistro[]> {
-    return obtenerRegistrosAuditoria(limite);
+export async function servicioObtenerAuditoria(q?: string, pagina: number = 1, limite: number = 15): Promise<{ data: AuditoriaRegistro[], total: number, totalPages: number }> {
+    return obtenerRegistrosAuditoria(q, pagina, limite);
 }
 
 export async function servicioRegistrarAuditoria(

@@ -18,13 +18,30 @@ function mapearProveedor(proveedorPrisma: Proveedor): ProveedorCliente {
     };
 }
 
-export async function obtenerProveedores(): Promise<ProveedorCliente[]> {
+export async function obtenerProveedores(q?: string, pagina: number = 1, limite: number = 15): Promise<{ data: ProveedorCliente[], total: number, totalPages: number }> {
+    const whereClause: import("@/generated/prisma/client").Prisma.ProveedorWhereInput = q ? {
+        OR: [
+            { nombre: { contains: q, mode: 'insensitive' as const } },
+            { nit: { contains: q, mode: 'insensitive' as const } }
+        ]
+    } : {};
+
+    const total = await prisma.proveedor.count({ where: whereClause });
+    const totalPages = Math.ceil(total / limite);
+
     const proveedores = await prisma.proveedor.findMany({
+        where: whereClause,
         orderBy: {
             nombre: 'asc'
-        }
+        },
+        skip: (pagina - 1) * limite,
+        take: limite
     });
-    return proveedores.map(mapearProveedor);
+    return {
+        data: proveedores.map(mapearProveedor),
+        total,
+        totalPages
+    };
 }
 
 export async function buscarProveedorPorNombre(nombre: string): Promise<ProveedorCliente | null> {

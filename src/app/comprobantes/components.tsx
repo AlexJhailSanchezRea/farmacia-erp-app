@@ -2,13 +2,20 @@
 
 import Link from "next/link";
 import { ComprobanteCliente } from "@/modules/comprobantes/types";
+import { Buscador } from "@/components/layout/Buscador";
+import { Paginacion } from "@/components/layout/Paginacion";
 
-export function ListaComprobantes({ comprobantes }: { comprobantes: ComprobanteCliente[] }) {
+export function ListaComprobantes({ comprobantes, totalPages }: { comprobantes: ComprobanteCliente[], totalPages: number }) {
     return (
         <div className="flex-1 p-6 lg:p-10 bg-slate-50 min-h-screen">
-            <header className="mb-8">
-                <h1 className="text-3xl font-bold text-slate-900">Comprobantes Internos</h1>
-                <p className="mt-2 text-slate-600">Historial de notas de venta emitidas.</p>
+            <header className="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h1 className="text-3xl font-bold text-slate-900">Comprobantes Internos</h1>
+                    <p className="mt-2 text-slate-600">Historial de notas de venta emitidas.</p>
+                </div>
+                <div className="flex flex-col sm:flex-row gap-4">
+                    <Buscador placeholder="Buscar por nro. o cliente..." />
+                </div>
             </header>
 
             <div className="rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-sm overflow-x-auto">
@@ -74,6 +81,10 @@ export function ListaComprobantes({ comprobantes }: { comprobantes: ComprobanteC
                     </tbody>
                 </table>
             </div>
+
+            {totalPages > 1 && (
+                <Paginacion totalPages={totalPages} />
+            )}
         </div>
     );
 }

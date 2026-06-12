@@ -12,8 +12,8 @@ import {
 } from "./services";
 import { ClienteCliente, CrearClienteInput, ActualizarClienteInput, RespuestaAccionCliente } from "./types";
 
-export async function accionObtenerClientes(): Promise<ClienteCliente[]> {
-    return servicioObtenerClientes();
+export async function accionObtenerClientes(q?: string, pagina: number = 1, limite: number = 15): Promise<{ data: ClienteCliente[], total: number, totalPages: number }> {
+    return servicioObtenerClientes(q, pagina, limite);
 }
 
 export async function accionCrearCliente(datos: CrearClienteInput): Promise<RespuestaAccionCliente<ClienteCliente>> {

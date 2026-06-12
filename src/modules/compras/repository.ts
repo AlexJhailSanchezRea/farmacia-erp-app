@@ -63,17 +63,35 @@ function mapearCompra(compraPrisma: CompraConRelaciones): CompraCliente {
     };
 }
 
-export async function obtenerCompras(): Promise<CompraCliente[]> {
+export async function obtenerCompras(q?: string, pagina: number = 1, limite: number = 15): Promise<{ data: CompraCliente[], total: number, totalPages: number }> {
+    const whereClause: Prisma.CompraWhereInput = q ? {
+        OR: [
+            { numeroCompra: { contains: q, mode: 'insensitive' as const } },
+            { proveedor: { nombre: { contains: q, mode: 'insensitive' as const } } }
+        ]
+    } : {};
+
+    const total = await prisma.compra.count({ where: whereClause });
+    const totalPages = Math.ceil(total / limite);
+
     const compras = await prisma.compra.findMany({
+        where: whereClause,
         orderBy: { fechaCompra: 'desc' },
         include: {
             proveedor: true,
             detalles: {
                 include: { producto: true }
             }
-        }
+        },
+        skip: (pagina - 1) * limite,
+        take: limite
     });
-    return compras.map(mapearCompra);
+    
+    return {
+        data: compras.map(mapearCompra),
+        total,
+        totalPages
+    };
 }
 
 function generarNumeroCompraUnico(): string {

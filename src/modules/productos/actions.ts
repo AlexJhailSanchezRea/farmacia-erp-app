@@ -15,8 +15,8 @@ import { ProductoCliente, CrearProductoInput, ActualizarProductoInput, Respuesta
 import { Categoria } from "@/modules/categorias/types";
 import { accionRegistrarAuditoria } from "@/modules/auditoria/actions";
 
-export async function accionObtenerProductos(): Promise<ProductoCliente[]> {
-    return servicioObtenerProductos();
+export async function accionObtenerProductos(q?: string, pagina: number = 1, limite: number = 15): Promise<{ data: ProductoCliente[], total: number, totalPages: number }> {
+    return servicioObtenerProductos(q, pagina, limite);
 }
 
 export async function accionObtenerCategoriasActivas(): Promise<Categoria[]> {

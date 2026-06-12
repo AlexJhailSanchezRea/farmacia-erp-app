@@ -10,8 +10,8 @@ import {
 import { ProveedorCliente, CrearProveedorInput, ActualizarProveedorInput } from "./types";
 import { validarCrearProveedor, validarActualizarProveedor } from "./validations";
 
-export async function servicioObtenerProveedores(): Promise<ProveedorCliente[]> {
-    return repoObtenerProveedores();
+export async function servicioObtenerProveedores(q?: string, pagina: number = 1, limite: number = 15): Promise<{ data: ProveedorCliente[], total: number, totalPages: number }> {
+    return repoObtenerProveedores(q, pagina, limite);
 }
 
 export async function servicioCrearProveedor(datos: CrearProveedorInput): Promise<{exito: boolean; mensaje: string; proveedor?: ProveedorCliente}> {

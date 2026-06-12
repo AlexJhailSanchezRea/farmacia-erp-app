@@ -9,6 +9,8 @@ import {
     accionActualizarProducto, 
     accionCambiarEstadoProducto 
 } from "@/modules/productos/actions";
+import { Buscador } from "@/components/layout/Buscador";
+import { Paginacion } from "@/components/layout/Paginacion";
 
 export function FormularioProducto({ 
     productoAEditar, 
@@ -264,7 +266,7 @@ export function FormularioProducto({
     );
 }
 
-export function ListaProductos({ productos, categorias }: { productos: ProductoCliente[], categorias: Categoria[] }) {
+export function ListaProductos({ productos, categorias, totalPages }: { productos: ProductoCliente[], categorias: Categoria[], totalPages: number }) {
     const [mostrarModal, setMostrarModal] = useState(false);
     const [productoAEditar, setProductoAEditar] = useState<ProductoCliente | null>(null);
 
@@ -292,12 +294,15 @@ export function ListaProductos({ productos, categorias }: { productos: ProductoC
                     <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Productos</h1>
                     <p className="mt-2 text-slate-600 dark:text-slate-400">Gestiona el catálogo de productos y su stock.</p>
                 </div>
-                <button
-                    onClick={handleCrear}
-                    className="rounded-xl bg-teal-600 px-4 py-2.5 text-sm font-semibold text-slate-900 dark:text-white shadow-lg hover:bg-teal-700 dark:hover:bg-teal-500 transition whitespace-nowrap"
-                >
-                    + Nuevo Producto
-                </button>
+                <div className="flex flex-col sm:flex-row gap-4">
+                    <Buscador placeholder="Buscar por nombre, activo, lab..." />
+                    <button
+                        onClick={handleCrear}
+                        className="rounded-xl bg-teal-600 px-4 py-2.5 text-sm font-semibold text-slate-900 dark:text-white shadow-lg hover:bg-teal-700 dark:hover:bg-teal-500 transition whitespace-nowrap"
+                    >
+                        + Nuevo Producto
+                    </button>
+                </div>
             </header>
 
             <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-white dark:bg-slate-900/50 overflow-hidden shadow-xl overflow-x-auto">
@@ -386,6 +391,10 @@ export function ListaProductos({ productos, categorias }: { productos: ProductoC
                     </tbody>
                 </table>
             </div>
+
+            {totalPages > 1 && (
+                <Paginacion totalPages={totalPages} />
+            )}
 
             {mostrarModal && (
                 <FormularioProducto 

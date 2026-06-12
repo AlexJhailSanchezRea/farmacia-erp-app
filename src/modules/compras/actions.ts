@@ -10,8 +10,8 @@ import {
 import { CompraCliente, CrearCompraInput, RespuestaAccionCompra } from "./types";
 import { accionRegistrarAuditoria } from "@/modules/auditoria/actions";
 
-export async function accionObtenerCompras(): Promise<CompraCliente[]> {
-    return servicioObtenerCompras();
+export async function accionObtenerCompras(q?: string, pagina: number = 1, limite: number = 15): Promise<{ data: CompraCliente[], total: number, totalPages: number }> {
+    return servicioObtenerCompras(q, pagina, limite);
 }
 
 export async function accionCrearCompra(datos: CrearCompraInput): Promise<RespuestaAccionCompra<CompraCliente>> {

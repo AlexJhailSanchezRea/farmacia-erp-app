@@ -66,8 +66,19 @@ function mapearVenta(ventaPrisma: VentaConRelaciones): VentaCliente {
     };
 }
 
-export async function obtenerVentas(): Promise<VentaCliente[]> {
+export async function obtenerVentas(q?: string, pagina: number = 1, limite: number = 15): Promise<{ data: VentaCliente[], total: number, totalPages: number }> {
+    const whereClause: Prisma.VentaWhereInput = q ? {
+        OR: [
+            { numeroVenta: { contains: q, mode: 'insensitive' as const } },
+            { cliente: { nombre: { contains: q, mode: 'insensitive' as const } } }
+        ]
+    } : {};
+
+    const total = await prisma.venta.count({ where: whereClause });
+    const totalPages = Math.ceil(total / limite);
+
     const ventas = await prisma.venta.findMany({
+        where: whereClause,
         orderBy: { fechaVenta: 'desc' },
         include: {
             cliente: true,
@@ -75,9 +86,16 @@ export async function obtenerVentas(): Promise<VentaCliente[]> {
                 include: { producto: true }
             },
             facturaDemo: true
-        }
+        },
+        skip: (pagina - 1) * limite,
+        take: limite
     });
-    return ventas.map(mapearVenta);
+
+    return {
+        data: ventas.map(mapearVenta),
+        total,
+        totalPages
+    };
 }
 
 function generarNumeroVentaUnico(): string {

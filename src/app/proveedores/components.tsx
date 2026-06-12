@@ -8,6 +8,8 @@ import {
     accionActualizarProveedor, 
     accionCambiarEstadoProveedor 
 } from "@/modules/proveedores/actions";
+import { Buscador } from "@/components/layout/Buscador";
+import { Paginacion } from "@/components/layout/Paginacion";
 
 export function FormularioProveedor({ 
     proveedorAEditar, 
@@ -162,7 +164,7 @@ export function FormularioProveedor({
     );
 }
 
-export function ListaProveedores({ proveedores }: { proveedores: ProveedorCliente[] }) {
+export function ListaProveedores({ proveedores, totalPages }: { proveedores: ProveedorCliente[], totalPages: number }) {
     const [mostrarModal, setMostrarModal] = useState(false);
     const [proveedorAEditar, setProveedorAEditar] = useState<ProveedorCliente | null>(null);
 
@@ -190,12 +192,15 @@ export function ListaProveedores({ proveedores }: { proveedores: ProveedorClient
                     <h1 className="text-3xl font-bold text-white">Proveedores</h1>
                     <p className="mt-2 text-slate-400">Gestiona las empresas que suministran productos.</p>
                 </div>
-                <button
-                    onClick={handleCrear}
-                    className="rounded-xl bg-cyan-600 px-4 py-2.5 text-sm font-semibold text-white shadow-lg hover:bg-cyan-500 transition whitespace-nowrap"
-                >
-                    + Nuevo Proveedor
-                </button>
+                <div className="flex flex-col sm:flex-row gap-4 items-center">
+                    <Buscador placeholder="Buscar por nombre o NIT..." />
+                    <button
+                        onClick={handleCrear}
+                        className="rounded-xl bg-cyan-600 px-4 py-2.5 text-sm font-semibold text-white shadow-lg hover:bg-cyan-500 transition whitespace-nowrap"
+                    >
+                        + Nuevo Proveedor
+                    </button>
+                </div>
             </header>
 
             <div className="rounded-2xl border border-slate-800 bg-slate-900/50 overflow-hidden shadow-xl overflow-x-auto">
@@ -265,6 +270,10 @@ export function ListaProveedores({ proveedores }: { proveedores: ProveedorClient
                     </tbody>
                 </table>
             </div>
+
+            {totalPages > 1 && (
+                <Paginacion totalPages={totalPages} />
+            )}
 
             {mostrarModal && (
                 <FormularioProveedor 

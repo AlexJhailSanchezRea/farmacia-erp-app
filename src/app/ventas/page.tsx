@@ -9,16 +9,19 @@ import { ListaVentas } from "./components";
 
 export const dynamic = 'force-dynamic';
 
-export default async function VentasPage() {
+export default async function VentasPage(props: { searchParams?: Promise<{ q?: string; page?: string }> }) {
+    const searchParams = await props.searchParams;
+    const q = searchParams?.q || "";
+    const page = Number(searchParams?.page) || 1;
     const usuario = await obtenerUsuarioAutenticado();
     if (!usuario || !verificarAccesoModulo(usuario.rol.nombre, "Ventas")) {
         return <NoAutorizado />;
     }
 
-    const [ventas, clientes, productos, cajaAbierta] = await Promise.all([
-        accionObtenerVentas(),
-        accionObtenerClientes(),
-        accionObtenerProductos(),
+    const [{ data: ventas, totalPages }, { data: clientes }, { data: productos }, cajaAbierta] = await Promise.all([
+        accionObtenerVentas(q, page, 15),
+        accionObtenerClientes("", 1, 10000),
+        accionObtenerProductos("", 1, 10000), // Get all products for the dropdown
         servicioObtenerCajaAbierta()
     ]);
 
@@ -32,6 +35,7 @@ export default async function VentasPage() {
                 productos={productos} 
                 puedeAnular={puedeAnular}
                 cajaAbierta={!!cajaAbierta}
+                totalPages={totalPages}
             />
         </main>
     );

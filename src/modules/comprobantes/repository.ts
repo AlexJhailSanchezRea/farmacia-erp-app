@@ -16,11 +16,29 @@ function mapearComprobante(comp: Comprobante): ComprobanteCliente {
     };
 }
 
-export async function obtenerComprobantes(): Promise<ComprobanteCliente[]> {
+export async function obtenerComprobantes(q?: string, pagina: number = 1, limite: number = 15): Promise<{ data: ComprobanteCliente[], total: number, totalPages: number }> {
+    const whereClause: import("@/generated/prisma/client").Prisma.ComprobanteWhereInput = q ? {
+        OR: [
+            { numeroComprobante: { contains: q, mode: 'insensitive' as const } },
+            { clienteNombre: { contains: q, mode: 'insensitive' as const } }
+        ]
+    } : {};
+
+    const total = await prisma.comprobante.count({ where: whereClause });
+    const totalPages = Math.ceil(total / limite);
+
     const comprobantes = await prisma.comprobante.findMany({
-        orderBy: { fechaEmision: 'desc' }
+        where: whereClause,
+        orderBy: { fechaEmision: 'desc' },
+        skip: (pagina - 1) * limite,
+        take: limite
     });
-    return comprobantes.map(mapearComprobante);
+    
+    return {
+        data: comprobantes.map(mapearComprobante),
+        total,
+        totalPages
+    };
 }
 
 export async function obtenerComprobantePorId(id: number): Promise<import('./types').ComprobanteDetalleCliente | null> {

@@ -2,8 +2,10 @@
 
 import { useState } from "react";
 import { CajaTurnoCliente } from "@/modules/caja/types";
+import { Buscador } from "@/components/layout/Buscador";
+import { Paginacion } from "@/components/layout/Paginacion";
 
-export function ListaHistorialCajas({ cajas }: { cajas: CajaTurnoCliente[] }) {
+export function ListaHistorialCajas({ cajas, totalPages }: { cajas: CajaTurnoCliente[], totalPages: number }) {
     const formatSoles = (valor: number | null | undefined) => {
         if (valor == null) return "Bs 0.00";
         return `Bs ${valor.toFixed(2)}`;
@@ -13,6 +15,9 @@ export function ListaHistorialCajas({ cajas }: { cajas: CajaTurnoCliente[] }) {
 
     return (
         <div className="flex flex-col gap-6">
+            <div className="flex flex-col sm:flex-row gap-4 mb-2">
+                <Buscador placeholder="Buscar por usuario apertura o cierre..." />
+            </div>
             <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 backdrop-blur-sm overflow-hidden print:hidden">
                 <div className="overflow-x-auto">
                     <table className="min-w-full divide-y divide-slate-800">
@@ -152,6 +157,10 @@ export function ListaHistorialCajas({ cajas }: { cajas: CajaTurnoCliente[] }) {
                         </div>
                     </div>
                 </div>
+            )}
+
+            {totalPages > 1 && (
+                <Paginacion totalPages={totalPages} />
             )}
         </div>
     );
