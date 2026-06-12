@@ -1,9 +1,43 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 type Modulo = { nombre: string; ruta: string };
+
+function ThemeToggle() {
+    const [theme, setTheme] = useState<"light" | "dark" | null>(null);
+
+    useEffect(() => {
+        const current = document.documentElement.classList.contains("dark") ? "dark" : "light";
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setTheme(current);
+    }, []);
+
+    const toggleTheme = () => {
+        if (theme === "dark") {
+            document.documentElement.classList.remove("dark");
+            localStorage.theme = "light";
+            setTheme("light");
+        } else {
+            document.documentElement.classList.add("dark");
+            localStorage.theme = "dark";
+            setTheme("dark");
+        }
+    };
+
+    if (!theme) return <div className="h-9"></div>;
+
+    return (
+        <button
+            onClick={toggleTheme}
+            className="w-full flex items-center justify-between rounded-xl px-4 py-2 text-sm font-medium text-slate-300 hover:bg-slate-700 hover:text-teal-400 transition mb-3"
+        >
+            <span>Tema: {theme === "dark" ? "Oscuro" : "Claro"}</span>
+            <span className="text-xl leading-none">{theme === "dark" ? "🌙" : "☀️"}</span>
+        </button>
+    );
+}
 
 export function DashboardSidebar({ modulosPermitidos, usuarioInfo, logoutButton }: { modulosPermitidos: Modulo[], usuarioInfo: React.ReactNode, logoutButton: React.ReactNode }) {
     const [isOpen, setIsOpen] = useState(false);
@@ -32,7 +66,7 @@ export function DashboardSidebar({ modulosPermitidos, usuarioInfo, logoutButton 
                     <h1 className="mt-3 text-2xl font-bold text-white">
                         Panel Administrativo
                     </h1>
-                    <p className="mt-2 text-sm text-slate-400">
+                    <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
                         Gestión corporativa y control clínico.
                     </p>
                 </div>
@@ -51,6 +85,7 @@ export function DashboardSidebar({ modulosPermitidos, usuarioInfo, logoutButton 
                 </nav>
 
                 <div className="mt-8 border-t border-slate-700 dark:border-slate-800 pt-6">
+                    <ThemeToggle />
                     {usuarioInfo}
                     <div className={!usuarioInfo ? "mt-4" : ""}>
                         {logoutButton}

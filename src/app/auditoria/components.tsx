@@ -7,8 +7,8 @@ import { Paginacion } from "@/components/layout/Paginacion";
 export function TablaAuditoria({ registros, totalPages }: { registros: AuditoriaRegistro[], totalPages: number }) {
 
     return (
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
-            <div className="p-4 lg:p-6 border-b border-slate-200 bg-slate-50 flex flex-col sm:flex-row gap-4 justify-between items-center">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden flex flex-col">
+            <div className="p-4 lg:p-6 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 flex flex-col sm:flex-row gap-4 justify-between items-center">
                 <h3 className="font-semibold text-slate-800">Últimos registros</h3>
                 <div className="w-full sm:w-auto">
                     <Buscador placeholder="Buscar módulo, acción, correo..." />
@@ -17,7 +17,7 @@ export function TablaAuditoria({ registros, totalPages }: { registros: Auditoria
             
             <div className="overflow-x-auto">
                 <table className="w-full text-left text-sm text-slate-600">
-                    <thead className="bg-slate-50 text-slate-700 font-medium border-b border-slate-200 uppercase text-xs tracking-wider">
+                    <thead className="bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium border-b border-slate-200 uppercase text-xs tracking-wider">
                         <tr>
                             <th className="px-4 lg:px-6 py-4">Fecha</th>
                             <th className="px-4 lg:px-6 py-4">Usuario</th>
@@ -37,7 +37,7 @@ export function TablaAuditoria({ registros, totalPages }: { registros: Auditoria
                             </tr>
                         ) : (
                             registros.map((registro) => (
-                                <tr key={registro.id} className="hover:bg-slate-50/50 transition-colors">
+                                <tr key={registro.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
                                     <td className="px-4 lg:px-6 py-4 whitespace-nowrap">
                                         <span className="text-slate-900 font-medium">
                                             {new Date(registro.creadoEn).toLocaleDateString('es-ES')}

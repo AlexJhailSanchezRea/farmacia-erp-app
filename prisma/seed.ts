@@ -522,8 +522,100 @@ async function main() {
                             cajaTurnoId: cajaTurno.id
                         }
                     });
+
+                    // Generar Factura Demo
+                    const numFactura = `FD-${ts}-${rnd}`;
+                    await tx.facturaDemo.create({
+                        data: {
+                            numeroFactura: numFactura,
+                            cuf: `CUF-${ts}-${rnd}-DEMO`,
+                            cufd: `CUFD-${ts}-DEMO`,
+                            leyenda: "Este documento no tiene validez fiscal",
+                            total: totalVenta,
+                            ventaId: nuevaVenta.id,
+                            estado: "ACTIVO"
+                        }
+                    });
+
                 });
             }
+        }
+
+        // Anular la última venta de prueba para tener un registro de anulación
+        const ultimaVenta = await prisma.venta.findFirst({ where: { numeroVenta: "SEED-VEN-008" }, include: { detalles: true } });
+        if (ultimaVenta && ultimaVenta.estado === "ACTIVO") {
+            await prisma.$transaction(async (tx) => {
+                await tx.venta.update({
+                    where: { id: ultimaVenta.id },
+                    data: { estado: "INACTIVO" }
+                });
+
+                await tx.comprobante.updateMany({
+                    where: { ventaId: ultimaVenta.id },
+                    data: { estado: "INACTIVO" }
+                });
+
+                await tx.facturaDemo.updateMany({
+                    where: { ventaId: ultimaVenta.id },
+                    data: { estado: "INACTIVO" }
+                });
+
+                for (const det of ultimaVenta.detalles) {
+                    const movSalida = await tx.movimientoInventario.findFirst({
+                        where: { ventaId: ultimaVenta.id, productoId: det.productoId }
+                    });
+
+                    if (movSalida && movSalida.loteId) {
+                        const lote = await tx.loteProducto.findUniqueOrThrow({ where: { id: movSalida.loteId } });
+                        const prod = await tx.producto.findUniqueOrThrow({ where: { id: det.productoId } });
+
+                        await tx.loteProducto.update({
+                            where: { id: lote.id },
+                            data: { stockActual: lote.stockActual + det.cantidad }
+                        });
+
+                        await tx.producto.update({
+                            where: { id: prod.id },
+                            data: { stockActual: prod.stockActual + det.cantidad }
+                        });
+
+                        await tx.movimientoInventario.create({
+                            data: {
+                                tipoMovimiento: "ENTRADA",
+                                cantidad: det.cantidad,
+                                stockAnterior: lote.stockActual,
+                                stockNuevo: lote.stockActual + det.cantidad,
+                                motivo: `Anulación Venta ${ultimaVenta.numeroVenta}`,
+                                ventaId: ultimaVenta.id,
+                                productoId: det.productoId,
+                                loteId: lote.id
+                            }
+                        });
+                    }
+                }
+
+                await tx.movimientoCaja.create({
+                    data: {
+                        tipoMovimiento: "EGRESO",
+                        concepto: `Anulación Venta ${ultimaVenta.numeroVenta}`,
+                        monto: -ultimaVenta.total, // Registro negativo o como egreso
+                        referencia: "Reembolso Cliente",
+                        cajaTurnoId: cajaTurno.id
+                    }
+                });
+
+                await tx.auditoria.create({
+                    data: {
+                        modulo: "VENTAS",
+                        accion: "ANULAR_VENTA",
+                        descripcion: `El administrador anuló la venta ${ultimaVenta.numeroVenta} por motivo: Error de facturación demo.`,
+                        usuarioId: adminUser.id,
+                        usuarioCorreo: adminUser.correo,
+                        entidadId: ultimaVenta.id,
+                        entidad: "Venta"
+                    }
+                });
+            });
         }
     }
 
@@ -567,7 +659,41 @@ async function main() {
         });
     }
 
-    console.log("Seed completado exitosamente: 3 Roles, 12 Categorías, 40 Productos, 20 Clientes, 12 Proveedores, 8 Compras y 8 Ventas procesadas con transacciones y caja.");
+    // 9. Cajas Anteriores para Historial
+    const cajaCerrada = await prisma.cajaTurno.findFirst({ where: { estado: "CERRADA" } });
+    if (!cajaCerrada) {
+        const ayer = new Date();
+        ayer.setDate(ayer.getDate() - 1);
+        await prisma.cajaTurno.create({
+            data: {
+                usuarioAperturaId: adminUser.id,
+                usuarioCierreId: adminUser.id,
+                fechaApertura: ayer,
+                fechaCierre: new Date(ayer.getTime() + 8 * 60 * 60 * 1000), // 8 horas despues
+                montoInicial: 500.00,
+                montoContado: 1500.00,
+                saldoEsperado: 1500.00,
+                diferencia: 0,
+                observacionApertura: "Turno ayer",
+                observacionCierre: "Todo cuadrado",
+                estado: "CERRADA"
+            }
+        });
+    }
+
+    // 10. Auditoría adicional
+    const audLogins = await prisma.auditoria.count();
+    if (audLogins < 5) {
+        await prisma.auditoria.createMany({
+            data: [
+                { modulo: "AUTH", accion: "LOGIN", descripcion: "Login exitoso", usuarioId: adminUser.id, usuarioCorreo: adminUser.correo },
+                { modulo: "AUTH", accion: "LOGIN", descripcion: "Login exitoso", usuarioId: adminUser.id, usuarioCorreo: adminUser.correo },
+                { modulo: "CONFIGURACION", accion: "EDITAR", descripcion: "Actualizó datos institucionales", usuarioId: adminUser.id, usuarioCorreo: adminUser.correo },
+            ]
+        });
+    }
+
+    console.log("Seed completado exitosamente: 4 Roles, 12 Categorías, 40 Productos, 20 Clientes, 12 Proveedores, 8 Compras y 8 Ventas procesadas con facturas, auditoría y cajas.");
 }
 
 main()

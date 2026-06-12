@@ -32,7 +32,7 @@ export default async function LoginPage() {
                 <h2 className="text-center text-3xl font-bold leading-9 tracking-tight text-slate-900 dark:text-slate-100 mb-2">
                     PharmaERP 360
                 </h2>
-                <p className="text-center text-sm text-slate-500 dark:text-slate-400">
+                <p className="text-center text-sm text-slate-600 dark:text-slate-400">
                     Acceso institucional al sistema de gestión
                 </p>
             </div>

@@ -21,19 +21,19 @@ export default async function PerfilPage() {
                     <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Datos del Usuario</h3>
                     <div className="grid grid-cols-2 gap-4">
                         <div>
-                            <p className="text-sm text-slate-500 dark:text-slate-400">Nombre</p>
+                            <p className="text-sm text-slate-600 dark:text-slate-400">Nombre</p>
                             <p className="font-medium text-slate-900 dark:text-white">{usuario.nombre}</p>
                         </div>
                         <div>
-                            <p className="text-sm text-slate-500 dark:text-slate-400">Correo Electrónico</p>
+                            <p className="text-sm text-slate-600 dark:text-slate-400">Correo Electrónico</p>
                             <p className="font-medium text-slate-900 dark:text-white">{usuario.correo}</p>
                         </div>
                         <div>
-                            <p className="text-sm text-slate-500 dark:text-slate-400">Rol</p>
+                            <p className="text-sm text-slate-600 dark:text-slate-400">Rol</p>
                             <p className="font-medium text-slate-900 dark:text-white">{usuario.rol.nombre}</p>
                         </div>
                         <div>
-                            <p className="text-sm text-slate-500 dark:text-slate-400">Estado</p>
+                            <p className="text-sm text-slate-600 dark:text-slate-400">Estado</p>
                             <span className="inline-flex items-center rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-xs font-medium text-emerald-600 dark:text-emerald-400">
                                 {usuario.estado}
                             </span>

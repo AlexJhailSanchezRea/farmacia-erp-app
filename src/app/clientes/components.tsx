@@ -177,7 +177,7 @@ export function ListaClientes({ clientes, totalPages }: { clientes: ClienteClien
             <header className="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
                     <h1 className="text-3xl font-bold text-white">Clientes</h1>
-                    <p className="mt-2 text-slate-400">Gestiona el directorio de clientes de la empresa.</p>
+                    <p className="mt-2 text-slate-600 dark:text-slate-400">Gestiona el directorio de clientes de la empresa.</p>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4 items-center">
                     <Buscador placeholder="Buscar por nombre o CI/NIT..." />
@@ -190,9 +190,9 @@ export function ListaClientes({ clientes, totalPages }: { clientes: ClienteClien
                 </div>
             </header>
 
-            <div className="rounded-2xl border border-slate-800 bg-slate-900/50 overflow-hidden shadow-xl overflow-x-auto">
-                <table className="w-full text-left text-sm text-slate-300 min-w-[800px]">
-                    <thead className="border-b border-slate-800 bg-slate-900/80 text-xs uppercase text-slate-400">
+            <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 overflow-hidden shadow-xl overflow-x-auto">
+                <table className="w-full text-left text-sm text-slate-700 dark:text-slate-300 min-w-[800px]">
+                    <thead className="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/80 text-xs uppercase text-slate-600 dark:text-slate-400">
                         <tr>
                             <th className="px-6 py-4 font-semibold">Cliente</th>
                             <th className="px-6 py-4 font-semibold">Contacto</th>
@@ -203,16 +203,16 @@ export function ListaClientes({ clientes, totalPages }: { clientes: ClienteClien
                     <tbody className="divide-y divide-slate-800">
                         {clientes.length === 0 ? (
                             <tr>
-                                <td colSpan={4} className="px-6 py-8 text-center text-slate-500">
+                                <td colSpan={4} className="px-6 py-8 text-center text-slate-600 dark:text-slate-400">
                                     No hay clientes registrados.
                                 </td>
                             </tr>
                         ) : (
                             clientes.map((cli) => (
-                                <tr key={cli.id} className="hover:bg-slate-800/50 transition">
+                                <tr key={cli.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
                                     <td className="px-6 py-4">
                                         <div className="font-medium text-white">{cli.nombre}</div>
-                                        {cli.ciNit && <div className="text-xs text-slate-500 mt-1">CI/NIT: {cli.ciNit}</div>}
+                                        {cli.ciNit && <div className="text-xs text-slate-600 dark:text-slate-400 mt-1">CI/NIT: {cli.ciNit}</div>}
                                     </td>
                                     <td className="px-6 py-4">
                                         <div className="text-sm">{cli.telefono || cli.correo ? (
@@ -221,7 +221,7 @@ export function ListaClientes({ clientes, totalPages }: { clientes: ClienteClien
                                                 {cli.correo && <div>📧 {cli.correo}</div>}
                                             </>
                                         ) : (
-                                            <span className="text-slate-500">-</span>
+                                            <span className="text-slate-600 dark:text-slate-400">-</span>
                                         )}</div>
                                     </td>
                                     <td className="px-6 py-4">

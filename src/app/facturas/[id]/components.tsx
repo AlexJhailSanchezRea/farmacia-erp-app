@@ -31,7 +31,7 @@ export function VistaImpresionFactura({
             {/* Controles no imprimibles */}
             <div className="flex items-center justify-between bg-white dark:bg-slate-900 p-4 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 print:hidden">
                 <div>
-                    <Link href="/facturas" className="text-sm font-medium text-slate-500 hover:text-indigo-500 transition">
+                    <Link href="/facturas" className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-indigo-500 transition">
                         &larr; Volver a Facturas Demo
                     </Link>
                 </div>

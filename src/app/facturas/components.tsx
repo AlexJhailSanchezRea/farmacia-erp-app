@@ -42,7 +42,7 @@ export function ListaFacturas({
                     <tbody className="divide-y divide-slate-800">
                         {facturas.length === 0 ? (
                             <tr>
-                                <td colSpan={7} className="px-6 py-8 text-center text-slate-500 dark:text-slate-400">
+                                <td colSpan={7} className="px-6 py-8 text-center text-slate-600 dark:text-slate-400">
                                     No hay facturas demo emitidas.
                                 </td>
                             </tr>

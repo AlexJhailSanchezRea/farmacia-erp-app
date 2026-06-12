@@ -326,7 +326,7 @@ export function ListaProductos({ productos, categorias, totalPages }: { producto
                             </tr>
                         ) : (
                             productos.map((prod) => (
-                                <tr key={prod.id} className="hover:hover:bg-slate-50 dark:hover:bg-slate-50 dark:bg-slate-800/50 transition">
+                                <tr key={prod.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
                                     <td className="px-6 py-4">
                                         <div className="font-medium text-slate-900 dark:text-white">{prod.nombre} {prod.concentracion ? `(${prod.concentracion})` : ''}</div>
                                         {prod.principioActivo && <div className="text-xs text-teal-600 dark:text-teal-400 mt-1">{prod.principioActivo}</div>}

@@ -7,7 +7,7 @@ import { Paginacion } from "@/components/layout/Paginacion";
 
 export function ListaComprobantes({ comprobantes, totalPages }: { comprobantes: ComprobanteCliente[], totalPages: number }) {
     return (
-        <div className="flex-1 p-6 lg:p-10 bg-slate-50 min-h-screen">
+        <div className="flex-1 p-6 lg:p-10 bg-slate-50 dark:bg-slate-950 min-h-screen">
             <header className="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
                     <h1 className="text-3xl font-bold text-slate-900">Comprobantes Internos</h1>
@@ -18,9 +18,9 @@ export function ListaComprobantes({ comprobantes, totalPages }: { comprobantes: 
                 </div>
             </header>
 
-            <div className="rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-sm overflow-x-auto">
+            <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden shadow-sm overflow-x-auto">
                 <table className="w-full text-left text-sm text-slate-700 min-w-[900px]">
-                    <thead className="border-b border-slate-200 bg-slate-50 text-xs uppercase text-slate-500 dark:text-slate-600 dark:text-slate-400">
+                    <thead className="border-b border-slate-200 bg-slate-50 dark:bg-slate-800 text-xs uppercase text-slate-500 dark:text-slate-600 dark:text-slate-400">
                         <tr>
                             <th className="px-6 py-4 font-semibold">Nro. Comprobante</th>
                             <th className="px-6 py-4 font-semibold">Fecha Emisión</th>

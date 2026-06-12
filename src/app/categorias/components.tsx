@@ -133,7 +133,7 @@ export function ListaCategorias({ categoriasIniciales }: { categoriasIniciales: 
             <header className="mb-8 flex items-center justify-between">
                 <div>
                     <h1 className="text-3xl font-bold text-white">Categorías</h1>
-                    <p className="mt-2 text-slate-400">Gestiona las categorías de productos.</p>
+                    <p className="mt-2 text-slate-600 dark:text-slate-400">Gestiona las categorías de productos.</p>
                 </div>
                 <button
                     onClick={handleCrear}
@@ -143,10 +143,10 @@ export function ListaCategorias({ categoriasIniciales }: { categoriasIniciales: 
                 </button>
             </header>
 
-            <div className="rounded-2xl border border-slate-800 bg-slate-900/50 overflow-hidden shadow-xl">
+            <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 overflow-hidden shadow-xl">
                 <div className="overflow-x-auto">
-                    <table className="w-full text-left text-sm text-slate-300">
-                        <thead className="border-b border-slate-800 bg-slate-900/80 text-xs uppercase text-slate-400">
+                    <table className="w-full text-left text-sm text-slate-700 dark:text-slate-300">
+                        <thead className="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/80 text-xs uppercase text-slate-600 dark:text-slate-400">
                             <tr>
                                 <th className="px-6 py-4 font-semibold">Nombre</th>
                                 <th className="px-6 py-4 font-semibold">Descripción</th>
@@ -157,13 +157,13 @@ export function ListaCategorias({ categoriasIniciales }: { categoriasIniciales: 
                         <tbody className="divide-y divide-slate-800">
                             {categoriasIniciales.length === 0 ? (
                                 <tr>
-                                    <td colSpan={4} className="px-6 py-8 text-center text-slate-500">
+                                    <td colSpan={4} className="px-6 py-8 text-center text-slate-600 dark:text-slate-400">
                                         No hay categorías registradas.
                                     </td>
                                 </tr>
                             ) : (
                                 categoriasIniciales.map((cat) => (
-                                    <tr key={cat.id} className="hover:bg-slate-800/50 transition">
+                                    <tr key={cat.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
                                         <td className="px-6 py-4 font-medium text-white">{cat.nombre}</td>
                                         <td className="px-6 py-4">{cat.descripcion || "-"}</td>
                                         <td className="px-6 py-4">

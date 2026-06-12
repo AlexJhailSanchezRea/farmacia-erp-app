@@ -42,7 +42,7 @@ export function FormularioConfiguracion({ configuracionActual }: { configuracion
     };
 
     return (
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden p-6 lg:p-8 max-w-4xl mx-auto mt-8">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden p-6 lg:p-8 max-w-4xl mx-auto mt-8">
             {error && (
                 <div className="mb-6 p-4 rounded-lg bg-red-50 text-red-600 border border-red-200">
                     <p className="font-semibold text-sm">{error}</p>

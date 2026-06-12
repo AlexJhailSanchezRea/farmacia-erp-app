@@ -190,7 +190,7 @@ export function ListaProveedores({ proveedores, totalPages }: { proveedores: Pro
             <header className="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
                     <h1 className="text-3xl font-bold text-white">Proveedores</h1>
-                    <p className="mt-2 text-slate-400">Gestiona las empresas que suministran productos.</p>
+                    <p className="mt-2 text-slate-600 dark:text-slate-400">Gestiona las empresas que suministran productos.</p>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4 items-center">
                     <Buscador placeholder="Buscar por nombre o NIT..." />
@@ -203,9 +203,9 @@ export function ListaProveedores({ proveedores, totalPages }: { proveedores: Pro
                 </div>
             </header>
 
-            <div className="rounded-2xl border border-slate-800 bg-slate-900/50 overflow-hidden shadow-xl overflow-x-auto">
-                <table className="w-full text-left text-sm text-slate-300 min-w-[900px]">
-                    <thead className="border-b border-slate-800 bg-slate-900/80 text-xs uppercase text-slate-400">
+            <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 overflow-hidden shadow-xl overflow-x-auto">
+                <table className="w-full text-left text-sm text-slate-700 dark:text-slate-300 min-w-[900px]">
+                    <thead className="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/80 text-xs uppercase text-slate-600 dark:text-slate-400">
                         <tr>
                             <th className="px-6 py-4 font-semibold">Proveedor</th>
                             <th className="px-6 py-4 font-semibold">Representante</th>
@@ -217,16 +217,16 @@ export function ListaProveedores({ proveedores, totalPages }: { proveedores: Pro
                     <tbody className="divide-y divide-slate-800">
                         {proveedores.length === 0 ? (
                             <tr>
-                                <td colSpan={5} className="px-6 py-8 text-center text-slate-500">
+                                <td colSpan={5} className="px-6 py-8 text-center text-slate-600 dark:text-slate-400">
                                     No hay proveedores registrados.
                                 </td>
                             </tr>
                         ) : (
                             proveedores.map((prov) => (
-                                <tr key={prov.id} className="hover:bg-slate-800/50 transition">
+                                <tr key={prov.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
                                     <td className="px-6 py-4">
                                         <div className="font-medium text-white">{prov.nombre}</div>
-                                        {prov.nit && <div className="text-xs text-slate-500 mt-1">NIT: {prov.nit}</div>}
+                                        {prov.nit && <div className="text-xs text-slate-600 dark:text-slate-400 mt-1">NIT: {prov.nit}</div>}
                                     </td>
                                     <td className="px-6 py-4">{prov.contacto || "-"}</td>
                                     <td className="px-6 py-4">
@@ -236,7 +236,7 @@ export function ListaProveedores({ proveedores, totalPages }: { proveedores: Pro
                                                 {prov.correo && <div>📧 {prov.correo}</div>}
                                             </>
                                         ) : (
-                                            <span className="text-slate-500">-</span>
+                                            <span className="text-slate-600 dark:text-slate-400">-</span>
                                         )}</div>
                                     </td>
                                     <td className="px-6 py-4">

@@ -126,7 +126,7 @@ export function UsuariosManager({ usuarios, roles }: { usuarios: UsuarioCliente[
                         <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">
                             Resetear Contraseña
                         </h3>
-                        <p className="text-sm text-slate-500 mb-6">
+                        <p className="text-sm text-slate-600 dark:text-slate-400 mb-6">
                             Para el usuario: <span className="font-semibold text-slate-700 dark:text-slate-300">{usuarioReset.correo}</span>
                         </p>
                         <ResetearContrasenaForm usuarioId={usuarioReset.id} onClose={handleClose} />
@@ -273,7 +273,7 @@ function ResetearContrasenaForm({ usuarioId, onClose }: { usuarioId: number, onC
                     name="nueva" 
                     required 
                     minLength={8}
-                    className="block w-full rounded-lg border-0 bg-slate-50 dark:bg-slate-800 py-2.5 px-3 text-slate-900 dark:text-white shadow-sm ring-1 ring-inset ring-slate-700 placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-amber-500 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-lg border-0 bg-slate-50 dark:bg-slate-800 py-2.5 px-3 text-slate-900 dark:text-white shadow-sm ring-1 ring-inset ring-slate-700 placeholder:text-slate-600 dark:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-amber-500 sm:text-sm sm:leading-6"
                     placeholder="Mínimo 8 caracteres"
                 />
             </div>
@@ -287,7 +287,7 @@ function ResetearContrasenaForm({ usuarioId, onClose }: { usuarioId: number, onC
                     name="confirmar" 
                     required 
                     minLength={8}
-                    className="block w-full rounded-lg border-0 bg-slate-50 dark:bg-slate-800 py-2.5 px-3 text-slate-900 dark:text-white shadow-sm ring-1 ring-inset ring-slate-700 placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-amber-500 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-lg border-0 bg-slate-50 dark:bg-slate-800 py-2.5 px-3 text-slate-900 dark:text-white shadow-sm ring-1 ring-inset ring-slate-700 placeholder:text-slate-600 dark:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-amber-500 sm:text-sm sm:leading-6"
                 />
             </div>
 

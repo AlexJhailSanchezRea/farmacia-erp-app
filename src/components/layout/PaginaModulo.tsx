@@ -52,7 +52,7 @@ export function PaginaModulo({
                             Módulo en construcción
                         </h2>
 
-                        <p className="mt-3 text-sm leading-6 text-slate-500 dark:text-slate-400">
+                        <p className="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-400">
                             Esta pantalla forma parte de la estructura inicial de PharmaERP 360. Más
                             adelante se conectará con la capa de aplicación, servicios,
                             repositorios y base de datos mediante Prisma.

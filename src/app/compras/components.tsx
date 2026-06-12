@@ -141,7 +141,7 @@ export function FormularioCompra({
                 </div>
 
                 {/* Zona de adición de productos */}
-                <div className="hover:bg-slate-50 dark:hover:bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-300 dark:border-slate-700 mb-6">
+                <div className="hover:bg-slate-50 dark:hover:bg-slate-800/50 p-4 rounded-xl border border-slate-300 dark:border-slate-700 mb-6">
                     <h4 className="font-semibold text-slate-900 dark:text-white mb-3">Agregar Producto</h4>
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
                         <div className="md:col-span-2">
@@ -343,7 +343,7 @@ export function ListaCompras({
                             </tr>
                         ) : (
                             compras.map((comp) => (
-                                <tr key={comp.id} className="hover:hover:bg-slate-50 dark:hover:bg-slate-50 dark:bg-slate-800/50 transition">
+                                <tr key={comp.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
                                     <td className="px-6 py-4 font-mono text-teal-600 dark:text-teal-400 font-medium">
                                         {comp.numeroCompra}
                                     </td>

@@ -38,16 +38,16 @@ export function ListaHistorialCajas({ cajas, totalPages }: { cajas: CajaTurnoCli
                                 <tr key={c.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-700 dark:text-slate-300">
                                         <div className="font-semibold">{new Date(c.fechaApertura).toLocaleString('es-ES')}</div>
-                                        <div className="text-xs text-slate-500">{c.usuarioAperturaNombre}</div>
+                                        <div className="text-xs text-slate-600 dark:text-slate-400">{c.usuarioAperturaNombre}</div>
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-700 dark:text-slate-300">
                                         {c.fechaCierre ? (
                                             <>
                                                 <div className="font-semibold">{new Date(c.fechaCierre).toLocaleString('es-ES')}</div>
-                                                <div className="text-xs text-slate-500">{c.usuarioCierreNombre}</div>
+                                                <div className="text-xs text-slate-600 dark:text-slate-400">{c.usuarioCierreNombre}</div>
                                             </>
                                         ) : (
-                                            <span className="text-slate-400">-</span>
+                                            <span className="text-slate-600 dark:text-slate-400">-</span>
                                         )}
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-700 dark:text-slate-300">
@@ -69,7 +69,7 @@ export function ListaHistorialCajas({ cajas, totalPages }: { cajas: CajaTurnoCli
                                                 {formatSoles(c.diferencia)}
                                             </span>
                                         ) : (
-                                            <span className="text-slate-400">-</span>
+                                            <span className="text-slate-600 dark:text-slate-400">-</span>
                                         )}
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap text-center">
@@ -93,7 +93,7 @@ export function ListaHistorialCajas({ cajas, totalPages }: { cajas: CajaTurnoCli
                             ))}
                             {cajas.length === 0 && (
                                 <tr>
-                                    <td colSpan={8} className="px-6 py-8 text-center text-sm text-slate-500 dark:text-slate-400">
+                                    <td colSpan={8} className="px-6 py-8 text-center text-sm text-slate-600 dark:text-slate-400">
                                         No hay registros de cajas.
                                     </td>
                                 </tr>
@@ -116,7 +116,7 @@ export function ListaHistorialCajas({ cajas, totalPages }: { cajas: CajaTurnoCli
                         <div className="mb-6 flex justify-between items-start">
                             <div>
                                 <h2 className="text-2xl font-bold text-slate-900 print:text-black">Reporte de Caja - {cajaAImprimir.estado}</h2>
-                                <p className="text-slate-500 print:text-gray-600">ID: {cajaAImprimir.id} | Fecha de impresión: {new Date().toLocaleString()}</p>
+                                <p className="text-slate-600 dark:text-slate-400 print:text-gray-600">ID: {cajaAImprimir.id} | Fecha de impresión: {new Date().toLocaleString()}</p>
                             </div>
                             <button onClick={() => window.print()} className="print:hidden bg-indigo-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-indigo-500">
                                 Imprimir
@@ -125,13 +125,13 @@ export function ListaHistorialCajas({ cajas, totalPages }: { cajas: CajaTurnoCli
 
                         <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
                             <div className="p-4 border rounded-lg print:border-gray-300">
-                                <p className="text-slate-500 print:text-gray-600">Apertura</p>
+                                <p className="text-slate-600 dark:text-slate-400 print:text-gray-600">Apertura</p>
                                 <p className="font-semibold text-slate-900 print:text-black">{new Date(cajaAImprimir.fechaApertura).toLocaleString()}</p>
                                 <p className="text-slate-600 print:text-gray-800">Por: {cajaAImprimir.usuarioAperturaNombre}</p>
                                 {cajaAImprimir.observacionApertura && <p className="mt-1 italic">Obs: {cajaAImprimir.observacionApertura}</p>}
                             </div>
                             <div className="p-4 border rounded-lg print:border-gray-300">
-                                <p className="text-slate-500 print:text-gray-600">Cierre</p>
+                                <p className="text-slate-600 dark:text-slate-400 print:text-gray-600">Cierre</p>
                                 <p className="font-semibold text-slate-900 print:text-black">{cajaAImprimir.fechaCierre ? new Date(cajaAImprimir.fechaCierre).toLocaleString() : "No cerrada"}</p>
                                 <p className="text-slate-600 print:text-gray-800">{cajaAImprimir.usuarioCierreNombre ? `Por: ${cajaAImprimir.usuarioCierreNombre}` : "-"}</p>
                                 {cajaAImprimir.observacionCierre && <p className="mt-1 italic">Obs: {cajaAImprimir.observacionCierre}</p>}

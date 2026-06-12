@@ -90,7 +90,7 @@ export function CajaManager({
             {cajaAbierta && (
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                     <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 p-6 flex flex-col gap-2">
-                        <span className="text-sm font-medium text-slate-500 dark:text-slate-400">Monto Inicial</span>
+                        <span className="text-sm font-medium text-slate-600 dark:text-slate-400">Monto Inicial</span>
                         <span className="text-2xl font-bold text-slate-900 dark:text-white">{formatSoles(cajaAbierta.montoInicial)}</span>
                     </div>
                     <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/10 p-6 flex flex-col gap-2">

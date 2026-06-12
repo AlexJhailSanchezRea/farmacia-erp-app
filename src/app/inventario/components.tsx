@@ -32,7 +32,7 @@ export function ListaMovimientos({ movimientos }: { movimientos: MovimientoInven
                             </tr>
                         ) : (
                             movimientos.map((mov) => (
-                                <tr key={mov.id} className="hover:hover:bg-slate-50 dark:hover:bg-slate-50 dark:bg-slate-800/50 transition">
+                                <tr key={mov.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
                                     <td className="px-6 py-4 whitespace-nowrap text-slate-600 dark:text-slate-400">
                                         {new Date(mov.creadoEn).toLocaleString('es-ES', { dateStyle: 'short', timeStyle: 'short' })}
                                     </td>

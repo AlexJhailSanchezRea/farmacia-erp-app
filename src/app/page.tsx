@@ -86,7 +86,7 @@ export default async function Inicio() {
                     </div>
                     <div>
                         <p className="text-sm font-medium text-white">{usuario.nombre}</p>
-                        <p className="text-xs text-slate-400">{usuario.rol.nombre}</p>
+                        <p className="text-xs text-slate-600 dark:text-slate-400">{usuario.rol.nombre}</p>
                     </div>
                 </div>
                 <Link href="/perfil" className="mt-3 mx-4 text-xs font-medium text-teal-400 hover:text-teal-300 transition">
@@ -122,13 +122,13 @@ export default async function Inicio() {
                 key={indicador.titulo}
                 className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm transition-shadow hover:shadow-md"
               >
-                <p className="text-sm font-medium text-slate-500 dark:text-slate-400">
+                <p className="text-sm font-medium text-slate-600 dark:text-slate-400">
                   {indicador.titulo}
                 </p>
                 <strong className="mt-3 block text-2xl font-bold text-slate-900 dark:text-slate-100">
                   {indicador.valor}
                 </strong>
-                <p className="mt-2 text-xs text-slate-400 dark:text-slate-500">
+                <p className="mt-2 text-xs text-slate-600 dark:text-slate-400">
                   {indicador.descripcion}
                 </p>
               </article>

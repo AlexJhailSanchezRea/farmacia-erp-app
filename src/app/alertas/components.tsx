@@ -66,11 +66,11 @@ export function AlertasDashboard({ alertas }: { alertas: AlertasSanitarias }) {
                             <span className="h-2 w-2 rounded-full bg-rose-500"></span> Lotes Vencidos
                         </h3>
                         {TotalVencidos === 0 ? (
-                            <p className="text-sm text-slate-500 dark:text-slate-400 dark:text-slate-600 dark:text-slate-400 dark:text-slate-400">No hay lotes vencidos en stock.</p>
+                            <p className="text-sm text-slate-600 dark:text-slate-400 dark:text-slate-600 dark:text-slate-400 dark:text-slate-400">No hay lotes vencidos en stock.</p>
                         ) : (
                             <div className="overflow-x-auto">
                                 <table className="w-full text-left text-sm text-slate-700 dark:text-slate-300">
-                                    <thead className="bg-slate-50 dark:bg-slate-800 text-xs uppercase text-slate-500 dark:text-slate-400 dark:text-slate-600 dark:text-slate-400 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700">
+                                    <thead className="bg-slate-50 dark:bg-slate-800 text-xs uppercase text-slate-600 dark:text-slate-400 dark:text-slate-600 dark:text-slate-400 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700">
                                         <tr>
                                             <th className="px-4 py-3 font-semibold">Producto</th>
                                             <th className="px-4 py-3 font-semibold text-center">Lote</th>
@@ -99,11 +99,11 @@ export function AlertasDashboard({ alertas }: { alertas: AlertasSanitarias }) {
                             <span className="h-2 w-2 rounded-full bg-cyan-500"></span> Productos con Stock Bajo
                         </h3>
                         {TotalBajo === 0 ? (
-                            <p className="text-sm text-slate-500 dark:text-slate-400 dark:text-slate-600 dark:text-slate-400 dark:text-slate-400">El inventario global es saludable.</p>
+                            <p className="text-sm text-slate-600 dark:text-slate-400 dark:text-slate-600 dark:text-slate-400 dark:text-slate-400">El inventario global es saludable.</p>
                         ) : (
                             <div className="overflow-x-auto">
                                 <table className="w-full text-left text-sm text-slate-700 dark:text-slate-300">
-                                    <thead className="bg-slate-50 dark:bg-slate-800 text-xs uppercase text-slate-500 dark:text-slate-400 dark:text-slate-600 dark:text-slate-400 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700">
+                                    <thead className="bg-slate-50 dark:bg-slate-800 text-xs uppercase text-slate-600 dark:text-slate-400 dark:text-slate-600 dark:text-slate-400 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700">
                                         <tr>
                                             <th className="px-4 py-3 font-semibold">Producto</th>
                                             <th className="px-4 py-3 font-semibold text-right">Mínimo</th>
@@ -114,7 +114,7 @@ export function AlertasDashboard({ alertas }: { alertas: AlertasSanitarias }) {
                                         {alertas.stockBajoGlobal.map(prod => (
                                             <tr key={prod.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 dark:bg-slate-800">
                                                 <td className="px-4 py-3 font-medium text-slate-900 dark:text-slate-100">{prod.nombre}</td>
-                                                <td className="px-4 py-3 text-right text-slate-500 dark:text-slate-400 dark:text-slate-600 dark:text-slate-400 dark:text-slate-400">{prod.stockMinimo}</td>
+                                                <td className="px-4 py-3 text-right text-slate-600 dark:text-slate-400 dark:text-slate-600 dark:text-slate-400 dark:text-slate-400">{prod.stockMinimo}</td>
                                                 <td className="px-4 py-3 text-right text-amber-600 font-bold">{prod.stockActual}</td>
                                             </tr>
                                         ))}
@@ -132,11 +132,11 @@ export function AlertasDashboard({ alertas }: { alertas: AlertasSanitarias }) {
                             <span className="h-2 w-2 rounded-full bg-amber-500"></span> Lotes Críticos (≤ 30 Días)
                         </h3>
                         {Total30 === 0 ? (
-                            <p className="text-sm text-slate-500 dark:text-slate-400 dark:text-slate-600 dark:text-slate-400 dark:text-slate-400">No hay lotes próximos a caducar en este rango.</p>
+                            <p className="text-sm text-slate-600 dark:text-slate-400 dark:text-slate-600 dark:text-slate-400 dark:text-slate-400">No hay lotes próximos a caducar en este rango.</p>
                         ) : (
                             <div className="overflow-x-auto">
                                 <table className="w-full text-left text-sm text-slate-700 dark:text-slate-300">
-                                    <thead className="bg-slate-50 dark:bg-slate-800 text-xs uppercase text-slate-500 dark:text-slate-400 dark:text-slate-600 dark:text-slate-400 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700">
+                                    <thead className="bg-slate-50 dark:bg-slate-800 text-xs uppercase text-slate-600 dark:text-slate-400 dark:text-slate-600 dark:text-slate-400 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700">
                                         <tr>
                                             <th className="px-4 py-3 font-semibold">Producto</th>
                                             <th className="px-4 py-3 font-semibold text-center">Lote</th>
@@ -163,11 +163,11 @@ export function AlertasDashboard({ alertas }: { alertas: AlertasSanitarias }) {
                             <span className="h-2 w-2 rounded-full bg-yellow-500"></span> Riesgo Moderado (31-60 Días)
                         </h3>
                         {Total60 === 0 ? (
-                            <p className="text-sm text-slate-500 dark:text-slate-400 dark:text-slate-600 dark:text-slate-400 dark:text-slate-400">No hay lotes en este rango de vencimiento.</p>
+                            <p className="text-sm text-slate-600 dark:text-slate-400 dark:text-slate-600 dark:text-slate-400 dark:text-slate-400">No hay lotes en este rango de vencimiento.</p>
                         ) : (
                             <div className="overflow-x-auto">
                                 <table className="w-full text-left text-sm text-slate-700 dark:text-slate-300">
-                                    <thead className="bg-slate-50 dark:bg-slate-800 text-xs uppercase text-slate-500 dark:text-slate-400 dark:text-slate-600 dark:text-slate-400 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700">
+                                    <thead className="bg-slate-50 dark:bg-slate-800 text-xs uppercase text-slate-600 dark:text-slate-400 dark:text-slate-600 dark:text-slate-400 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700">
                                         <tr>
                                             <th className="px-4 py-3 font-semibold">Producto</th>
                                             <th className="px-4 py-3 font-semibold text-center">Lote</th>
