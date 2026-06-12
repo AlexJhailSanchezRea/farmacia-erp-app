@@ -17,7 +17,7 @@ export function TablaAuditoria({ registros, totalPages }: { registros: Auditoria
             
             <div className="overflow-x-auto">
                 <table className="w-full text-left text-sm text-slate-600">
-                    <thead className="bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium border-b border-slate-200 uppercase text-xs tracking-wider">
+                    <thead className="app-table-head">
                         <tr>
                             <th className="px-4 lg:px-6 py-4">Fecha</th>
                             <th className="px-4 lg:px-6 py-4">Usuario</th>

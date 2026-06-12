@@ -214,7 +214,7 @@ export function FormularioCompra({
                 {/* Tabla de detalle */}
                 <div className="overflow-x-auto rounded-xl border border-slate-300 dark:border-slate-700 mb-6">
                     <table className="w-full text-left text-sm text-slate-700 dark:text-slate-300">
-                        <thead className="bg-slate-50 dark:bg-slate-800 text-xs uppercase text-slate-600 dark:text-slate-400">
+                        <thead className="app-table-head">
                             <tr>
                                 <th className="px-4 py-3">Producto / Lote</th>
                                 <th className="px-4 py-3 text-right">Cant.</th>
@@ -234,7 +234,7 @@ export function FormularioCompra({
                                 detalles.map((d) => {
                                     const prod = productos.find(p => p.id === d.productoId);
                                     return (
-                                        <tr key={`${d.productoId}-${d.numeroLote}`} className="bg-white dark:bg-white dark:bg-slate-900/50">
+                                        <tr key={`${d.productoId}-${d.numeroLote}`} className="bg-white dark:bg-slate-900/50">
                                             <td className="px-4 py-3">
                                                 <div className="text-slate-900 dark:text-white font-medium">{prod?.nombre}</div>
                                                 <div className="text-xs text-slate-600 dark:text-slate-400 mt-1">Lote: <span className="text-teal-600 dark:text-teal-400">{d.numeroLote}</span> | Vence: {new Date(d.fechaVencimiento).toLocaleDateString('es-ES', { timeZone: 'UTC'})}</div>
@@ -322,19 +322,19 @@ export function ListaCompras({
                 </div>
             </header>
 
-            <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-white dark:bg-slate-900/50 overflow-hidden shadow-xl overflow-x-auto">
-                <table className="w-full text-left text-sm text-slate-700 dark:text-slate-300 min-w-[900px]">
-                    <thead className="border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-white dark:bg-slate-900/80 text-xs uppercase text-slate-600 dark:text-slate-400">
+            <div className="app-table-wrapper">
+                <table className="app-table">
+                    <thead className="app-table-head">
                         <tr>
-                            <th className="px-6 py-4 font-semibold">Nro. Compra</th>
-                            <th className="px-6 py-4 font-semibold">Fecha</th>
-                            <th className="px-6 py-4 font-semibold">Proveedor</th>
-                            <th className="px-6 py-4 font-semibold">Observación</th>
-                            <th className="px-6 py-4 font-semibold text-right">Total</th>
-                            <th className="px-6 py-4 font-semibold">Estado</th>
+                            <th className="app-table-cell font-semibold">Nro. Compra</th>
+                            <th className="app-table-cell font-semibold">Fecha</th>
+                            <th className="app-table-cell font-semibold">Proveedor</th>
+                            <th className="app-table-cell font-semibold">Observación</th>
+                            <th className="app-table-cell font-semibold text-right">Total</th>
+                            <th className="app-table-cell font-semibold">Estado</th>
                         </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-800">
+                    <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
                         {compras.length === 0 ? (
                             <tr>
                                 <td colSpan={6} className="px-6 py-8 text-center text-slate-500 dark:text-slate-600 dark:text-slate-400">
@@ -343,23 +343,23 @@ export function ListaCompras({
                             </tr>
                         ) : (
                             compras.map((comp) => (
-                                <tr key={comp.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
-                                    <td className="px-6 py-4 font-mono text-teal-600 dark:text-teal-400 font-medium">
+                                <tr key={comp.id} className="app-table-row">
+                                    <td className="app-table-cell font-mono text-teal-600 dark:text-teal-400 font-medium">
                                         {comp.numeroCompra}
                                     </td>
-                                    <td className="px-6 py-4">
+                                    <td className="app-table-cell">
                                         {new Date(comp.fechaCompra).toLocaleDateString('es-ES')}
                                     </td>
-                                    <td className="px-6 py-4 font-medium text-slate-900 dark:text-white">
+                                    <td className="app-table-cell font-medium text-slate-900 dark:text-white">
                                         {comp.proveedor?.nombre}
                                     </td>
-                                    <td className="px-6 py-4 text-slate-600 dark:text-slate-400">
+                                    <td className="app-table-cell text-slate-600 dark:text-slate-400">
                                         {comp.observacion || "-"}
                                     </td>
-                                    <td className="px-6 py-4 text-right font-semibold text-emerald-400">
+                                    <td className="app-table-cell text-right font-semibold text-emerald-400">
                                         Bs {comp.total.toFixed(2)}
                                     </td>
-                                    <td className="px-6 py-4">
+                                    <td className="app-table-cell">
                                         <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
                                             comp.estado === "ACTIVO" 
                                                 ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20" 

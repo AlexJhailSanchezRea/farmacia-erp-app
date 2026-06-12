@@ -80,7 +80,7 @@ export function ReportesDashboard({ datos, rolUsuario }: { datos: ReporteMetrica
                 
                 {puedeExportar && (
                     <div className="relative group">
-                        <button disabled={cargandoExport} className="inline-flex items-center gap-2 rounded-xl bg-teal-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-teal-500 disabled:opacity-50 transition-all">
+                        <button disabled={cargandoExport} className="inline-flex items-center gap-2 rounded-xl bg-teal-600 px-4 py-2.5 text-sm font-semibold text-slate-900 dark:text-white shadow-sm hover:bg-teal-500 disabled:opacity-50 transition-all">
                             {cargandoExport ? "Exportando..." : "Exportar CSV ▼"}
                         </button>
                         <div className="absolute right-0 mt-2 w-56 origin-top-right rounded-md bg-white dark:bg-slate-800 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden group-hover:block z-50">
@@ -127,7 +127,7 @@ export function ReportesDashboard({ datos, rolUsuario }: { datos: ReporteMetrica
             {/* Gráficos Simples */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 print:grid-cols-3 print:gap-4 print:break-inside-avoid">
                 {/* Ventas vs Compras */}
-                <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-white dark:bg-slate-900/50 p-6 flex flex-col gap-4">
+                <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 p-6 flex flex-col gap-4">
                     <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Ventas vs Compras</h3>
                     <div className="flex flex-col gap-4 mt-2">
                         {[
@@ -152,7 +152,7 @@ export function ReportesDashboard({ datos, rolUsuario }: { datos: ReporteMetrica
                 </div>
 
                 {/* Flujo de Caja */}
-                <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-white dark:bg-slate-900/50 p-6 flex flex-col gap-4">
+                <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 p-6 flex flex-col gap-4">
                     <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Flujo de Caja</h3>
                     <div className="flex flex-col gap-4 mt-2">
                         {[
@@ -177,7 +177,7 @@ export function ReportesDashboard({ datos, rolUsuario }: { datos: ReporteMetrica
                 </div>
 
                 {/* Top Productos */}
-                <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-white dark:bg-slate-900/50 p-6 flex flex-col gap-4">
+                <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 p-6 flex flex-col gap-4">
                     <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Top 5 Productos Vendidos</h3>
                     <div className="flex flex-col gap-3 mt-1">
                         {datos.topProductos.length > 0 ? datos.topProductos.map(p => {
@@ -283,13 +283,13 @@ function KPICard({ title, value, color, icon }: { title: string, value: string, 
 
 function TablaReporte({ titulo, headers, datos }: { titulo: string, headers: string[], datos: { id: number, col1: string, col2: string, col3: string, color?: string }[] }) {
     return (
-        <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-white dark:bg-slate-900/50 backdrop-blur-sm overflow-hidden flex flex-col">
-            <div className="px-6 py-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-white dark:bg-slate-900/80 flex items-center justify-between">
+        <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 backdrop-blur-sm overflow-hidden flex flex-col">
+            <div className="px-6 py-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/80 flex items-center justify-between">
                 <h3 className="text-lg font-semibold text-slate-900 dark:text-white">{titulo}</h3>
             </div>
             <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-slate-800">
-                    <thead className="bg-white dark:bg-slate-900/40">
+                <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-800">
+                    <thead className="app-table-head">
                         <tr>
                             {headers.map((h, i) => (
                                 <th key={i} className={`px-6 py-3 text-xs font-medium text-slate-600 dark:text-slate-400 uppercase tracking-wider ${i === 2 ? 'text-right' : 'text-left'}`}>
@@ -298,7 +298,7 @@ function TablaReporte({ titulo, headers, datos }: { titulo: string, headers: str
                             ))}
                         </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-800">
+                    <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
                         {datos.map((d) => (
                             <tr key={d.id} className="hover:bg-slate-50 dark:bg-slate-800/30 transition-colors">
                                 <td className="px-6 py-3 whitespace-nowrap text-sm text-slate-900 dark:text-white">{d.col1}</td>

@@ -37,7 +37,7 @@ export function VistaImpresionFactura({
                 </div>
                 <button
                     onClick={handleImprimir}
-                    className="rounded-xl bg-indigo-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg hover:bg-indigo-500 transition"
+                    className="rounded-xl bg-indigo-600 px-6 py-2.5 text-sm font-semibold text-slate-900 dark:text-white shadow-lg hover:bg-indigo-500 transition"
                 >
                     🖨️ Imprimir Factura Demo
                 </button>

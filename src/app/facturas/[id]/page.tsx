@@ -5,7 +5,7 @@ import { obtenerUsuarioAutenticado } from "@/lib/auth";
 import { redirect, notFound } from "next/navigation";
 import { verificarAccesoModulo } from "@/lib/permissions";
 
-export default async function FacturaImpresionPage({ params }: { params: { id: string } }) {
+export default async function FacturaImpresionPage({ params }: { params: Promise<{ id: string }> }) {
     const usuario = await obtenerUsuarioAutenticado();
 
     if (!usuario) {
@@ -16,7 +16,8 @@ export default async function FacturaImpresionPage({ params }: { params: { id: s
         redirect("/");
     }
 
-    const facturaId = parseInt(params.id, 10);
+    const resolvedParams = await params;
+    const facturaId = parseInt(resolvedParams.id, 10);
     if (isNaN(facturaId)) {
         notFound();
     }

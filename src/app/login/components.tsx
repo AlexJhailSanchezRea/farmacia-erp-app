@@ -33,7 +33,7 @@ export function LoginForm() {
                         type="email"
                         autoComplete="email"
                         required
-                        className="block w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 py-3 pl-10 pr-4 text-slate-900 dark:text-slate-100 shadow-sm placeholder:text-slate-400 dark:placeholder:text-slate-600 dark:text-slate-400 focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 dark:focus:ring-teal-500 sm:text-sm sm:leading-6 transition-colors"
+                        className="block w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 py-3 pl-10 pr-4 text-slate-900 dark:text-slate-100 shadow-sm placeholder:text-slate-600 dark:text-slate-400 dark:placeholder:text-slate-600 dark:text-slate-400 focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 dark:focus:ring-teal-500 sm:text-sm sm:leading-6 transition-colors"
                         placeholder="admin@nexaerp.com"
                     />
                 </div>
@@ -55,7 +55,7 @@ export function LoginForm() {
                         type="password"
                         autoComplete="current-password"
                         required
-                        className="block w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 py-3 pl-10 pr-4 text-slate-900 dark:text-slate-100 shadow-sm placeholder:text-slate-400 dark:placeholder:text-slate-600 dark:text-slate-400 focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 dark:focus:ring-teal-500 sm:text-sm sm:leading-6 transition-colors"
+                        className="block w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 py-3 pl-10 pr-4 text-slate-900 dark:text-slate-100 shadow-sm placeholder:text-slate-600 dark:text-slate-400 dark:placeholder:text-slate-600 dark:text-slate-400 focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 dark:focus:ring-teal-500 sm:text-sm sm:leading-6 transition-colors"
                         placeholder="••••••••"
                     />
                 </div>
@@ -79,11 +79,11 @@ export function LoginForm() {
             <button
                 type="submit"
                 disabled={isPending}
-                className="mt-2 flex w-full justify-center rounded-xl bg-teal-600 px-3 py-3 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-teal-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                className="mt-2 flex w-full justify-center rounded-xl bg-teal-600 px-3 py-3 text-sm font-semibold leading-6 text-slate-900 dark:text-white shadow-sm hover:bg-teal-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
             >
                 {isPending ? (
                     <span className="flex items-center gap-2">
-                        <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-slate-900 dark:text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>

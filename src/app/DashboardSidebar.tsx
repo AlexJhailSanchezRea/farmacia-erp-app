@@ -31,7 +31,7 @@ function ThemeToggle() {
     return (
         <button
             onClick={toggleTheme}
-            className="w-full flex items-center justify-between rounded-xl px-4 py-2 text-sm font-medium text-slate-300 hover:bg-slate-700 hover:text-teal-400 transition mb-3"
+            className="w-full flex items-center justify-between rounded-xl px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-teal-600 dark:hover:text-teal-400 transition mb-3"
         >
             <span>Tema: {theme === "dark" ? "Oscuro" : "Claro"}</span>
             <span className="text-xl leading-none">{theme === "dark" ? "🌙" : "☀️"}</span>
@@ -45,11 +45,11 @@ export function DashboardSidebar({ modulosPermitidos, usuarioInfo, logoutButton 
     return (
         <>
             {/* Mobile header / toggle */}
-            <div className="lg:hidden flex items-center justify-between p-4 bg-slate-800 dark:bg-slate-900 border-b border-slate-700 dark:border-slate-800 print:hidden">
-                <span className="text-teal-400 font-bold tracking-widest text-sm uppercase">PharmaERP 360</span>
+            <div className="lg:hidden flex items-center justify-between p-4 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 print:hidden transition">
+                <span className="text-teal-600 dark:text-teal-400 font-bold tracking-widest text-sm uppercase">PharmaERP 360</span>
                 <button 
                     onClick={() => setIsOpen(!isOpen)}
-                    className="p-2 text-slate-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-teal-500 rounded-lg"
+                    className="p-2 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-teal-500 rounded-lg"
                 >
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
@@ -58,12 +58,12 @@ export function DashboardSidebar({ modulosPermitidos, usuarioInfo, logoutButton 
             </div>
 
             {/* Sidebar */}
-            <aside className={`${isOpen ? 'block' : 'hidden'} lg:block w-full lg:w-72 lg:border-r border-slate-700 dark:border-slate-800 bg-slate-800 dark:bg-slate-900 p-6 flex flex-col h-full lg:min-h-screen print:hidden`}>
+            <aside className={`${isOpen ? 'block' : 'hidden'} lg:block w-full lg:w-72 lg:border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 flex flex-col h-full lg:min-h-screen print:hidden transition`}>
                 <div className="mb-10 hidden lg:block">
-                    <p className="text-sm font-semibold uppercase tracking-widest text-teal-400">
+                    <p className="text-sm font-semibold uppercase tracking-widest text-teal-600 dark:text-teal-400">
                         PharmaERP 360
                     </p>
-                    <h1 className="mt-3 text-2xl font-bold text-white">
+                    <h1 className="mt-3 text-2xl font-bold text-slate-900 dark:text-white">
                         Panel Administrativo
                     </h1>
                     <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
@@ -76,7 +76,7 @@ export function DashboardSidebar({ modulosPermitidos, usuarioInfo, logoutButton 
                         <Link
                             key={modulo.nombre}
                             href={modulo.ruta}
-                            className="block rounded-xl px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-700 dark:hover:bg-slate-800 hover:text-teal-400 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                            className="block rounded-xl px-4 py-3 text-sm font-medium text-slate-700 hover:bg-slate-100 hover:text-teal-600 dark:text-slate-300 transition dark:hover:bg-slate-800 dark:hover:text-teal-400 focus:outline-none focus:ring-2 focus:ring-teal-500"
                             onClick={() => setIsOpen(false)}
                         >
                             {modulo.nombre}
@@ -84,7 +84,7 @@ export function DashboardSidebar({ modulosPermitidos, usuarioInfo, logoutButton 
                     ))}
                 </nav>
 
-                <div className="mt-8 border-t border-slate-700 dark:border-slate-800 pt-6">
+                <div className="mt-8 border-t border-slate-300 dark:border-slate-700 dark:border-slate-800 pt-6">
                     <ThemeToggle />
                     {usuarioInfo}
                     <div className={!usuarioInfo ? "mt-4" : ""}>

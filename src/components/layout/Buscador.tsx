@@ -48,7 +48,7 @@ export function Buscador({ placeholder = "Buscar..." }: { placeholder?: string }
                     type="search"
                     id="search"
                     name="q"
-                    className="block w-full rounded-xl border-0 bg-white dark:bg-slate-900 py-2.5 pl-10 pr-3 text-slate-900 dark:text-white shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-700 placeholder:text-slate-600 dark:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-teal-500 sm:text-sm sm:leading-6 transition-shadow"
+                    className="block w-full rounded-xl border-0 bg-white dark:bg-slate-900 py-2.5 pl-10 pr-3 text-slate-900 dark:text-slate-100 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-700 placeholder:text-slate-500 dark:placeholder:text-slate-600 dark:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-teal-500 sm:text-sm sm:leading-6 transition-shadow"
                     placeholder={placeholder}
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}

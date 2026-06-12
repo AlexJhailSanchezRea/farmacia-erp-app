@@ -81,11 +81,11 @@ export default async function Inicio() {
           usuario && (
             <div className="flex flex-col mb-4">
                 <div className="flex items-center gap-3 px-4">
-                    <div className="h-10 w-10 rounded-full bg-slate-800 dark:bg-slate-700 flex items-center justify-center border border-slate-700 dark:border-slate-600">
-                        <span className="text-white font-bold">{usuario.nombre.charAt(0).toUpperCase()}</span>
+                    <div className="h-10 w-10 rounded-full bg-slate-100 dark:bg-slate-800 dark:bg-slate-700 flex items-center justify-center border border-slate-300 dark:border-slate-700 dark:border-slate-600">
+                        <span className="text-slate-900 dark:text-white font-bold">{usuario.nombre.charAt(0).toUpperCase()}</span>
                     </div>
                     <div>
-                        <p className="text-sm font-medium text-white">{usuario.nombre}</p>
+                        <p className="text-sm font-medium text-slate-900 dark:text-white">{usuario.nombre}</p>
                         <p className="text-xs text-slate-600 dark:text-slate-400">{usuario.rol.nombre}</p>
                     </div>
                 </div>

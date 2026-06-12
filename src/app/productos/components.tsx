@@ -305,19 +305,19 @@ export function ListaProductos({ productos, categorias, totalPages }: { producto
                 </div>
             </header>
 
-            <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-white dark:bg-slate-900/50 overflow-hidden shadow-xl overflow-x-auto">
+            <div className="app-table-wrapper">
                 <table className="w-full text-left text-sm text-slate-700 dark:text-slate-300 min-w-[800px]">
-                    <thead className="border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-white dark:bg-slate-900/80 text-xs uppercase text-slate-600 dark:text-slate-400">
+                    <thead className="app-table-head">
                         <tr>
-                            <th className="px-6 py-4 font-semibold">Producto</th>
-                            <th className="px-6 py-4 font-semibold">Categoría</th>
-                            <th className="px-6 py-4 font-semibold">Precio V.</th>
-                            <th className="px-6 py-4 font-semibold">Stock</th>
-                            <th className="px-6 py-4 font-semibold">Estado</th>
-                            <th className="px-6 py-4 font-semibold text-right">Acciones</th>
+                            <th className="app-table-cell font-semibold">Producto</th>
+                            <th className="app-table-cell font-semibold">Categoría</th>
+                            <th className="app-table-cell font-semibold">Precio V.</th>
+                            <th className="app-table-cell font-semibold">Stock</th>
+                            <th className="app-table-cell font-semibold">Estado</th>
+                            <th className="app-table-cell font-semibold text-right">Acciones</th>
                         </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-800">
+                    <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
                         {productos.length === 0 ? (
                             <tr>
                                 <td colSpan={6} className="px-6 py-8 text-center text-slate-500 dark:text-slate-600 dark:text-slate-400">
@@ -326,19 +326,19 @@ export function ListaProductos({ productos, categorias, totalPages }: { producto
                             </tr>
                         ) : (
                             productos.map((prod) => (
-                                <tr key={prod.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
-                                    <td className="px-6 py-4">
+                                <tr key={prod.id} className="app-table-row">
+                                    <td className="app-table-cell">
                                         <div className="font-medium text-slate-900 dark:text-white">{prod.nombre} {prod.concentracion ? `(${prod.concentracion})` : ''}</div>
                                         {prod.principioActivo && <div className="text-xs text-teal-600 dark:text-teal-400 mt-1">{prod.principioActivo}</div>}
                                         {prod.laboratorio && <div className="text-xs text-slate-500 dark:text-slate-600 dark:text-slate-400">{prod.laboratorio}</div>}
                                         {prod.codigoBarra && <div className="text-xs text-slate-500 dark:text-slate-600 dark:text-slate-400 mt-1">Cod: {prod.codigoBarra}</div>}
                                         {prod.requiereReceta && <span className="inline-flex mt-1 items-center rounded bg-rose-500/10 px-2 py-0.5 text-[10px] font-medium text-rose-400 border border-rose-500/20">Receta Obligatoria</span>}
                                     </td>
-                                    <td className="px-6 py-4">{prod.categoria?.nombre || "-"}</td>
-                                    <td className="px-6 py-4 font-medium text-teal-600 dark:text-teal-400">
+                                    <td className="app-table-cell">{prod.categoria?.nombre || "-"}</td>
+                                    <td className="app-table-cell font-medium text-teal-600 dark:text-teal-400">
                                         Bs {prod.precioVenta.toFixed(2)}
                                     </td>
-                                    <td className="px-6 py-4">
+                                    <td className="app-table-cell">
                                         <div className="flex flex-col gap-1">
                                             <span className={`font-medium ${prod.stockActual <= prod.stockMinimo ? 'text-amber-400' : 'text-slate-700 dark:text-slate-300'}`}>
                                                 {prod.stockActual} <span className="text-xs opacity-70 text-slate-600 dark:text-slate-400">Gral.</span>
@@ -360,7 +360,7 @@ export function ListaProductos({ productos, categorias, totalPages }: { producto
                                             )}
                                         </div>
                                     </td>
-                                    <td className="px-6 py-4">
+                                    <td className="app-table-cell">
                                         <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
                                             prod.estado === "ACTIVO" 
                                                 ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20" 
@@ -369,7 +369,7 @@ export function ListaProductos({ productos, categorias, totalPages }: { producto
                                             {prod.estado}
                                         </span>
                                     </td>
-                                    <td className="px-6 py-4 text-right">
+                                    <td className="app-table-cell text-right">
                                         <button
                                             onClick={() => handleEditar(prod)}
                                             className="text-teal-600 dark:text-teal-400 hover:text-cyan-300 mr-4 transition font-medium"

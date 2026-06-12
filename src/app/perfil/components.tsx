@@ -81,7 +81,7 @@ export function CambiarContrasenaForm() {
                 <button 
                     type="submit" 
                     disabled={isPending}
-                    className="w-full sm:w-auto inline-flex justify-center items-center rounded-xl bg-teal-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-teal-500 disabled:opacity-50 transition-all focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
+                    className="w-full sm:w-auto inline-flex justify-center items-center rounded-xl bg-teal-600 px-6 py-2.5 text-sm font-semibold text-slate-900 dark:text-white shadow-sm hover:bg-teal-500 disabled:opacity-50 transition-all focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
                 >
                     {isPending ? "Actualizando..." : "Actualizar Contraseña"}
                 </button>

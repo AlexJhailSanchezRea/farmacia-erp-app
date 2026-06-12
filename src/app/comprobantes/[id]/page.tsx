@@ -6,7 +6,7 @@ import { verificarAccesoModulo } from "@/lib/permissions";
 import { obtenerUsuarioAutenticado } from "@/lib/auth";
 import { accionObtenerConfiguracion } from "@/modules/configuracion/actions";
 
-export default async function DetalleComprobantePage({ params }: { params: { id: string } }) {
+export default async function DetalleComprobantePage({ params }: { params: Promise<{ id: string }> }) {
     const usuario = await obtenerUsuarioAutenticado();
     if (!usuario) {
         redirect('/login');
@@ -16,7 +16,8 @@ export default async function DetalleComprobantePage({ params }: { params: { id:
         redirect('/');
     }
 
-    const id = parseInt(params.id, 10);
+    const resolvedParams = await params;
+    const id = parseInt(resolvedParams.id, 10);
     if (isNaN(id)) {
         notFound();
     }
@@ -51,7 +52,7 @@ export default async function DetalleComprobantePage({ params }: { params: { id:
                     {/* Contenedor relativo para estar por encima del watermark */}
                     <div className="relative z-10">
                         {/* Header Recibo */}
-                    <div className="text-center mb-8 border-b border-slate-200 dark:border-slate-800 pb-6 print:border-slate-800">
+                    <div className="text-center mb-8 border-b border-slate-200 dark:border-slate-800 pb-6 print:border-slate-200 dark:border-slate-800">
                         <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100 uppercase tracking-widest print:text-black">{config.nombreComercial}</h1>
                         <h2 className="text-lg font-semibold text-slate-700 dark:text-slate-300 mt-1 print:text-black">{config.razonSocial}</h2>
                         <div className="text-sm text-slate-600 dark:text-slate-400 mt-2 space-y-1 print:text-black">
@@ -109,9 +110,9 @@ export default async function DetalleComprobantePage({ params }: { params: { id:
                     </div>
 
                     {/* Footer */}
-                    <div className="mt-12 text-center text-sm text-slate-600 dark:text-slate-400 pt-6 border-t border-slate-200 dark:border-slate-800 print:border-slate-800 print:text-black">
+                    <div className="mt-12 text-center text-sm text-slate-600 dark:text-slate-400 pt-6 border-t border-slate-200 dark:border-slate-800 print:border-slate-200 dark:border-slate-800 print:text-black">
                         <p className="font-semibold text-slate-700 dark:text-slate-300 print:text-black mb-1">{config.mensajeComprobante}</p>
-                        <p className="text-xs mt-2 text-slate-400 dark:text-slate-600 dark:text-slate-400 print:text-slate-600">Este no es un documento fiscal</p>
+                        <p className="text-xs mt-2 text-slate-600 dark:text-slate-400 dark:text-slate-600 dark:text-slate-400 print:text-slate-600">Este no es un documento fiscal</p>
                     </div>
                     </div>
 

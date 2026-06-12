@@ -197,7 +197,7 @@ export function FormularioVenta({
                 {/* Tabla de detalle */}
                 <div className="overflow-x-auto rounded-xl border border-slate-300 dark:border-slate-700 mb-6">
                     <table className="w-full text-left text-sm text-slate-700 dark:text-slate-300">
-                        <thead className="bg-slate-50 dark:bg-slate-800 text-xs uppercase text-slate-600 dark:text-slate-400">
+                        <thead className="app-table-head">
                             <tr>
                                 <th className="px-4 py-3">Producto</th>
                                 <th className="px-4 py-3 text-right">Cant.</th>
@@ -217,7 +217,7 @@ export function FormularioVenta({
                                 detalles.map((d) => {
                                     const prod = productos.find(p => p.id === d.productoId);
                                     return (
-                                        <tr key={d.productoId} className="bg-white dark:bg-white dark:bg-slate-900/50">
+                                        <tr key={d.productoId} className="app-table-row">
                                             <td className="px-4 py-3 text-slate-900 dark:text-white">{prod?.nombre}</td>
                                             <td className="px-4 py-3 text-right">{d.cantidad}</td>
                                             <td className="px-4 py-3 text-right">Bs {d.precioUnitario.toFixed(2)}</td>
@@ -385,21 +385,21 @@ export function ListaVentas({
                 </div>
             </header>
 
-            <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-white dark:bg-slate-900/50 overflow-hidden shadow-xl overflow-x-auto">
-                <table className="w-full text-left text-sm text-slate-700 dark:text-slate-300 min-w-[900px]">
-                    <thead className="border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-white dark:bg-slate-900/80 text-xs uppercase text-slate-600 dark:text-slate-400">
+            <div className="app-table-wrapper">
+                <table className="app-table">
+                    <thead className="app-table-head">
                         <tr>
-                            <th className="px-6 py-4 font-semibold">Nro. Venta</th>
-                            <th className="px-6 py-4 font-semibold">Fecha</th>
-                            <th className="px-6 py-4 font-semibold">Cliente</th>
-                            <th className="px-6 py-4 font-semibold">Observación</th>
-                            <th className="px-6 py-4 font-semibold text-right">Total</th>
-                            <th className="px-6 py-4 font-semibold text-center">Estado</th>
-                            <th className="px-6 py-4 font-semibold text-center">Factura Demo</th>
-                            {puedeAnular && <th className="px-6 py-4 font-semibold text-center">Acciones</th>}
+                            <th className="app-table-cell font-semibold">Nro. Venta</th>
+                            <th className="app-table-cell font-semibold">Fecha</th>
+                            <th className="app-table-cell font-semibold">Cliente</th>
+                            <th className="app-table-cell font-semibold">Observación</th>
+                            <th className="app-table-cell font-semibold text-right">Total</th>
+                            <th className="app-table-cell font-semibold text-center">Estado</th>
+                            <th className="app-table-cell font-semibold text-center">Factura Demo</th>
+                            {puedeAnular && <th className="app-table-cell font-semibold text-center">Acciones</th>}
                         </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-800">
+                    <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
                         {ventas.length === 0 ? (
                             <tr>
                                 <td colSpan={6} className="px-6 py-8 text-center text-slate-500 dark:text-slate-600 dark:text-slate-400">
@@ -408,23 +408,23 @@ export function ListaVentas({
                             </tr>
                         ) : (
                             ventas.map((v) => (
-                                <tr key={v.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
-                                    <td className="px-6 py-4 font-mono text-indigo-400 font-medium">
+                                <tr key={v.id} className="app-table-row">
+                                    <td className="app-table-cell font-mono text-indigo-400 font-medium">
                                         {v.numeroVenta}
                                     </td>
-                                    <td className="px-6 py-4">
+                                    <td className="app-table-cell">
                                         {new Date(v.fechaVenta).toLocaleDateString('es-ES')}
                                     </td>
-                                    <td className="px-6 py-4 font-medium text-slate-900 dark:text-white">
+                                    <td className="app-table-cell font-medium text-slate-900 dark:text-white">
                                         {v.cliente ? v.cliente.nombre : "Cliente General"}
                                     </td>
-                                    <td className="px-6 py-4 text-slate-600 dark:text-slate-400">
+                                    <td className="app-table-cell text-slate-600 dark:text-slate-400">
                                         {v.observacion || "-"}
                                     </td>
-                                    <td className="px-6 py-4 text-right font-semibold text-emerald-400">
+                                    <td className="app-table-cell text-right font-semibold text-emerald-400">
                                         Bs {v.total.toFixed(2)}
                                     </td>
-                                    <td className="px-6 py-4 text-center">
+                                    <td className="app-table-cell text-center">
                                         <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
                                             v.estado === "ACTIVO" 
                                                 ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20" 
@@ -433,7 +433,7 @@ export function ListaVentas({
                                             {v.estado === "ACTIVO" ? "ACTIVA" : "ANULADA"}
                                         </span>
                                     </td>
-                                    <td className="px-6 py-4 text-center">
+                                    <td className="app-table-cell text-center">
                                         {v.facturaDemoId ? (
                                             <a 
                                                 href={`/facturas/${v.facturaDemoId}`} 
@@ -454,7 +454,7 @@ export function ListaVentas({
                                         )}
                                     </td>
                                     {puedeAnular && (
-                                        <td className="px-6 py-4 text-center">
+                                        <td className="app-table-cell text-center">
                                             {v.estado === "ACTIVO" && (
                                                 <button
                                                     onClick={() => {

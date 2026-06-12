@@ -27,7 +27,7 @@ export function PanelMantenimiento() {
                         <button 
                             onClick={handleAuditar}
                             disabled={isPending}
-                            className="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 disabled:opacity-50 transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                            className="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-5 py-3 text-sm font-semibold text-slate-900 dark:text-white shadow-sm hover:bg-indigo-500 disabled:opacity-50 transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500"
                         >
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />

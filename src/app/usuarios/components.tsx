@@ -41,32 +41,32 @@ export function UsuariosManager({ usuarios, roles }: { usuarios: UsuarioCliente[
             </div>
 
             {/* Tabla de Usuarios */}
-            <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-white dark:bg-slate-900/50 backdrop-blur-sm overflow-hidden">
+            <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 backdrop-blur-sm overflow-hidden">
                 <div className="overflow-x-auto">
-                    <table className="min-w-full divide-y divide-slate-800">
-                        <thead className="bg-slate-50 dark:bg-white dark:bg-slate-900/80">
+                    <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-800">
+                        <thead className="app-table-head">
                             <tr>
-                                <th className="px-6 py-4 text-left text-xs font-medium text-slate-600 dark:text-slate-400 uppercase tracking-wider">Nombre</th>
-                                <th className="px-6 py-4 text-left text-xs font-medium text-slate-600 dark:text-slate-400 uppercase tracking-wider">Rol</th>
-                                <th className="px-6 py-4 text-left text-xs font-medium text-slate-600 dark:text-slate-400 uppercase tracking-wider">Estado</th>
-                                <th className="px-6 py-4 text-right text-xs font-medium text-slate-600 dark:text-slate-400 uppercase tracking-wider">Acciones</th>
+                                <th className="app-table-cell text-left text-xs font-medium text-slate-600 dark:text-slate-400 uppercase tracking-wider">Nombre</th>
+                                <th className="app-table-cell text-left text-xs font-medium text-slate-600 dark:text-slate-400 uppercase tracking-wider">Rol</th>
+                                <th className="app-table-cell text-left text-xs font-medium text-slate-600 dark:text-slate-400 uppercase tracking-wider">Estado</th>
+                                <th className="app-table-cell text-right text-xs font-medium text-slate-600 dark:text-slate-400 uppercase tracking-wider">Acciones</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-slate-800">
+                        <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
                             {usuarios.map((u) => (
                                 <tr key={u.id} className="hover:bg-slate-50 dark:bg-slate-800/30 transition-colors">
-                                    <td className="px-6 py-4 whitespace-nowrap">
+                                    <td className="app-table-cell whitespace-nowrap">
                                         <div className="flex flex-col">
                                             <span className="font-medium text-slate-900 dark:text-white">{u.nombre}</span>
                                             <span className="text-sm text-slate-600 dark:text-slate-400">{u.correo}</span>
                                         </div>
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap">
+                                    <td className="app-table-cell whitespace-nowrap">
                                         <span className="inline-flex items-center rounded-md bg-indigo-500/10 px-2 py-1 text-xs font-medium text-indigo-400 ring-1 ring-inset ring-indigo-500/20">
                                             {u.rol.nombre}
                                         </span>
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap">
+                                    <td className="app-table-cell whitespace-nowrap">
                                         <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
                                             u.estado === 'ACTIVO' 
                                                 ? 'bg-emerald-500/10 text-emerald-400 ring-1 ring-inset ring-emerald-500/20' 
@@ -75,7 +75,7 @@ export function UsuariosManager({ usuarios, roles }: { usuarios: UsuarioCliente[
                                             {u.estado}
                                         </span>
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <td className="app-table-cell whitespace-nowrap text-right text-sm font-medium">
                                         <button 
                                             onClick={() => setUsuarioReset(u)}
                                             className="text-amber-500 hover:text-amber-400 mr-4 transition-colors"
@@ -308,7 +308,7 @@ function ResetearContrasenaForm({ usuarioId, onClose }: { usuarioId: number, onC
                 <button
                     type="submit"
                     disabled={isPending}
-                    className="rounded-lg bg-amber-600 px-6 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600 disabled:opacity-50 transition-all"
+                    className="rounded-lg bg-amber-600 px-6 py-2.5 text-sm font-medium text-slate-900 dark:text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600 disabled:opacity-50 transition-all"
                 >
                     {isPending ? "Reseteando..." : "Confirmar Reset"}
                 </button>

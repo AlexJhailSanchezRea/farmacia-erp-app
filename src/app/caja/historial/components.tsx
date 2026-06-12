@@ -20,27 +20,27 @@ export function ListaHistorialCajas({ cajas, totalPages }: { cajas: CajaTurnoCli
             </div>
             <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 backdrop-blur-sm overflow-hidden print:hidden">
                 <div className="overflow-x-auto">
-                    <table className="min-w-full divide-y divide-slate-800">
-                        <thead className="bg-slate-50 dark:bg-slate-900/80">
+                    <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-800">
+                        <thead className="app-table-head">
                             <tr>
-                                <th className="px-6 py-4 text-left text-xs font-medium text-slate-600 dark:text-slate-400 uppercase tracking-wider">Apertura</th>
-                                <th className="px-6 py-4 text-left text-xs font-medium text-slate-600 dark:text-slate-400 uppercase tracking-wider">Cierre</th>
-                                <th className="px-6 py-4 text-left text-xs font-medium text-slate-600 dark:text-slate-400 uppercase tracking-wider">M. Inicial</th>
-                                <th className="px-6 py-4 text-left text-xs font-medium text-slate-600 dark:text-slate-400 uppercase tracking-wider">S. Esperado</th>
-                                <th className="px-6 py-4 text-left text-xs font-medium text-slate-600 dark:text-slate-400 uppercase tracking-wider">Contado</th>
-                                <th className="px-6 py-4 text-right text-xs font-medium text-slate-600 dark:text-slate-400 uppercase tracking-wider">Diferencia</th>
-                                <th className="px-6 py-4 text-center text-xs font-medium text-slate-600 dark:text-slate-400 uppercase tracking-wider">Estado</th>
-                                <th className="px-6 py-4 text-center text-xs font-medium text-slate-600 dark:text-slate-400 uppercase tracking-wider print:hidden">Acciones</th>
+                                <th className="app-table-cell text-left text-xs font-medium text-slate-600 dark:text-slate-400 uppercase tracking-wider">Apertura</th>
+                                <th className="app-table-cell text-left text-xs font-medium text-slate-600 dark:text-slate-400 uppercase tracking-wider">Cierre</th>
+                                <th className="app-table-cell text-left text-xs font-medium text-slate-600 dark:text-slate-400 uppercase tracking-wider">M. Inicial</th>
+                                <th className="app-table-cell text-left text-xs font-medium text-slate-600 dark:text-slate-400 uppercase tracking-wider">S. Esperado</th>
+                                <th className="app-table-cell text-left text-xs font-medium text-slate-600 dark:text-slate-400 uppercase tracking-wider">Contado</th>
+                                <th className="app-table-cell text-right text-xs font-medium text-slate-600 dark:text-slate-400 uppercase tracking-wider">Diferencia</th>
+                                <th className="app-table-cell text-center text-xs font-medium text-slate-600 dark:text-slate-400 uppercase tracking-wider">Estado</th>
+                                <th className="app-table-cell text-center text-xs font-medium text-slate-600 dark:text-slate-400 uppercase tracking-wider print:hidden">Acciones</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-slate-800">
+                        <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
                             {cajas.map((c) => (
                                 <tr key={c.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-700 dark:text-slate-300">
+                                    <td className="app-table-cell whitespace-nowrap text-sm text-slate-700 dark:text-slate-300">
                                         <div className="font-semibold">{new Date(c.fechaApertura).toLocaleString('es-ES')}</div>
                                         <div className="text-xs text-slate-600 dark:text-slate-400">{c.usuarioAperturaNombre}</div>
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-700 dark:text-slate-300">
+                                    <td className="app-table-cell whitespace-nowrap text-sm text-slate-700 dark:text-slate-300">
                                         {c.fechaCierre ? (
                                             <>
                                                 <div className="font-semibold">{new Date(c.fechaCierre).toLocaleString('es-ES')}</div>
@@ -50,16 +50,16 @@ export function ListaHistorialCajas({ cajas, totalPages }: { cajas: CajaTurnoCli
                                             <span className="text-slate-600 dark:text-slate-400">-</span>
                                         )}
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-700 dark:text-slate-300">
+                                    <td className="app-table-cell whitespace-nowrap text-sm text-slate-700 dark:text-slate-300">
                                         {formatSoles(c.montoInicial)}
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-slate-900 dark:text-white">
+                                    <td className="app-table-cell whitespace-nowrap text-sm font-semibold text-slate-900 dark:text-white">
                                         {c.estado === "CERRADA" ? formatSoles(c.saldoEsperado) : "-"}
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-indigo-600 dark:text-indigo-400">
+                                    <td className="app-table-cell whitespace-nowrap text-sm font-semibold text-indigo-600 dark:text-indigo-400">
                                         {c.estado === "CERRADA" ? formatSoles(c.montoContado) : "-"}
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-right">
+                                    <td className="app-table-cell whitespace-nowrap text-sm text-right">
                                         {c.estado === "CERRADA" ? (
                                             <span className={`px-2 py-1 rounded font-bold ${
                                                 c.diferencia === 0 ? 'text-emerald-600 dark:text-emerald-400 bg-emerald-500/10' :
@@ -72,7 +72,7 @@ export function ListaHistorialCajas({ cajas, totalPages }: { cajas: CajaTurnoCli
                                             <span className="text-slate-600 dark:text-slate-400">-</span>
                                         )}
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-center">
+                                    <td className="app-table-cell whitespace-nowrap text-center">
                                         <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
                                             c.estado === 'ABIERTA' 
                                                 ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20' 
@@ -81,7 +81,7 @@ export function ListaHistorialCajas({ cajas, totalPages }: { cajas: CajaTurnoCli
                                             {c.estado}
                                         </span>
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-center print:hidden">
+                                    <td className="app-table-cell whitespace-nowrap text-center print:hidden">
                                         <button 
                                             onClick={() => setCajaAImprimir(c)}
                                             className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium text-sm transition-colors"
@@ -106,7 +106,7 @@ export function ListaHistorialCajas({ cajas, totalPages }: { cajas: CajaTurnoCli
             {/* Modal de Impresión */}
             {cajaAImprimir && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 print:p-0 print:bg-white print:static print:block">
-                    <div className="bg-white dark:bg-slate-900 print:dark:bg-white border border-slate-200 dark:border-slate-800 print:border-none rounded-2xl p-8 w-full max-w-2xl shadow-2xl print:shadow-none relative print:w-full print:max-w-none">
+                    <div className="bg-white dark:bg-slate-900 print:dark:bg-slate-900 border border-slate-200 dark:border-slate-800 print:border-none rounded-2xl p-8 w-full max-w-2xl shadow-2xl print:shadow-none relative print:w-full print:max-w-none">
                         <button onClick={() => setCajaAImprimir(null)} className="absolute top-4 right-4 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white print:hidden">
                             <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -118,7 +118,7 @@ export function ListaHistorialCajas({ cajas, totalPages }: { cajas: CajaTurnoCli
                                 <h2 className="text-2xl font-bold text-slate-900 print:text-black">Reporte de Caja - {cajaAImprimir.estado}</h2>
                                 <p className="text-slate-600 dark:text-slate-400 print:text-gray-600">ID: {cajaAImprimir.id} | Fecha de impresión: {new Date().toLocaleString()}</p>
                             </div>
-                            <button onClick={() => window.print()} className="print:hidden bg-indigo-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-indigo-500">
+                            <button onClick={() => window.print()} className="print:hidden bg-indigo-600 text-slate-900 dark:text-white px-4 py-2 rounded-lg font-medium hover:bg-indigo-500">
                                 Imprimir
                             </button>
                         </div>
