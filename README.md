@@ -25,6 +25,57 @@ Aplicación web ERP modular para administrar productos, ventas, compras, caja y 
 
 <p align="center"><sub>Dashboard del sistema · Captura real de la aplicación</sub></p>
 
+## Explora el sistema
+
+Todas las capturas están visibles aquí mismo en la portada del repositorio. Selecciona cualquier imagen para verla en tamaño completo o [abre la galería interactiva](https://alexjhailsanchezrea.github.io/farmacia-erp-app/galeria.html) para filtrar y recorrer las pantallas.
+
+### Farmacia e inventario
+
+<table>
+  <tr>
+    <td width="50%"><a href="docs/screenshots/producto1.png"><img src="docs/screenshots/producto1.png" alt="Catálogo de productos" /></a><br /><sub>Catálogo de productos</sub></td>
+    <td width="50%"><a href="docs/screenshots/producto2.png"><img src="docs/screenshots/producto2.png" alt="Formulario y ficha de producto farmacéutico" /></a><br /><sub>Ficha farmacéutica del producto</sub></td>
+  </tr>
+  <tr>
+    <td width="50%"><a href="docs/screenshots/inventario.png"><img src="docs/screenshots/inventario.png" alt="Movimientos de inventario" /></a><br /><sub>Movimientos de inventario</sub></td>
+    <td width="50%"><a href="docs/screenshots/alertas_sanitarias.png"><img src="docs/screenshots/alertas_sanitarias.png" alt="Alertas sanitarias, vencimientos y stock crítico" /></a><br /><sub>Alertas sanitarias y vencimientos</sub></td>
+  </tr>
+</table>
+
+### Ventas, caja y comprobantes
+
+<table>
+  <tr>
+    <td width="50%"><a href="docs/screenshots/ventas.png"><img src="docs/screenshots/ventas.png" alt="Registro y consulta de ventas" /></a><br /><sub>Registro y consulta de ventas</sub></td>
+    <td width="50%"><a href="docs/screenshots/caja.png"><img src="docs/screenshots/caja.png" alt="Control de caja por turno" /></a><br /><sub>Control de caja por turno</sub></td>
+  </tr>
+  <tr>
+    <td width="50%"><a href="docs/screenshots/comprobante1.png"><img src="docs/screenshots/comprobante1.png" alt="Listado de comprobantes" /></a><br /><sub>Comprobantes</sub></td>
+    <td width="50%"><a href="docs/screenshots/comprobante2.png"><img src="docs/screenshots/comprobante2.png" alt="Detalle de comprobante" /></a><br /><sub>Detalle de comprobante</sub></td>
+  </tr>
+  <tr>
+    <td width="50%"><a href="docs/screenshots/facturas1.png"><img src="docs/screenshots/facturas1.png" alt="Listado de facturas de demostración" /></a><br /><sub>Facturación demo</sub></td>
+    <td width="50%"><a href="docs/screenshots/facturas2.png"><img src="docs/screenshots/facturas2.png" alt="Detalle de factura de demostración" /></a><br /><sub>Detalle de factura demo</sub></td>
+  </tr>
+</table>
+
+### Administración y reportes
+
+<table>
+  <tr>
+    <td width="50%"><a href="docs/screenshots/login.png"><img src="docs/screenshots/login.png" alt="Pantalla de acceso a PharmaERP 360" /></a><br /><sub>Acceso al sistema</sub></td>
+    <td width="50%"><a href="docs/screenshots/usuarios_roles.png"><img src="docs/screenshots/usuarios_roles.png" alt="Administración de usuarios y roles" /></a><br /><sub>Usuarios y roles</sub></td>
+  </tr>
+  <tr>
+    <td width="50%"><a href="docs/screenshots/proveedores1.png"><img src="docs/screenshots/proveedores1.png" alt="Listado de proveedores" /></a><br /><sub>Proveedores</sub></td>
+    <td width="50%"><a href="docs/screenshots/proveedores2.png"><img src="docs/screenshots/proveedores2.png" alt="Detalle y gestión de proveedores" /></a><br /><sub>Gestión de proveedores</sub></td>
+  </tr>
+  <tr>
+    <td width="50%"><a href="docs/screenshots/reportes1.png"><img src="docs/screenshots/reportes1.png" alt="Reportes y estadísticas del sistema" /></a><br /><sub>Reportes y estadísticas</sub></td>
+    <td width="50%"></td>
+  </tr>
+</table>
+
 ## Sobre el proyecto
 
 PharmaERP 360 es un proyecto de portafolio enfocado en resolver flujos habituales de una farmacia y un negocio comercial desde una aplicación integrada. Reúne gestión de catálogo, compras, ventas, inventario, caja, comprobantes, reportes y administración de usuarios.
@@ -43,60 +94,6 @@ La solución está construida con **Next.js App Router**, **TypeScript**, **Post
 | **Comprobantes** | Historial de comprobantes internos y visualización de facturas en modo demostración. |
 
 > **Alcance de facturación:** la factura disponible es demostrativa y no tiene validez fiscal. El proyecto no debe utilizarse como sistema de emisión fiscal sin una integración certificada y el cumplimiento de la normativa aplicable.
-
-## Recorrido visual
-
-Las imágenes siguientes se tomaron de la aplicación real y se guardan en [`docs/screenshots`](docs/screenshots). Haz clic en cualquier imagen para abrirla en tamaño completo.
-
-La [galería interactiva](https://alexjhailsanchezrea.github.io/farmacia-erp-app/galeria.html) añade filtros, búsqueda, transiciones y un visor con navegación por teclado. GitHub no ejecuta JavaScript dentro del README; el [código fuente de la galería](docs/galeria.html) se publica desde la carpeta `docs`.
-
-<details>
-<summary><strong>01 · Catálogo e inventario farmacéutico</strong></summary>
-<br />
-
-<table>
-  <tr>
-    <td width="50%"><a href="docs/screenshots/producto1.png" target="_blank" rel="noopener noreferrer"><img src="docs/screenshots/producto1.png" alt="Catálogo de productos con categoría, precio, stock y estado" /></a><br /><sub>Catálogo de productos</sub></td>
-    <td width="50%"><a href="docs/screenshots/producto2.png" target="_blank" rel="noopener noreferrer"><img src="docs/screenshots/producto2.png" alt="Formulario de producto con datos farmacéuticos" /></a><br /><sub>Ficha de producto y datos farmacéuticos</sub></td>
-  </tr>
-  <tr>
-    <td width="50%"><a href="docs/screenshots/inventario.png" target="_blank" rel="noopener noreferrer"><img src="docs/screenshots/inventario.png" alt="Historial de movimientos de inventario" /></a><br /><sub>Movimientos de inventario</sub></td>
-    <td width="50%"><a href="docs/screenshots/alertas_sanitarias.png" target="_blank" rel="noopener noreferrer"><img src="docs/screenshots/alertas_sanitarias.png" alt="Alertas sanitarias de lotes vencidos y stock crítico" /></a><br /><sub>Vencimientos y stock crítico</sub></td>
-  </tr>
-</table>
-</details>
-
-<details>
-<summary><strong>02 · Ventas, caja y comprobantes</strong></summary>
-<br />
-
-<table>
-  <tr>
-    <td width="50%"><a href="docs/screenshots/ventas.png" target="_blank" rel="noopener noreferrer"><img src="docs/screenshots/ventas.png" alt="Listado de ventas y estado de cada operación" /></a><br /><sub>Registro y consulta de ventas</sub></td>
-    <td width="50%"><a href="docs/screenshots/caja.png" target="_blank" rel="noopener noreferrer"><img src="docs/screenshots/caja.png" alt="Estado de caja, saldos y movimientos del turno" /></a><br /><sub>Control de caja por turno</sub></td>
-  </tr>
-  <tr>
-    <td width="50%"><a href="docs/screenshots/comprobante1.png" target="_blank" rel="noopener noreferrer"><img src="docs/screenshots/comprobante1.png" alt="Historial de comprobantes internos" /></a><br /><sub>Comprobantes internos</sub></td>
-    <td width="50%"><a href="docs/screenshots/facturas1.png" target="_blank" rel="noopener noreferrer"><img src="docs/screenshots/facturas1.png" alt="Listado de facturas en modo demostración" /></a><br /><sub>Facturación en modo demo</sub></td>
-  </tr>
-</table>
-</details>
-
-<details>
-<summary><strong>03 · Reportes y administración</strong></summary>
-<br />
-
-<table>
-  <tr>
-    <td width="50%"><a href="docs/screenshots/reportes1.png" target="_blank" rel="noopener noreferrer"><img src="docs/screenshots/reportes1.png" alt="Panel de reportes y estadísticas" /></a><br /><sub>Reportes y estadísticas</sub></td>
-    <td width="50%"><a href="docs/screenshots/usuarios_roles.png" target="_blank" rel="noopener noreferrer"><img src="docs/screenshots/usuarios_roles.png" alt="Administración de usuarios, roles y estados" /></a><br /><sub>Usuarios y roles</sub></td>
-  </tr>
-  <tr>
-    <td width="50%"><a href="docs/screenshots/proveedores1.png" target="_blank" rel="noopener noreferrer"><img src="docs/screenshots/proveedores1.png" alt="Listado de proveedores" /></a><br /><sub>Gestión de proveedores</sub></td>
-    <td width="50%"><a href="docs/screenshots/login.png" target="_blank" rel="noopener noreferrer"><img src="docs/screenshots/login.png" alt="Pantalla de inicio de sesión de PharmaERP 360" /></a><br /><sub>Acceso al sistema</sub></td>
-  </tr>
-</table>
-</details>
 
 ## Arquitectura
 
