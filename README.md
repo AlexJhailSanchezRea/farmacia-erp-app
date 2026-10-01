@@ -15,7 +15,7 @@ Aplicación web ERP modular para administrar productos, ventas, compras, caja y 
   <a href="https://www.prisma.io/"><img src="https://img.shields.io/badge/Prisma-7-2D3748?logo=prisma" alt="Prisma 7" /></a>
 </p>
 
-[Galería interactiva](https://alexjhailsanchezrea.github.io/farmacia-erp-app/galeria.html) · [Ver el repositorio](https://github.com/AlexJhailSanchezRea/farmacia-erp-app) · [Arquitectura](docs/ARCHITECTURE.md)
+[Portafolio personal](https://alexjhailsanchezrea.github.io/farmacia-erp-app/) · [Galería interactiva](https://alexjhailsanchezrea.github.io/farmacia-erp-app/galeria.html) · [Ver el repositorio](https://github.com/AlexJhailSanchezRea/farmacia-erp-app) · [Arquitectura](docs/ARCHITECTURE.md)
 
 </div>
 
