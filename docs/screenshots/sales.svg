@@ -1,0 +1,25 @@
+<svg width="1280" height="760" viewBox="0 0 1280 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1280" height="760" fill="#081824"/>
+  <rect x="0" y="0" width="220" height="760" fill="#0E1B29"/>
+  <rect x="260" y="80" width="960" height="600" rx="18" fill="#0F1F2F" stroke="#233B4F"/>
+  <rect x="300" y="120" width="880" height="52" rx="12" fill="#122534"/>
+  <rect x="300" y="190" width="880" height="52" rx="12" fill="#112332"/>
+  <rect x="300" y="260" width="880" height="52" rx="12" fill="#112332"/>
+  <rect x="300" y="330" width="880" height="52" rx="12" fill="#112332"/>
+  <rect x="300" y="400" width="880" height="52" rx="12" fill="#112332"/>
+  <text x="330" y="152" font-family="Arial, sans-serif" font-size="18" fill="#D9F2FF" font-weight="700">Cliente</text>
+  <text x="620" y="152" font-family="Arial, sans-serif" font-size="18" fill="#D9F2FF" font-weight="700">Comprobante</text>
+  <text x="890" y="152" font-family="Arial, sans-serif" font-size="18" fill="#D9F2FF" font-weight="700">Total</text>
+  <text x="330" y="221" font-family="Arial, sans-serif" font-size="18" fill="#EAF8FF">Ana Gómez</text>
+  <text x="620" y="221" font-family="Arial, sans-serif" font-size="18" fill="#EAF8FF">Factura 001-2301</text>
+  <text x="890" y="221" font-family="Arial, sans-serif" font-size="18" fill="#EAF8FF">Bs 1240.00</text>
+  <text x="330" y="291" font-family="Arial, sans-serif" font-size="18" fill="#EAF8FF">Luis Perez</text>
+  <text x="620" y="291" font-family="Arial, sans-serif" font-size="18" fill="#EAF8FF">Factura 001-2302</text>
+  <text x="890" y="291" font-family="Arial, sans-serif" font-size="18" fill="#EAF8FF">Bs 860.00</text>
+  <text x="330" y="361" font-family="Arial, sans-serif" font-size="18" fill="#EAF8FF">Maria Ruiz</text>
+  <text x="620" y="361" font-family="Arial, sans-serif" font-size="18" fill="#EAF8FF">Factura 001-2303</text>
+  <text x="890" y="361" font-family="Arial, sans-serif" font-size="18" fill="#EAF8FF">Bs 1520.00</text>
+  <text x="330" y="431" font-family="Arial, sans-serif" font-size="18" fill="#EAF8FF">Pedro Quispe</text>
+  <text x="620" y="431" font-family="Arial, sans-serif" font-size="18" fill="#EAF8FF">Factura 001-2304</text>
+  <text x="890" y="431" font-family="Arial, sans-serif" font-size="18" fill="#EAF8FF">Bs 930.50</text>
+</svg>

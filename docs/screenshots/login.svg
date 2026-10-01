@@ -1,0 +1,20 @@
+<svg width="1280" height="760" viewBox="0 0 1280 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1280" height="760" fill="#071422"/>
+  <rect x="0" y="0" width="1280" height="760" fill="url(#bg)"/>
+  <rect x="430" y="120" width="420" height="510" rx="22" fill="#0F1D2C" stroke="#2B3F59"/>
+  <circle cx="640" cy="210" r="54" fill="#1A2E45"/>
+  <rect x="500" y="287" width="280" height="48" rx="10" fill="#122534" stroke="#2F4C66"/>
+  <rect x="500" y="360" width="280" height="48" rx="10" fill="#122534" stroke="#2F4C66"/>
+  <rect x="500" y="430" width="280" height="48" rx="10" fill="#22C55E"/>
+  <text x="640" y="170" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" fill="#E6F7FF" font-weight="700">PharmaERP 360</text>
+  <text x="640" y="260" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#7DD3FC">Iniciar sesión</text>
+  <text x="640" y="315" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#B7D6E8">admin@nexaerp.com</text>
+  <text x="640" y="388" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#B7D6E8">••••••••</text>
+  <text x="640" y="458" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#04131F" font-weight="700">Ingresar al sistema</text>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1280" y2="760" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#071422"/>
+      <stop offset="1" stop-color="#0B1D2E"/>
+    </linearGradient>
+  </defs>
+</svg>

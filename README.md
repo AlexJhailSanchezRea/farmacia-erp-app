@@ -1,67 +1,252 @@
-# NexaERP / PharmaERP 360
+# PharmaERP 360
 
-## Descripción General
-NexaERP es un sistema ERP modular diseñado para pequeños y medianos negocios. En su especialización **PharmaERP 360**, ofrece una gestión completa orientada a farmacias, abarcando desde el control de inventario y lotes hasta la facturación y el manejo de caja por turno. El sistema está construido con un enfoque en seguridad, escalabilidad y facilidad de uso.
+<p align="center">
+  <img src="https://img.shields.io/badge/Next.js-16.2.9-000000?style=for-the-badge&logo=nextdotjs" alt="Next.js" />
+  <img src="https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react" alt="React" />
+  <img src="https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/PostgreSQL-17-4169E1?style=for-the-badge&logo=postgresql" alt="PostgreSQL" />
+  <img src="https://img.shields.io/badge/Prisma-7-2D3748?style=for-the-badge&logo=prisma" alt="Prisma" />
+</p>
 
-## Objetivo del Sistema
-Proveer a las empresas una herramienta unificada para gestionar sus operaciones comerciales, financieras y logísticas, asegurando la integridad de los datos, reduciendo el margen de error humano y optimizando los tiempos de atención al cliente y toma de decisiones.
+<p align="center">
+  <strong>ERP modular para farmacias y negocios con control de inventario, ventas, caja, clientes, proveedores, reportes y auditoría.</strong>
+</p>
 
-## Problema que Resuelve
-Muchos pequeños y medianos negocios operan con sistemas desactualizados, hojas de cálculo o procesos manuales que derivan en pérdida de inventario, descuadre de cajas y falta de información en tiempo real. NexaERP resuelve esto centralizando ventas, compras, caja y reportes bajo un sistema moderno de roles y permisos, evitando manipulaciones indebidas y automatizando el flujo de entrada y salida (FEFO para farmacias).
+## Descripción general
 
-## Tecnologías Usadas
-- **Frontend**: React, Next.js (App Router), Tailwind CSS
-- **Backend**: Next.js Server Actions, TypeScript
-- **Base de Datos**: PostgreSQL
-- **ORM**: Prisma
-- **Calidad de Código**: ESLint
+PharmaERP 360 es un sistema ERP modular orientado a farmacias y negocios con gestión comercial y operativa. La solución está diseñada para controlar productos, categorías, clientes, proveedores, compras, ventas, inventario, caja, comprobantes y reportes desde una misma plataforma.
 
-## Requisitos Previos
-- Node.js (v18 o superior)
-- PostgreSQL (v14 o superior)
+La arquitectura del proyecto está pensada para seguir una estructura modular por dominio, con una capa de presentación, aplicación, negocio y acceso a datos bajo App Router de Next.js y Prisma con PostgreSQL.
+
+## Objetivo
+
+Centralizar la gestión operativa de una farmacia o negocio comercial para:
+
+- controlar stock en tiempo real
+- manejar lotes y vencimientos
+- optimizar ventas y compras
+- controlar caja por turno
+- mejorar trazabilidad y auditoría
+- reducir errores manuales
+
+## Funcionalidades principales
+
+- Autenticación y control de usuarios por roles
+- Gestión de productos, categorías y proveedores
+- Inventario con lógica FEFO y control de vencimientos
+- Gestión de clientes y comprobantes
+- Compras y ventas con flujo de negocio integrado
+- Apertura y cierre de caja
+- Alertas por stock bajo y vencimientos próximos
+- Reportes y auditoría
+- Arquitectura modular por módulos de negocio
+
+## Stack tecnológico
+
+- Next.js 16
+- React 19
+- TypeScript
+- Tailwind CSS
+- PostgreSQL
+- Prisma ORM
+- ESLint
+
+## Capturas del sistema
+
+### Login
+
+![Login](docs/screenshots/login.svg)
+
+### Dashboard
+
+![Dashboard](docs/screenshots/dashboard.svg)
+
+### Inventario
+
+![Inventario](docs/screenshots/inventory.svg)
+
+### Ventas
+
+![Ventas](docs/screenshots/sales.svg)
+
+## Usuarios demo
+
+Después de ejecutar el seed, puedes probar con estos usuarios:
+
+- Administrador: `admin@nexaerp.com` / `Admin12345`
+- Vendedor: `vendedor@nexaerp.com` / `Vendedor12345`
+- Inventario/Farmacia: `inventario@nexaerp.com` / `Inventario12345`
+- Contador: `contador@nexaerp.com` / `Contador12345`
+
+## Requisitos
+
+- Node.js 18 o superior
+- PostgreSQL 14 o superior
 - Git
 
-## Instalación Local
-1. Clona este repositorio:
-   ```bash
-   git clone <URL_DEL_REPOSITORIO>
-   cd nexa-erp-app
-   ```
-2. Instala las dependencias:
-   ```bash
-   npm install
-   ```
+## Instalación
 
-## Variables de Entorno Necesarias
-Crea un archivo `.env` en la raíz del proyecto basándote en un posible `.env.example`. Las variables clave incluyen (no exponer valores reales):
-- `DATABASE_URL`: Cadena de conexión a PostgreSQL.
-- `JWT_SECRET` (o similar): Clave para manejo de sesiones/tokens si aplica.
+1. Clona el repositorio:
 
-## Comandos Principales
-Para operar en desarrollo, utiliza los siguientes comandos:
-- `npm install`: Instala las dependencias.
-- `npx prisma generate`: Genera el cliente de Prisma.
-- `npx prisma migrate dev`: Ejecuta las migraciones en la base de datos.
-- `npx tsx prisma/seed.ts`: Pobla la base de datos con datos iniciales (roles, configuración, admin).
-- `npm run dev`: Inicia el servidor de desarrollo en `http://localhost:3000`.
-- `npm run lint`: Ejecuta el linter para revisar la calidad del código.
-- `npm run build`: Construye la versión optimizada de producción.
+```bash
+git clone https://github.com/AlexJhailSanchezRea/farmacia-erp-app.git
+cd farmacia-erp-app
+```
 
-## Usuarios Demo
-Para ingresar al sistema con datos de prueba pre-cargados (si se ha ejecutado el seed):
-- **Administrador**: `admin@nexaerp.com` / `Admin12345`
-- **Vendedor**: `vendedor@nexaerp.com` / `Vendedor12345`
-- **Inventario/Farmacia**: `inventario@nexaerp.com` / `Inventario12345`
-- **Contador**: `contador@nexaerp.com` / `Contador12345`
+2. Instala dependencias:
 
-## Módulos Principales
-- **Autenticación y Perfil**: Login seguro y cambio de contraseñas.
-- **Configuración y Usuarios**: Gestión institucional y roles/permisos (RBAC).
-- **Inventario y Productos**: Control de stock, categorías, lotes, vencimientos y lógica FEFO.
-- **Entidades**: Gestión de Clientes y Proveedores.
-- **Compras y Ventas**: Entradas y salidas de almacén, con emisión de comprobantes y validación de cajas.
-- **Caja por Turno**: Control de aperturas, cierres, saldo esperado vs contado e historial de movimientos de dinero.
-- **Reportes y Auditoría**: Exportación de KPIs y log exhaustivo de acciones realizadas en el sistema.
+```bash
+npm install
+```
 
-> [!WARNING]
-> **Aviso Importante sobre Facturación:** La funcionalidad actual de "Facturación Demo" no genera facturas fiscales reales ni válidas para el SIAT (Bolivia) o el SIN. Es puramente demostrativa y funcional a nivel interno. Se requiere integración adicional con un proveedor fiscal para ser válida en producción comercial.
+3. Configura las variables de entorno:
+
+```bash
+cp .env.example .env
+```
+
+4. Ajusta la conexión local de PostgreSQL en `.env`:
+
+```env
+DATABASE_URL="postgresql://postgres:tu_password@localhost:5432/nexaerp_db?schema=public"
+```
+
+5. Genera el cliente de Prisma y aplica migraciones:
+
+```bash
+npx prisma generate
+npx prisma migrate deploy
+```
+
+6. Ejecuta el seed:
+
+```bash
+npx tsx prisma/seed.ts
+```
+
+7. Inicia la aplicación:
+
+```bash
+npm run dev
+```
+
+La app estará disponible en:
+
+```text
+http://localhost:3000
+```
+
+## Variables de entorno
+
+Crea un archivo `.env` en la raíz del proyecto con este ejemplo:
+
+```env
+DATABASE_URL="postgresql://postgres:tu_password@localhost:5432/nexaerp_db?schema=public"
+JWT_SECRET="cambia_esta_clave_por_una_generada_segura"
+NODE_ENV="development"
+```
+
+## Comandos útiles
+
+```bash
+npm install
+npm run dev
+npm run build
+npm run lint
+npx prisma generate
+npx prisma migrate deploy
+npx tsx prisma/seed.ts
+```
+
+## Arquitectura del sistema
+
+El proyecto sigue la arquitectura en capas propuesta por el equipo:
+
+```text
+page.tsx
+-> actions.ts
+-> services.ts
+-> repository.ts
+-> Prisma
+-> PostgreSQL
+```
+
+Esto mantiene una separación clara entre:
+
+- capa de presentación
+- lógica de aplicación
+- lógica de negocio
+- acceso a datos
+- base de datos
+
+## Estructura principal
+
+```text
+src/
+  app/
+  components/
+  modules/
+  lib/
+  types/
+  validations/
+prisma/
+  schema.prisma
+  seed.ts
+public/
+```
+
+## Módulos principales
+
+- auth
+- usuarios
+- roles
+- productos
+- categorias
+- clientes
+- proveedores
+- compras
+- ventas
+- inventario
+- caja
+- reportes
+- comprobantes
+- farmacia
+
+## Estado del proyecto
+
+- Sistema funcional en desarrollo local
+- Base de datos PostgreSQL integrada
+- Login operativo con usuarios demo
+- Dashboard principal funcionando
+- Módulos base implementados y listos para extensión
+
+## Roadmap
+
+- Mejorar UX en módulos de ventas y compras
+- Añadir exportación de reportes PDF/Excel
+- Integración con facturación electrónica
+- Mejoras de seguridad y validación avanzada
+- Optimización de rendimiento y pruebas
+
+## Contribución
+
+Las contribuciones son bienvenidas. Para colaborar:
+
+1. Haz un fork del repositorio
+2. Crea una rama de feature
+3. Realiza tus cambios
+4. Abre un pull request con una descripción clara
+
+## Licencia
+
+Este proyecto está bajo la licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
+
+## Contacto
+
+- GitHub: https://github.com/AlexJhailSanchezRea
+- Proyecto: https://github.com/AlexJhailSanchezRea/farmacia-erp-app
+
+## Nota importante
+
+La funcionalidad actual de facturación demo es conceptual y no reemplaza una facturación fiscal real. Para entornos de producción se requiere integración con un proveedor o normativa fiscal correspondiente.
+

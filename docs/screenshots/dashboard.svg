@@ -1,0 +1,26 @@
+<svg width="1280" height="760" viewBox="0 0 1280 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1280" height="760" fill="#081824"/>
+  <rect x="0" y="0" width="240" height="760" fill="#0E1B29"/>
+  <rect x="260" y="40" width="980" height="150" rx="18" fill="#0F1F2F" stroke="#233B4F"/>
+  <rect x="260" y="230" width="250" height="120" rx="18" fill="#0F1F2F" stroke="#233B4F"/>
+  <rect x="540" y="230" width="250" height="120" rx="18" fill="#0F1F2F" stroke="#233B4F"/>
+  <rect x="820" y="230" width="250" height="120" rx="18" fill="#0F1F2F" stroke="#233B4F"/>
+  <rect x="260" y="380" width="810" height="260" rx="18" fill="#0F1F2F" stroke="#233B4F"/>
+  <rect x="66" y="80" width="108" height="108" rx="18" fill="#1B2D3F"/>
+  <text x="440" y="115" font-family="Arial, sans-serif" font-size="30" fill="#EAF8FF" font-weight="700">PharmaERP 360</text>
+  <text x="440" y="150" font-family="Arial, sans-serif" font-size="18" fill="#7DD3FC">Sistema ERP modular para farmacia</text>
+  <text x="300" y="290" font-family="Arial, sans-serif" font-size="20" fill="#A7D7F5">Ventas del mes</text>
+  <text x="580" y="290" font-family="Arial, sans-serif" font-size="20" fill="#A7D7F5">Saldo en caja</text>
+  <text x="860" y="290" font-family="Arial, sans-serif" font-size="20" fill="#A7D7F5">Productos activos</text>
+  <text x="300" y="335" font-family="Arial, sans-serif" font-size="28" fill="#EAF8FF" font-weight="700">Bs 0.00</text>
+  <text x="580" y="335" font-family="Arial, sans-serif" font-size="28" fill="#EAF8FF" font-weight="700">Bs 200175.00</text>
+  <text x="860" y="335" font-family="Arial, sans-serif" font-size="28" fill="#EAF8FF" font-weight="700">40</text>
+  <text x="300" y="470" font-family="Arial, sans-serif" font-size="24" fill="#EAF8FF" font-weight="700">Indicadores</text>
+  <rect x="310" y="500" width="680" height="90" rx="12" fill="#122534"/>
+  <rect x="335" y="520" width="160" height="45" rx="10" fill="#22C55E"/>
+  <rect x="520" y="520" width="160" height="45" rx="10" fill="#F59E0B"/>
+  <rect x="705" y="520" width="160" height="45" rx="10" fill="#3B82F6"/>
+  <text x="415" y="548" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#04131F" font-weight="700">Stock OK</text>
+  <text x="600" y="548" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#04131F" font-weight="700">Stock bajo</text>
+  <text x="785" y="548" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#04131F" font-weight="700">Alertas</text>
+</svg>

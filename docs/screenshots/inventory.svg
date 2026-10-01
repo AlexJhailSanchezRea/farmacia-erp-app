@@ -1,0 +1,28 @@
+<svg width="1280" height="760" viewBox="0 0 1280 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1280" height="760" fill="#081824"/>
+  <rect x="0" y="0" width="220" height="760" fill="#0E1B29"/>
+  <rect x="260" y="70" width="940" height="620" rx="18" fill="#0F1F2F" stroke="#233B4F"/>
+  <rect x="292" y="100" width="880" height="54" rx="12" fill="#122534"/>
+  <rect x="292" y="178" width="880" height="56" rx="12" fill="#112332"/>
+  <rect x="292" y="250" width="880" height="56" rx="12" fill="#112332"/>
+  <rect x="292" y="322" width="880" height="56" rx="12" fill="#112332"/>
+  <rect x="292" y="394" width="880" height="56" rx="12" fill="#112332"/>
+  <rect x="292" y="466" width="880" height="56" rx="12" fill="#112332"/>
+  <rect x="292" y="538" width="880" height="56" rx="12" fill="#112332"/>
+  <text x="330" y="133" font-family="Arial, sans-serif" font-size="18" fill="#D9F2FF" font-weight="700">Producto</text>
+  <text x="620" y="133" font-family="Arial, sans-serif" font-size="18" fill="#D9F2FF" font-weight="700">Categoria</text>
+  <text x="850" y="133" font-family="Arial, sans-serif" font-size="18" fill="#D9F2FF" font-weight="700">Stock</text>
+  <text x="978" y="133" font-family="Arial, sans-serif" font-size="18" fill="#D9F2FF" font-weight="700">Vencimiento</text>
+  <text x="330" y="217" font-family="Arial, sans-serif" font-size="18" fill="#EAF8FF">Paracetamol 500mg</text>
+  <text x="620" y="217" font-family="Arial, sans-serif" font-size="18" fill="#EAF8FF">Analgesico</text>
+  <text x="850" y="217" font-family="Arial, sans-serif" font-size="18" fill="#EAF8FF">145</text>
+  <text x="978" y="217" font-family="Arial, sans-serif" font-size="18" fill="#EAF8FF">2026-12-15</text>
+  <text x="330" y="289" font-family="Arial, sans-serif" font-size="18" fill="#EAF8FF">Ibuprofeno 400mg</text>
+  <text x="620" y="289" font-family="Arial, sans-serif" font-size="18" fill="#EAF8FF">Antiinflamatorio</text>
+  <text x="850" y="289" font-family="Arial, sans-serif" font-size="18" fill="#EAF8FF">68</text>
+  <text x="978" y="289" font-family="Arial, sans-serif" font-size="18" fill="#EAF8FF">2026-11-01</text>
+  <text x="330" y="361" font-family="Arial, sans-serif" font-size="18" fill="#EAF8FF">Vitamina C</text>
+  <text x="620" y="361" font-family="Arial, sans-serif" font-size="18" fill="#EAF8FF">Suplemento</text>
+  <text x="850" y="361" font-family="Arial, sans-serif" font-size="18" fill="#EAF8FF">92</text>
+  <text x="978" y="361" font-family="Arial, sans-serif" font-size="18" fill="#EAF8FF">2027-02-20</text>
+</svg>
