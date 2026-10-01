@@ -20,7 +20,7 @@ Aplicación web ERP modular para administrar productos, ventas, compras, caja y 
 </div>
 
 <p align="center">
-  <img src="docs/screenshots/dashboard.png" alt="Dashboard de PharmaERP 360 con indicadores de ventas, caja, compras, productos y alertas" width="100%" />
+  <a href="docs/screenshots/dashboard.png" target="_blank" rel="noopener noreferrer"><img src="docs/screenshots/dashboard.png" alt="Dashboard de PharmaERP 360 con indicadores de ventas, caja, compras, productos y alertas" width="100%" /></a>
 </p>
 
 <p align="center"><sub>Dashboard del sistema · Captura real de la aplicación</sub></p>
@@ -46,7 +46,9 @@ La solución está construida con **Next.js App Router**, **TypeScript**, **Post
 
 ## Recorrido visual
 
-Las imágenes siguientes se tomaron de la aplicación real y se guardan en [`docs/screenshots`](docs/screenshots). Los paneles se agrupan por flujo para que la página del repositorio sea fácil de recorrer.
+Las imágenes siguientes se tomaron de la aplicación real y se guardan en [`docs/screenshots`](docs/screenshots). Haz clic en cualquier imagen para abrirla en tamaño completo.
+
+La [galería interactiva](docs/galeria.html) añade filtros, búsqueda, transiciones y un visor con navegación por teclado. GitHub no ejecuta JavaScript dentro del README; para publicar esa página en la web, habilita **Settings → Pages → Deploy from a branch → main → /docs**. Después estará disponible en `https://alexjhailsanchezrea.github.io/farmacia-erp-app/galeria.html`.
 
 <details>
 <summary><strong>01 · Catálogo e inventario farmacéutico</strong></summary>
@@ -54,12 +56,12 @@ Las imágenes siguientes se tomaron de la aplicación real y se guardan en [`doc
 
 <table>
   <tr>
-    <td width="50%"><img src="docs/screenshots/producto1.png" alt="Catálogo de productos con categoría, precio, stock y estado" /><br /><sub>Catálogo de productos</sub></td>
-    <td width="50%"><img src="docs/screenshots/producto2.png" alt="Formulario de producto con datos farmacéuticos" /><br /><sub>Ficha de producto y datos farmacéuticos</sub></td>
+    <td width="50%"><a href="docs/screenshots/producto1.png" target="_blank" rel="noopener noreferrer"><img src="docs/screenshots/producto1.png" alt="Catálogo de productos con categoría, precio, stock y estado" /></a><br /><sub>Catálogo de productos</sub></td>
+    <td width="50%"><a href="docs/screenshots/producto2.png" target="_blank" rel="noopener noreferrer"><img src="docs/screenshots/producto2.png" alt="Formulario de producto con datos farmacéuticos" /></a><br /><sub>Ficha de producto y datos farmacéuticos</sub></td>
   </tr>
   <tr>
-    <td width="50%"><img src="docs/screenshots/inventario.png" alt="Historial de movimientos de inventario" /><br /><sub>Movimientos de inventario</sub></td>
-    <td width="50%"><img src="docs/screenshots/alertas_sanitarias.png" alt="Alertas sanitarias de lotes vencidos y stock crítico" /><br /><sub>Vencimientos y stock crítico</sub></td>
+    <td width="50%"><a href="docs/screenshots/inventario.png" target="_blank" rel="noopener noreferrer"><img src="docs/screenshots/inventario.png" alt="Historial de movimientos de inventario" /></a><br /><sub>Movimientos de inventario</sub></td>
+    <td width="50%"><a href="docs/screenshots/alertas_sanitarias.png" target="_blank" rel="noopener noreferrer"><img src="docs/screenshots/alertas_sanitarias.png" alt="Alertas sanitarias de lotes vencidos y stock crítico" /></a><br /><sub>Vencimientos y stock crítico</sub></td>
   </tr>
 </table>
 </details>
@@ -70,12 +72,12 @@ Las imágenes siguientes se tomaron de la aplicación real y se guardan en [`doc
 
 <table>
   <tr>
-    <td width="50%"><img src="docs/screenshots/ventas.png" alt="Listado de ventas y estado de cada operación" /><br /><sub>Registro y consulta de ventas</sub></td>
-    <td width="50%"><img src="docs/screenshots/caja.png" alt="Estado de caja, saldos y movimientos del turno" /><br /><sub>Control de caja por turno</sub></td>
+    <td width="50%"><a href="docs/screenshots/ventas.png" target="_blank" rel="noopener noreferrer"><img src="docs/screenshots/ventas.png" alt="Listado de ventas y estado de cada operación" /></a><br /><sub>Registro y consulta de ventas</sub></td>
+    <td width="50%"><a href="docs/screenshots/caja.png" target="_blank" rel="noopener noreferrer"><img src="docs/screenshots/caja.png" alt="Estado de caja, saldos y movimientos del turno" /></a><br /><sub>Control de caja por turno</sub></td>
   </tr>
   <tr>
-    <td width="50%"><img src="docs/screenshots/comprobante1.png" alt="Historial de comprobantes internos" /><br /><sub>Comprobantes internos</sub></td>
-    <td width="50%"><img src="docs/screenshots/facturas1.png" alt="Listado de facturas en modo demostración" /><br /><sub>Facturación en modo demo</sub></td>
+    <td width="50%"><a href="docs/screenshots/comprobante1.png" target="_blank" rel="noopener noreferrer"><img src="docs/screenshots/comprobante1.png" alt="Historial de comprobantes internos" /></a><br /><sub>Comprobantes internos</sub></td>
+    <td width="50%"><a href="docs/screenshots/facturas1.png" target="_blank" rel="noopener noreferrer"><img src="docs/screenshots/facturas1.png" alt="Listado de facturas en modo demostración" /></a><br /><sub>Facturación en modo demo</sub></td>
   </tr>
 </table>
 </details>
@@ -86,12 +88,12 @@ Las imágenes siguientes se tomaron de la aplicación real y se guardan en [`doc
 
 <table>
   <tr>
-    <td width="50%"><img src="docs/screenshots/reportes1.png" alt="Panel de reportes y estadísticas" /><br /><sub>Reportes y estadísticas</sub></td>
-    <td width="50%"><img src="docs/screenshots/usuarios_roles.png" alt="Administración de usuarios, roles y estados" /><br /><sub>Usuarios y roles</sub></td>
+    <td width="50%"><a href="docs/screenshots/reportes1.png" target="_blank" rel="noopener noreferrer"><img src="docs/screenshots/reportes1.png" alt="Panel de reportes y estadísticas" /></a><br /><sub>Reportes y estadísticas</sub></td>
+    <td width="50%"><a href="docs/screenshots/usuarios_roles.png" target="_blank" rel="noopener noreferrer"><img src="docs/screenshots/usuarios_roles.png" alt="Administración de usuarios, roles y estados" /></a><br /><sub>Usuarios y roles</sub></td>
   </tr>
   <tr>
-    <td width="50%"><img src="docs/screenshots/proveedores1.png" alt="Listado de proveedores" /><br /><sub>Gestión de proveedores</sub></td>
-    <td width="50%"><img src="docs/screenshots/login.png" alt="Pantalla de inicio de sesión de PharmaERP 360" /><br /><sub>Acceso al sistema</sub></td>
+    <td width="50%"><a href="docs/screenshots/proveedores1.png" target="_blank" rel="noopener noreferrer"><img src="docs/screenshots/proveedores1.png" alt="Listado de proveedores" /></a><br /><sub>Gestión de proveedores</sub></td>
+    <td width="50%"><a href="docs/screenshots/login.png" target="_blank" rel="noopener noreferrer"><img src="docs/screenshots/login.png" alt="Pantalla de inicio de sesión de PharmaERP 360" /></a><br /><sub>Acceso al sistema</sub></td>
   </tr>
 </table>
 </details>
