@@ -15,7 +15,7 @@ Aplicación web ERP modular para administrar productos, ventas, compras, caja y 
   <a href="https://www.prisma.io/"><img src="https://img.shields.io/badge/Prisma-7-2D3748?logo=prisma" alt="Prisma 7" /></a>
 </p>
 
-[Ver el repositorio](https://github.com/AlexJhailSanchezRea/farmacia-erp-app) · [Arquitectura](docs/ARCHITECTURE.md) · [Guía de capturas](docs/CAPTURAS_REALES.md)
+[Galería interactiva](https://alexjhailsanchezrea.github.io/farmacia-erp-app/galeria.html) · [Ver el repositorio](https://github.com/AlexJhailSanchezRea/farmacia-erp-app) · [Arquitectura](docs/ARCHITECTURE.md)
 
 </div>
 
@@ -48,7 +48,7 @@ La solución está construida con **Next.js App Router**, **TypeScript**, **Post
 
 Las imágenes siguientes se tomaron de la aplicación real y se guardan en [`docs/screenshots`](docs/screenshots). Haz clic en cualquier imagen para abrirla en tamaño completo.
 
-La [galería interactiva](docs/galeria.html) añade filtros, búsqueda, transiciones y un visor con navegación por teclado. GitHub no ejecuta JavaScript dentro del README; para publicar esa página en la web, habilita **Settings → Pages → Deploy from a branch → main → /docs**. Después estará disponible en `https://alexjhailsanchezrea.github.io/farmacia-erp-app/galeria.html`.
+La [galería interactiva](https://alexjhailsanchezrea.github.io/farmacia-erp-app/galeria.html) añade filtros, búsqueda, transiciones y un visor con navegación por teclado. GitHub no ejecuta JavaScript dentro del README; el [código fuente de la galería](docs/galeria.html) se publica desde la carpeta `docs`.
 
 <details>
 <summary><strong>01 · Catálogo e inventario farmacéutico</strong></summary>
