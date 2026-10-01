@@ -53,21 +53,74 @@ Centralizar la gestión operativa de una farmacia o negocio comercial para:
 
 ## Capturas reales del sistema
 
-Estas capturas corresponden a la aplicación en funcionamiento en localhost y fueron tomadas desde la interfaz real del ERP, no desde mockups ni ilustraciones generadas.
+Estas capturas corresponden a la aplicación en funcionamiento en localhost y reflejan la interfaz real del ERP PharmaERP 360. La galería está organizada para mostrar el flujo principal del sistema: acceso, dashboard, gestión de productos, ventas, facturación y reportes.
 
-### Login real
-- Vista real del acceso institucional del sistema.
+<div align="center">
+  <table>
+    <tr>
+      <td align="center">
+        <img src="docs/screenshots/login.png" width="420" alt="Login del sistema" /><br />
+        <sub><strong>01.</strong> Login institucional</sub>
+      </td>
+      <td align="center">
+        <img src="docs/screenshots/dashboard.png" width="420" alt="Dashboard principal" /><br />
+        <sub><strong>02.</strong> Dashboard principal</sub>
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <img src="docs/screenshots/producto1.png" width="420" alt="Listado de productos" /><br />
+        <sub><strong>03.</strong> Catálogo de productos</sub>
+      </td>
+      <td align="center">
+        <img src="docs/screenshots/producto2.png" width="420" alt="Formulario de producto" /><br />
+        <sub><strong>04.</strong> Alta de producto</sub>
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <img src="docs/screenshots/inventario.png" width="420" alt="Inventario" /><br />
+        <sub><strong>05.</strong> Inventario y stock</sub>
+      </td>
+      <td align="center">
+        <img src="docs/screenshots/ventas.png" width="420" alt="Ventas" /><br />
+        <sub><strong>06.</strong> Módulo de ventas</sub>
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <img src="docs/screenshots/facturas1.png" width="420" alt="Listado de facturas demo" /><br />
+        <sub><strong>07.</strong> Facturas demo</sub>
+      </td>
+      <td align="center">
+        <img src="docs/screenshots/facturas2.png" width="420" alt="Factura demo" /><br />
+        <sub><strong>08.</strong> Documento de factura</sub>
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <img src="docs/screenshots/caja.png" width="420" alt="Caja" /><br />
+        <sub><strong>09.</strong> Control de caja</sub>
+      </td>
+      <td align="center">
+        <img src="docs/screenshots/reportes1.png" width="420" alt="Reportes" /><br />
+        <sub><strong>10.</strong> Reportes y KPI</sub>
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <img src="docs/screenshots/proveedores1.png" width="420" alt="Proveedores" /><br />
+        <sub><strong>11.</strong> Proveedores</sub>
+      </td>
+      <td align="center">
+        <img src="docs/screenshots/usuarios_roles.png" width="420" alt="Usuarios y roles" /><br />
+        <sub><strong>12.</strong> Usuarios y roles</sub>
+      </td>
+    </tr>
+  </table>
+</div>
 
-### Dashboard real
-- Vista principal del panel de control con indicadores clave.
-
-### Menú principal real
-- Navegación con módulos de productos, clientes, proveedores, compras, ventas, inventario, caja y reportes.
-
-### Módulo de facturación demo
-- Vista del flujo de comprobantes y facturas del sistema demo.
-
-> Las imágenes reales se encuentran en la documentación del proyecto y pueden actualizarse con nuevas capturas del sistema a medida que se amplíe la funcionalidad.
+> La documentación visual del proyecto se actualiza con capturas reales para mantener una presentación profesional y fiel al estado del sistema.
 
 ## Usuarios demo
 
