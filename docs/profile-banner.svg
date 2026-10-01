@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="360" viewBox="0 0 1280 360" role="img" aria-labelledby="title description">
+  <title id="title">Alex Jhail Sánchez Rea — Portafolio de software</title>
+  <desc id="description">Desarrollo de software, aplicaciones web, automatización e infraestructura tecnológica.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#071521"/>
+      <stop offset="0.56" stop-color="#102b3b"/>
+      <stop offset="1" stop-color="#172148"/>
+    </linearGradient>
+    <linearGradient id="highlight" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#57e3c3"/>
+      <stop offset="1" stop-color="#77a8ff"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientTransform="translate(1040 45) rotate(120) scale(360 510)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#57e3c3" stop-opacity=".2"/>
+      <stop offset="1" stop-color="#57e3c3" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse">
+      <path d="M36 0H0V36" fill="none" stroke="#c6e2ff" stroke-opacity=".055" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1280" height="360" rx="28" fill="url(#background)"/>
+  <rect width="1280" height="360" rx="28" fill="url(#glow)"/>
+  <rect width="1280" height="360" rx="28" fill="url(#grid)"/>
+  <circle cx="1090" cy="150" r="186" fill="none" stroke="#71ebd2" stroke-opacity=".16" stroke-width="1.5"/>
+  <circle cx="1090" cy="150" r="136" fill="none" stroke="#71ebd2" stroke-opacity=".13" stroke-width="1.5"/>
+  <circle cx="1090" cy="150" r="86" fill="#57e3c3" fill-opacity=".08" stroke="#71ebd2" stroke-opacity=".2"/>
+  <path d="M1012 152h37l20-32 28 62 21-30h50" fill="none" stroke="url(#highlight)" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"/>
+  <circle cx="1012" cy="152" r="4" fill="#57e3c3"/>
+  <circle cx="1168" cy="152" r="4" fill="#77a8ff"/>
+  <rect x="72" y="62" width="10" height="10" rx="5" fill="#57e3c3"/>
+  <text x="96" y="72" fill="#7cebd4" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="700" letter-spacing="3">PORTAFOLIO · DESARROLLO DE SOFTWARE</text>
+  <text x="72" y="164" fill="#f2f7ff" font-family="Segoe UI,Arial,sans-serif" font-size="54" font-weight="750" letter-spacing="-2">Alex Jhail Sánchez Rea</text>
+  <text x="74" y="214" fill="#57e3c3" font-family="Segoe UI,Arial,sans-serif" font-size="26" font-weight="650">Construyo soluciones digitales.</text>
+  <text x="74" y="269" fill="#becde0" font-family="Segoe UI,Arial,sans-serif" font-size="19">Aplicaciones web · Sistemas de negocio · Automatización · Infraestructura</text>
+  <path d="M74 314h510" stroke="url(#highlight)" stroke-opacity=".75" stroke-width="2"/>
+  <text x="74" y="338" fill="#91a7bd" font-family="Segoe UI,Arial,sans-serif" font-size="12" letter-spacing="1.2">PROYECTOS REALES · CÓDIGO · CAPTURAS</text>
+</svg>
