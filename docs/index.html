@@ -376,7 +376,7 @@
       }
 
       function mostrarRepositorios(lista) {
-        repositorios = lista.filter((repo) => !repo.fork && !repo.archived);
+        repositorios = lista.filter((repo) => !repo.fork && !repo.archived && repo.name !== usuario);
         totalRepos.textContent = repositorios.length;
         const lenguajes = [...new Set(repositorios.map((repo) => repo.language).filter(Boolean))].sort((a, b) => a.localeCompare(b, "es"));
         filtroLenguaje.replaceChildren(new Option("Todos los lenguajes", "todos"));
