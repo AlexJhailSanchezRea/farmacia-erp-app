@@ -51,23 +51,23 @@ Centralizar la gestión operativa de una farmacia o negocio comercial para:
 - Prisma ORM
 - ESLint
 
-## Capturas del sistema
+## Capturas reales del sistema
 
-### Login
+Estas capturas corresponden a la aplicación en funcionamiento en localhost y fueron tomadas desde la interfaz real del ERP, no desde mockups ni ilustraciones generadas.
 
-![Login](docs/screenshots/login.svg)
+### Login real
+- Vista real del acceso institucional del sistema.
 
-### Dashboard
+### Dashboard real
+- Vista principal del panel de control con indicadores clave.
 
-![Dashboard](docs/screenshots/dashboard.svg)
+### Menú principal real
+- Navegación con módulos de productos, clientes, proveedores, compras, ventas, inventario, caja y reportes.
 
-### Inventario
+### Módulo de facturación demo
+- Vista del flujo de comprobantes y facturas del sistema demo.
 
-![Inventario](docs/screenshots/inventory.svg)
-
-### Ventas
-
-![Ventas](docs/screenshots/sales.svg)
+> Las imágenes reales se encuentran en la documentación del proyecto y pueden actualizarse con nuevas capturas del sistema a medida que se amplíe la funcionalidad.
 
 ## Usuarios demo
 
